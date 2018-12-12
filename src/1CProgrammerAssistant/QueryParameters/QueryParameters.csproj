@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1;net47</TargetFrameworks>
+    <AssemblyName>_1CProgrammerAssistant.QueryParameters</AssemblyName>
+  </PropertyGroup>
+
+</Project>
