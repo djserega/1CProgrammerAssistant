@@ -55,6 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UnmanagedCode\GlobalHotKeyManager.cs" />
+    <Compile Include="UnmanagedCode\KeyDownArgs.cs" />
+    <Compile Include="UnmanagedCode\KeyUpArgs.cs" />
+    <Compile Include="UnmanagedCode\LowLevelKeyboardListener.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
