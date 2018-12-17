@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +21,50 @@ namespace _1CProgrammerAssistant
     /// </summary>
     public partial class MainWindow : Window
     {
+        private GlobalHotKeyManager _hotKeyManager = new GlobalHotKeyManager();
+
         public MainWindow()
         {
             InitializeComponent();
 
-            new DescriptionsTheMethods.Class1();
-            new QueryParameters.Class1();
-            new MethodStore.Class1();
+            ProcessTextInClipboardEvents.ProcessTextInClipboardEvent +=
+                () =>
+                {
+                    ProcessTextWithClipboard();
+                    SetDescriptionToClipboard();
+                };
+        }
+
+        public DescriptionsTheMethods.Main DescriptionsTheMethodsMain { get; set; } = new DescriptionsTheMethods.Main();
+        //new QueryParameters.Class1();
+        //    new MethodStore.Class1();
+
+
+        private void ProcessTextWithClipboard()
+        {
+            if (Clipboard.ContainsText())
+                DescriptionsTheMethodsMain.DataMethod.StringMethod = Clipboard.GetText();
+        }
+        private void SetDescriptionToClipboard()
+        {
+            try
+            {
+                Clipboard.SetText(DescriptionsTheMethodsMain.DataMethod.Description);
+            }
+            catch (Exception ex)
+            {
+                using (EventLog eventLog = new EventLog("Application"))
+                {
+                    eventLog.Source = "Application";
+                    eventLog.WriteEntry(
+                        ex.Message
+                        + "\n" +
+                        ex.InnerException?.Message
+                        + "\n" +
+                        ex.InnerException?.InnerException?.Message,
+                        EventLogEntryType.Warning);
+                }
+            }
         }
     }
 }
