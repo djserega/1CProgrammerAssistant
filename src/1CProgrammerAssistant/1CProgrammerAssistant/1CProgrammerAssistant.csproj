@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ProcessTextInClipboardEvents.cs" />
     <Compile Include="UnmanagedCode\GlobalHotKeyManager.cs" />
     <Compile Include="UnmanagedCode\KeyDownArgs.cs" />
     <Compile Include="UnmanagedCode\KeyUpArgs.cs" />
