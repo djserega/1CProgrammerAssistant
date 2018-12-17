@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;net47</TargetFrameworks>
-    <AssemblyName>_1CProgrammerAssistant.DescriptionsTheMethods</AssemblyName>
+    <AssemblyName>DescriptionsTheMethods</AssemblyName>
   </PropertyGroup>
 
 </Project>

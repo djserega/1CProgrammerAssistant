@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;net47</TargetFrameworks>
-    <AssemblyName>_1CProgrammerAssistant.MethodStore</AssemblyName>
+    <AssemblyName>MethodStore</AssemblyName>
   </PropertyGroup>
 
 </Project>
