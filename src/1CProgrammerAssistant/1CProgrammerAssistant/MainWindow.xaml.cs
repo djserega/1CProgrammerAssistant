@@ -30,8 +30,8 @@ namespace _1CProgrammerAssistant
             ProcessTextInClipboardEvents.ProcessTextInClipboardEvent +=
                 () =>
                 {
-                    ProcessTextWithClipboard();
-                    SetDescriptionToClipboard();
+                    if (ProcessTextWithClipboard())
+                        SetDescriptionToClipboard();
                 };
         }
 
@@ -40,16 +40,28 @@ namespace _1CProgrammerAssistant
         //    new MethodStore.Class1();
 
 
-        private void ProcessTextWithClipboard()
+        private bool ProcessTextWithClipboard()
         {
             if (Clipboard.ContainsText())
-                DescriptionsTheMethodsMain.DataMethod.StringMethod = Clipboard.GetText();
+            {
+                DescriptionsTheMethodsMain.StringMethod = Clipboard.GetText();
+
+                if (string.IsNullOrEmpty(DescriptionsTheMethodsMain.TextError)
+                    && !string.IsNullOrEmpty(DescriptionsTheMethodsMain.Description))
+                    return true;
+
+
+
+                return false;
+            }
+
+            return false;
         }
         private void SetDescriptionToClipboard()
         {
             try
             {
-                Clipboard.SetText(DescriptionsTheMethodsMain.DataMethod.Description);
+                Clipboard.SetText(DescriptionsTheMethodsMain.Description);
             }
             catch (Exception ex)
             {
