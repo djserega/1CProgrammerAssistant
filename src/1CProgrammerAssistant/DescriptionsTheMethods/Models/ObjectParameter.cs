@@ -12,21 +12,18 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods.Models
         {
         }
 
-        public ObjectParameter(string name)
+        public ObjectParameter(string name) : this()
         {
             Name = name;
         }
 
-        public ObjectParameter(string name, string type)
+        public ObjectParameter(string name, string type) : this(name)
         {
-            Name = name;
             Type = type;
         }
 
-        public ObjectParameter(string name, string type, string description)
+        public ObjectParameter(string name, string type, string description) : this(name, type)
         {
-            Name = name;
-            Type = type;
             Description = description;
         }
 
