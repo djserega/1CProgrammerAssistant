@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryParameters", "QueryPar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MethodStore", "MethodStore\MethodStore.csproj", "{3A111E44-981D-45DF-9099-BF1175A10F75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Additions", "Additions\Additions.csproj", "{82C6A171-030E-4E05-9EE2-80D8744F9D35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Additions", "Additions\Additions.csproj", "{82C6A171-030E-4E05-9EE2-80D8744F9D35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
