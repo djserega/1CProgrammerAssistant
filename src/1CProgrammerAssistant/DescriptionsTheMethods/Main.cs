@@ -1,4 +1,4 @@
-﻿using _1CProgrammerAssistant.DescriptionsTheMethods.Additions;
+﻿using _1CProgrammerAssistant.Additions;
 using _1CProgrammerAssistant.DescriptionsTheMethods.Models;
 using System;
 using System.Collections.Generic;

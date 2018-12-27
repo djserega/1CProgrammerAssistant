@@ -1,8 +1,10 @@
-﻿using System;
+﻿using _1CProgrammerAssistant.Additions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,25 +33,60 @@ namespace _1CProgrammerAssistant
                 () =>
                 {
                     if (ProcessTextWithClipboard())
-                        SetDescriptionToClipboard();
+                        SetResultTextToClipboard();
                 };
         }
 
         public DescriptionsTheMethods.Main DescriptionsTheMethodsMain { get; set; } = new DescriptionsTheMethods.Main();
-        //new QueryParameters.Class1();
+        public QueryParameters.Main QueryParametersMain { get; set; } = new QueryParameters.Main();
         //    new MethodStore.Class1();
+
+
+
+        public string SourceText
+        {
+            get { return (string)GetValue(SourceTextProperty); }
+            set { SetValue(SourceTextProperty, value); }
+        }
+        // Using a DependencyProperty as the backing store for SourceText.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SourceTextProperty =
+            DependencyProperty.Register("SourceText", typeof(string), typeof(MainWindow), new PropertyMetadata(null));
+
+        public string ResultText
+        {
+            get { return (string)GetValue(ResultTextProperty); }
+            set { SetValue(ResultTextProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ResultText.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ResultTextProperty =
+            DependencyProperty.Register("ResultText", typeof(string), typeof(MainWindow), new PropertyMetadata(null));
+
 
 
         private bool ProcessTextWithClipboard()
         {
             if (Clipboard.ContainsText())
             {
-                DescriptionsTheMethodsMain.StringMethod = Clipboard.GetText();
+                string textInClipboard = Clipboard.GetText();
 
+                SourceText = textInClipboard;
+
+                DescriptionsTheMethodsMain.StringMethod = textInClipboard;
                 if (string.IsNullOrEmpty(DescriptionsTheMethodsMain.TextError)
                     && !string.IsNullOrEmpty(DescriptionsTheMethodsMain.Description))
+                {
+                    ResultText = DescriptionsTheMethodsMain.Description;
                     return true;
+                }
 
+                QueryParametersMain.QueryText = textInClipboard;
+                if (string.IsNullOrEmpty(QueryParametersMain.TextError)
+                    && !string.IsNullOrEmpty(QueryParametersMain.QueryParameters))
+                {
+                    ResultText = QueryParametersMain.QueryParameters;
+                    return true;
+                }
 
 
                 return false;
@@ -57,11 +94,12 @@ namespace _1CProgrammerAssistant
 
             return false;
         }
-        private void SetDescriptionToClipboard()
+
+        private void SetResultTextToClipboard()
         {
             try
             {
-                Clipboard.SetText(DescriptionsTheMethodsMain.Description);
+                Clipboard.SetText(ResultText);
             }
             catch (Exception ex)
             {

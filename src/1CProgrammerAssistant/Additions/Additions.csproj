@@ -2,11 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;net47</TargetFrameworks>
-    <AssemblyName>QueryParameters</AssemblyName>
+    <RootNamespace>_1CProgrammerAssistant.Additions</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Additions\Additions.csproj" />
-  </ItemGroup>
 
 </Project>

@@ -5,4 +5,8 @@
     <AssemblyName>DescriptionsTheMethods</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Additions\Additions.csproj" />
+  </ItemGroup>
+
 </Project>

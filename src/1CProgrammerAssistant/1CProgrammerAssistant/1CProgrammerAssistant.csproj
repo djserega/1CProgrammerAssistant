@@ -100,6 +100,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Additions\Additions.csproj">
+      <Project>{82c6a171-030e-4e05-9ee2-80d8744f9d35}</Project>
+      <Name>Additions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DescriptionsTheMethods\DescriptionsTheMethods.csproj">
       <Project>{89bac6ab-407c-41d1-83e9-1e2800c15c6f}</Project>
       <Name>DescriptionsTheMethods</Name>
