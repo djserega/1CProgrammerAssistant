@@ -6,25 +6,36 @@
         xmlns:local="clr-namespace:_1CProgrammerAssistant"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        Title="Помощник 1Сника" Height="450" Width="800">
+    <Grid Margin="5 0 5 5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
+        <Grid Grid.Column="0"
+              Margin="0 0 2 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
-                   Content="Источник"/>
+                   Content="Источник"
+                   Background="{DynamicResource Lime}"/>
             <TextBox Grid.Row="1"
-                     Text="{Binding SourceText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                     Text="{Binding SourceText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalContentAlignment="Top"
+                     BorderThickness="0.4"
+                     HorizontalScrollBarVisibility="Auto"/>
         </Grid>
 
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1"
+              Margin="2 0 0 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
@@ -33,7 +44,10 @@
                    Content="Результат"/>
             <TextBox Grid.Row="1"
                      IsReadOnly="True"
-                     Text="{Binding ResultText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                     Text="{Binding ResultText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalContentAlignment="Top"
+                     BorderThickness="0.4"
+                     HorizontalScrollBarVisibility="Auto"/>
         </Grid>
 
     </Grid>
