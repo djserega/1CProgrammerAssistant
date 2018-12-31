@@ -116,5 +116,10 @@ namespace _1CProgrammerAssistant
                 }
             }
         }
+
+        private void ButtonCopyResultToClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            SetResultTextToClipboard();
+        }
     }
 }
