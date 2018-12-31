@@ -16,6 +16,7 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
 
         private List<ObjectParameter> _parametersMethod = new List<ObjectParameter>();
 
+        public string MethodName { get; private set; }
         public string StringMethod { get => _stringMethod; set { _stringMethod = value; SetDescription(); } }
         public string Description { get; set; } = string.Empty;
         public string TextError { get; private set; } = string.Empty;
@@ -85,6 +86,8 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
                 parser = parser.RemoveSpace();
 
                 int positionOpeningBracket = parser.IndexOf("(");
+
+                MethodName = parser.Substring(0, positionOpeningBracket);
 
                 parser = parser.Substring(positionOpeningBracket + 1);
 

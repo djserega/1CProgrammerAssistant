@@ -11,8 +11,8 @@ namespace _1CProgrammerAssistant.QueryParameters
         private const string _partRegexPattern = "[Нн][Оо][Вв][Ыы][Йй] [Зз][Аа][Пп][Рр][Оо][Сс]";
 
         private string _queryText;
-        private string _nameValiableQueryObject = "Запрос";
 
+        public string NameVariableQueryObject { get; private set; }
         public string QueryText
         {
             get { return _queryText; }
@@ -42,7 +42,7 @@ namespace _1CProgrammerAssistant.QueryParameters
                 processingText = processingText.RemoveEndText("=");
                 processingText = processingText.TrimEnd();
 
-                _nameValiableQueryObject = processingText;
+                NameVariableQueryObject = processingText;
             }
         }
 
@@ -82,7 +82,7 @@ namespace _1CProgrammerAssistant.QueryParameters
             {
                 i++;
 
-                string textInResult = $"{_nameValiableQueryObject}.УстановитьПараметр(\"{parameterName}\", );";
+                string textInResult = $"{NameVariableQueryObject}.УстановитьПараметр(\"{parameterName}\", );";
 
                 if (i == ParametersName.Count)
                     stringBuilder.Append(textInResult);

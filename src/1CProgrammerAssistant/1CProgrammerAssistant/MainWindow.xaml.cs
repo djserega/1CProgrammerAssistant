@@ -1,7 +1,9 @@
 ﻿using _1CProgrammerAssistant.Additions;
+using Hardcodet.Wpf.TaskbarNotification;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -23,6 +25,7 @@ namespace _1CProgrammerAssistant
     /// </summary>
     public partial class MainWindow : Window
     {
+        private TaskbarIcon _taskbarIcon;
         private GlobalHotKeyManager _hotKeyManager = new GlobalHotKeyManager();
 
         public MainWindow()
@@ -35,6 +38,12 @@ namespace _1CProgrammerAssistant
                     if (ProcessTextWithClipboard())
                         SetResultTextToClipboard();
                 };
+
+            _taskbarIcon = new TaskbarIcon
+            {
+                IconSource = new BitmapImage(new Uri("pack://application:,,,/Помощник 1Сника;component/" + "1CProgrammerAssistant.ico")),
+                ToolTipText = "Помощник 1Сника"
+            };
         }
 
         public DescriptionsTheMethods.Main DescriptionsTheMethodsMain { get; set; } = new DescriptionsTheMethods.Main();
@@ -77,6 +86,7 @@ namespace _1CProgrammerAssistant
                     && !string.IsNullOrEmpty(DescriptionsTheMethodsMain.Description))
                 {
                     ResultText = DescriptionsTheMethodsMain.Description;
+                    ShowNotification($"Получено описание метода: {DescriptionsTheMethodsMain.MethodName}");
                     return true;
                 }
 
@@ -85,6 +95,7 @@ namespace _1CProgrammerAssistant
                     && !string.IsNullOrEmpty(QueryParametersMain.QueryParameters))
                 {
                     ResultText = QueryParametersMain.QueryParameters;
+                    ShowNotification($"Получены параметры запроса: {QueryParametersMain.NameVariableQueryObject.Trim()}");
                     return true;
                 }
 
@@ -120,6 +131,11 @@ namespace _1CProgrammerAssistant
         private void ButtonCopyResultToClipboard_Click(object sender, RoutedEventArgs e)
         {
             SetResultTextToClipboard();
+        }
+
+        private void ShowNotification(string message, BalloonIcon icon = BalloonIcon.None)
+        {
+            _taskbarIcon.ShowBalloonTip("Помощник 1Сника", message, icon);
         }
     }
 }
