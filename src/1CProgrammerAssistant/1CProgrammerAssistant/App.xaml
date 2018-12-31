@@ -16,11 +16,19 @@
             <Style TargetType="Border">
                 <Setter Property="Background">
                     <Setter.Value>
-                        <DynamicResource ResourceKey="PrimaryHueLightBrush"/>
+                        <DynamicResource ResourceKey="MaterialDesignPaper"/>
                     </Setter.Value>
                 </Setter>
             </Style>
 
+            <Style TargetType="Border" x:Key="BorderHeader">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <DynamicResource ResourceKey="MaterialDesignSelection"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
