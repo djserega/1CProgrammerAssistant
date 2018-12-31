@@ -82,7 +82,7 @@ namespace _1CProgrammerAssistant.QueryParameters
             {
                 i++;
 
-                string textInResult = $"{_nameValiableQueryObject}.УстановитьПараметр(\"{parameterName}\", )";
+                string textInResult = $"{_nameValiableQueryObject}.УстановитьПараметр(\"{parameterName}\", );";
 
                 if (i == ParametersName.Count)
                     stringBuilder.Append(textInResult);
