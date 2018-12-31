@@ -131,6 +131,7 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
 
         private static string RemoveNonUsedStartText(string parser, bool removeTypeMethod = true)
         {
+            parser = parser.TrimStart();
             parser = parser.RemoveStartText("&НаКлиентеНаСервереБезКонтекста");
             parser = parser.RemoveStartText("&НаСервереБезКонтекста");
             parser = parser.RemoveStartText("&НаСервере");
