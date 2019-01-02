@@ -137,5 +137,10 @@ namespace _1CProgrammerAssistant
         {
             _taskbarIcon.ShowBalloonTip("Помощник 1Сника", message, icon);
         }
+
+        private void ButtonProcessingTextInClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            ProcessTextWithClipboard();
+        }
     }
 }

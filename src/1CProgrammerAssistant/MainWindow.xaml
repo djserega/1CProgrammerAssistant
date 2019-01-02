@@ -35,10 +35,21 @@
             </Border>
             <Border Grid.Row="1"
                     CornerRadius="2 2 5 5">
-                <TextBox Text="{Binding SourceText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <Grid>
+                    <TextBox Text="{Binding SourceText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          VerticalContentAlignment="Top"
                          BorderThickness="0.4"
                          HorizontalScrollBarVisibility="Auto"/>
+                    <Button HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            ToolTip="Копировать в буфер обмена"
+                            BorderThickness="0"
+                            Background="{x:Null}"
+                            Foreground="{DynamicResource MaterialDesignToolTipBackground}"
+                            Click="ButtonProcessingTextInClipboard_Click">
+                        <md:PackIcon Kind="Cog"/>
+                    </Button>
+                </Grid>
             </Border>
         </Grid>
 
