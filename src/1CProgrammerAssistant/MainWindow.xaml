@@ -42,7 +42,7 @@
                          HorizontalScrollBarVisibility="Auto"/>
                     <Button HorizontalAlignment="Right"
                             VerticalAlignment="Top"
-                            ToolTip="Копировать в буфер обмена"
+                            ToolTip="Обработать текст из буфера обмена"
                             BorderThickness="0"
                             Background="{x:Null}"
                             Foreground="{DynamicResource MaterialDesignToolTipBackground}"

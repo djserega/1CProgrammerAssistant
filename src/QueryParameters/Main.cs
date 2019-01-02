@@ -8,9 +8,15 @@ namespace _1CProgrammerAssistant.QueryParameters
 {
     public class Main
     {
+        #region Private fields
+
         private const string _partRegexPattern = "[Нн][Оо][Вв][Ыы][Йй] [Зз][Аа][Пп][Рр][Оо][Сс]";
 
         private string _queryText;
+
+        #endregion
+
+        #region Public properties
 
         public string NameVariableQueryObject { get; private set; }
         public string QueryText
@@ -22,6 +28,10 @@ namespace _1CProgrammerAssistant.QueryParameters
 
         public string QueryParameters { get; private set; }
         public string TextError { get; private set; }
+
+        #endregion
+
+        #region Private methods
 
         private void SetQueryParameters()
         {
@@ -92,5 +102,7 @@ namespace _1CProgrammerAssistant.QueryParameters
 
             QueryParameters = stringBuilder.ToString();
         }
+
+        #endregion
     }
 }

@@ -25,8 +25,8 @@ namespace _1CProgrammerAssistant
     /// </summary>
     public partial class MainWindow : Window
     {
-        private TaskbarIcon _taskbarIcon;
-        private GlobalHotKeyManager _hotKeyManager = new GlobalHotKeyManager();
+        private readonly TaskbarIcon _taskbarIcon;
+        private readonly GlobalHotKeyManager _hotKeyManager = new GlobalHotKeyManager();
 
         public MainWindow()
         {
@@ -46,11 +46,15 @@ namespace _1CProgrammerAssistant
             };
         }
 
+        #region Public properties - Additions classes
+
         public DescriptionsTheMethods.Main DescriptionsTheMethodsMain { get; set; } = new DescriptionsTheMethods.Main();
         public QueryParameters.Main QueryParametersMain { get; set; } = new QueryParameters.Main();
         //    new MethodStore.Class1();
 
+        #endregion
 
+        #region DependencyProperty
 
         public string SourceText
         {
@@ -71,7 +75,9 @@ namespace _1CProgrammerAssistant
         public static readonly DependencyProperty ResultTextProperty =
             DependencyProperty.Register("ResultText", typeof(string), typeof(MainWindow), new PropertyMetadata(null));
 
+        #endregion
 
+        #region Clipoard
 
         private bool ProcessTextWithClipboard()
         {
@@ -128,19 +134,26 @@ namespace _1CProgrammerAssistant
             }
         }
 
+        #endregion
+
+        #region Button
+
         private void ButtonCopyResultToClipboard_Click(object sender, RoutedEventArgs e)
-        {
-            SetResultTextToClipboard();
-        }
+            => SetResultTextToClipboard();
+
+        private void ButtonProcessingTextInClipboard_Click(object sender, RoutedEventArgs e)
+            => ProcessTextWithClipboard();
+
+        #endregion
+
+        #region Notifications
 
         private void ShowNotification(string message, BalloonIcon icon = BalloonIcon.None)
         {
             _taskbarIcon.ShowBalloonTip("Помощник 1Сника", message, icon);
         }
 
-        private void ButtonProcessingTextInClipboard_Click(object sender, RoutedEventArgs e)
-        {
-            ProcessTextWithClipboard();
-        }
+        #endregion
+
     }
 }

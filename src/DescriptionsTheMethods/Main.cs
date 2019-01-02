@@ -11,10 +11,16 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
 {
     public class Main : INotifyPropertyChanged
     {
+        #region Private fields
+
         private string _stringMethod;
         private string _stringMethodWithoutDirectiveCompilation;
 
         private List<ObjectParameter> _parametersMethod = new List<ObjectParameter>();
+
+        #endregion
+
+        #region Public properties
 
         public string MethodName { get; private set; }
         public string StringMethod { get => _stringMethod; set { _stringMethod = value; SetDescription(); } }
@@ -22,11 +28,23 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
         public string TextError { get; private set; } = string.Empty;
         public bool IncludeStringMethod { get; set; } = true;
 
+        #endregion
+
+        #region Private properties
+
         private bool StringIsFunction { get => _stringMethodWithoutDirectiveCompilation.TrimStart().StartsWith("функция", true, null); }
         private bool StringIsProcedure { get => _stringMethodWithoutDirectiveCompilation.TrimStart().StartsWith("процедура", true, null); }
 
+        #endregion
+
+        #region Notify property changed
+
         public event PropertyChangedEventHandler PropertyChanged;
         public virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        #endregion
+
+        #region Private methods
 
         private void SetDescription()
         {
@@ -146,5 +164,7 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
 
             return parser;
         }
+
+        #endregion
     }
 }
