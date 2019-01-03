@@ -35,6 +35,9 @@ namespace _1CProgrammerAssistant.QueryParameters
 
         private void SetQueryParameters()
         {
+            if (string.IsNullOrEmpty(QueryText))
+                return;
+
             GetVariableName();
             ParseTextQuery();
             SetTextQueryParameters();
@@ -60,7 +63,11 @@ namespace _1CProgrammerAssistant.QueryParameters
         {
             ParametersName.Clear();
 
-            Regex regex = new Regex(@"""[^""]+"""); // "[^"]+"
+            Regex regex = new Regex(@"""+[^""]+"""); // "+[^"]+"
+
+            if (QueryText.StartsWith("Выбрать", true, null))
+                QueryText = $"\"{QueryText}\"";
+
             if (regex.IsMatch(QueryText))
             {
                 string textQuery = string.Empty;

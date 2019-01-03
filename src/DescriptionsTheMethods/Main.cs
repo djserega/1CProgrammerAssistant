@@ -51,6 +51,9 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
             TextError = string.Empty;
             Description = string.Empty;
 
+            if (string.IsNullOrEmpty(_stringMethod))
+                return;
+
             _stringMethodWithoutDirectiveCompilation = RemoveNonUsedStartText(_stringMethod, false);
 
             if (StringIsFunction || StringIsProcedure)

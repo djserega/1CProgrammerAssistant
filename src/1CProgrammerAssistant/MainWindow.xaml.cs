@@ -77,7 +77,7 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
-        #region Clipoard
+        #region Clipboard
 
         private bool ProcessTextWithClipboard()
         {
@@ -101,7 +101,12 @@ namespace _1CProgrammerAssistant
                     && !string.IsNullOrEmpty(QueryParametersMain.QueryParameters))
                 {
                     ResultText = QueryParametersMain.QueryParameters;
-                    ShowNotification($"Получены параметры запроса: {QueryParametersMain.NameVariableQueryObject.Trim()}");
+
+                    string message = "Получены параметры запроса";
+                    if (!string.IsNullOrEmpty(QueryParametersMain.NameVariableQueryObject))
+                        message += $": {QueryParametersMain.NameVariableQueryObject.Trim()}";
+
+                    ShowNotification(message);
                     return true;
                 }
 
