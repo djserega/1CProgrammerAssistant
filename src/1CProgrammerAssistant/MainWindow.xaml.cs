@@ -46,6 +46,24 @@ namespace _1CProgrammerAssistant
             };
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            InitializeTaskbarIcon();
+        }
+
+        private void InitializeTaskbarIcon()
+        {
+            MenuItem menuItemExit = new MenuItem()
+            {
+                Header = "Выход"
+            };
+            menuItemExit.Click += (object sender, RoutedEventArgs e) => { Application.Current.Shutdown(); };
+
+            _taskbarIcon.ContextMenu = new ContextMenu();
+            _taskbarIcon.ContextMenu.Items.Add(new Separator());
+            _taskbarIcon.ContextMenu.Items.Add(menuItemExit);
+        }
+
         #region Public properties - Additions classes
 
         public DescriptionsTheMethods.Main DescriptionsTheMethodsMain { get; set; } = new DescriptionsTheMethods.Main();
