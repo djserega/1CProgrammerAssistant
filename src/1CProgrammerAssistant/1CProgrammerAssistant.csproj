@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Permission.cs" />
     <Compile Include="ProcessTextInClipboardEvents.cs" />
     <Compile Include="UnmanagedCode\GlobalHotKeyManager.cs" />
     <Compile Include="UnmanagedCode\KeyDownArgs.cs" />

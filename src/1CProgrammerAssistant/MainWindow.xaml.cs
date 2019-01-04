@@ -1,10 +1,15 @@
 ﻿using _1CProgrammerAssistant.Additions;
 using Hardcodet.Wpf.TaskbarNotification;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -13,10 +18,12 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Image = System.Windows.Controls.Image;
 
 namespace _1CProgrammerAssistant
 {
@@ -53,15 +60,58 @@ namespace _1CProgrammerAssistant
 
         private void InitializeTaskbarIcon()
         {
+            #region Create HeaderTemplate_VisualTree
+
+            FrameworkElementFactory elementFactoryAutostartTextBlock = new FrameworkElementFactory(typeof(TextBlock));
+            elementFactoryAutostartTextBlock.SetValue(TextBlock.TextProperty, "Запускать при старте системы");
+            elementFactoryAutostartTextBlock.SetValue(MarginProperty, new Thickness(0, 0, 5, 0));
+
+            ImageSource Icon = Imaging.CreateBitmapSourceFromHBitmap(
+                  SystemIcons.Shield.ToBitmap().GetHbitmap(),
+                  IntPtr.Zero,
+                  Int32Rect.Empty,
+                  BitmapSizeOptions.FromEmptyOptions());
+
+            FrameworkElementFactory elementFactoryAutostartIcon = new FrameworkElementFactory(typeof(Image));
+            elementFactoryAutostartIcon.SetValue(Image.SourceProperty, Icon);
+            elementFactoryAutostartIcon.SetValue(WidthProperty, 14.0);
+            elementFactoryAutostartIcon.SetValue(HeightProperty, 14.0);
+
+            FrameworkElementFactory elementFactoryAutostart = new FrameworkElementFactory(typeof(StackPanel));
+            elementFactoryAutostart.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
+            elementFactoryAutostart.AppendChild(elementFactoryAutostartTextBlock);
+            elementFactoryAutostart.AppendChild(elementFactoryAutostartIcon);
+
+            #endregion
+
+            MenuItem menuItemAutostart = new MenuItem()
+            {
+                HeaderTemplate = new DataTemplate()
+                {
+                    DataType = typeof(MenuItem),
+                    VisualTree = elementFactoryAutostart
+                },
+                ToolTip = "Для изменения значения требуются права администратора",
+                IsChecked = Permission.GetStatusAutostart(),
+                IsCheckable = true
+            };
+            menuItemAutostart.Click += (object sender, RoutedEventArgs e) => { Permission.SetRemoveAutostart(menuItemAutostart.IsChecked); };
+
             MenuItem menuItemExit = new MenuItem()
             {
                 Header = "Выход"
             };
             menuItemExit.Click += (object sender, RoutedEventArgs e) => { Application.Current.Shutdown(); };
 
-            _taskbarIcon.ContextMenu = new ContextMenu();
-            _taskbarIcon.ContextMenu.Items.Add(new Separator());
-            _taskbarIcon.ContextMenu.Items.Add(menuItemExit);
+            _taskbarIcon.ContextMenu = new ContextMenu()
+            {
+                Items =
+                {
+                    menuItemAutostart,
+                    new Separator(),
+                    menuItemExit
+                }
+            };
         }
 
         #region Public properties - Additions classes
