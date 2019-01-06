@@ -34,6 +34,11 @@ namespace _1CProgrammerAssistant
     {
         private readonly TaskbarIcon _taskbarIcon;
         private readonly GlobalHotKeyManager _hotKeyManager = new GlobalHotKeyManager();
+        private readonly string[] _pagesAddition = new string[2] 
+        {
+            "AdditionsDescriptionQuery",
+            "AdditionsModifiedFiles"
+        };
 
         public MainWindow()
         {
@@ -55,6 +60,7 @@ namespace _1CProgrammerAssistant
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            SetColumn(0);
             InitializeTaskbarIcon();
         }
 
@@ -211,6 +217,16 @@ namespace _1CProgrammerAssistant
 
         #region Button
 
+        private void ButtonDescriptionQuery_Click(object sender, RoutedEventArgs e)
+        {
+            SetColumn(Grid.GetColumn((Button)sender));
+        }
+
+        private void ButtonModifiedFiles_Click(object sender, RoutedEventArgs e)
+        {
+            SetColumn(Grid.GetColumn((Button)sender));
+        }
+
         private void ButtonCopyResultToClipboard_Click(object sender, RoutedEventArgs e)
             => SetResultTextToClipboard();
 
@@ -227,6 +243,13 @@ namespace _1CProgrammerAssistant
         }
 
         #endregion
+        
+        private void SetColumn(int newColumn)
+        {
+            Grid.SetColumn(BorderSelectionButton, newColumn);
 
+            for (int i = 0; i < _pagesAddition.Count(); i++)
+                ((Grid)this.FindName(_pagesAddition[i])).Visibility = i == newColumn ? Visibility.Visible : Visibility.Collapsed;
+        }
     }
 }
