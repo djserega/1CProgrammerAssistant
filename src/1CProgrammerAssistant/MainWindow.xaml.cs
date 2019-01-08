@@ -243,7 +243,7 @@ namespace _1CProgrammerAssistant
         }
 
         #endregion
-        
+
         private void SetColumn(int newColumn)
         {
             Grid.SetColumn(BorderSelectionButton, newColumn);
@@ -251,5 +251,29 @@ namespace _1CProgrammerAssistant
             for (int i = 0; i < _pagesAddition.Count(); i++)
                 ((Grid)this.FindName(_pagesAddition[i])).Visibility = i == newColumn ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        #region Modified files
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ModifiedFilesChangeVisibilityListVesions();
+        }
+
+
+        private void ModifiedFilesChangeVisibilityListVesions()
+        {
+            Visibility newVisibility = ReverseValueVisibility(GridSplitterModifiedFiles.Visibility);
+
+            GridSplitterModifiedFiles.Visibility = newVisibility;
+            DataGridModifiedFilesVersion.Visibility = newVisibility;
+
+            ColumnDefinitionModifiedFiles1.Width = new GridLength(DataGridModifiedFiles.ActualWidth, GridUnitType.Auto);
+        }
+
+        #endregion
+
+        private Visibility ReverseValueVisibility(Visibility currentVisibility)
+            => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
+
     }
 }
