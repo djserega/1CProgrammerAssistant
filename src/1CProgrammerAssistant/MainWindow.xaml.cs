@@ -3,6 +3,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -56,6 +57,8 @@ namespace _1CProgrammerAssistant
                 IconSource = new BitmapImage(new Uri("pack://application:,,,/Помощник 1Сника;component/" + "1CProgrammerAssistant.ico")),
                 ToolTipText = "Помощник 1Сника"
             };
+
+            ListModifiedFiles = new ObservableCollection<ModifiedFiles.Models.File>();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -122,9 +125,10 @@ namespace _1CProgrammerAssistant
 
         #region Public properties - Additions classes
 
-        public DescriptionsTheMethods.Main DescriptionsTheMethodsMain { get; set; } = new DescriptionsTheMethods.Main();
-        public QueryParameters.Main QueryParametersMain { get; set; } = new QueryParameters.Main();
+        public DescriptionsTheMethods.Main DescriptionsTheMethodsMain { get; } = new DescriptionsTheMethods.Main();
+        public QueryParameters.Main QueryParametersMain { get; } = new QueryParameters.Main();
         //    new MethodStore.Class1();
+        public ModifiedFiles.Main ModifiedFilesMain { get; } = new ModifiedFiles.Main();
 
         #endregion
 
@@ -254,6 +258,18 @@ namespace _1CProgrammerAssistant
 
         #region Modified files
 
+        public ObservableCollection<ModifiedFiles.Models.File> ListModifiedFiles
+        {
+            get { return (ObservableCollection<ModifiedFiles.Models.File>)GetValue(ListModifiedFilesProperty); }
+            set { SetValue(ListModifiedFilesProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ModifiedFiles.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ListModifiedFilesProperty =
+            DependencyProperty.Register("ListModifiedFiles", typeof(ObservableCollection<ModifiedFiles.Models.File>), typeof(MainWindow), null);
+
+        public ModifiedFiles.Models.File SelectedModifiedFile { get; set; }
+
         private void ButtonModifiedFilesAddFile_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
@@ -266,7 +282,24 @@ namespace _1CProgrammerAssistant
                 ShowReadOnly = true,
                 Title = "Выбор файлов версионирования"
             };
-            openFileDialog.ShowDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                foreach (string fileName in openFileDialog.FileNames)
+                    ListModifiedFiles.Add(new ModifiedFiles.Models.File(fileName));
+
+                ModifiedFilesMain.Files = ListModifiedFiles.ToList();
+            };
+        }
+
+        private void ButtonModifiedFilesRemoveFile_Click(object sender, RoutedEventArgs e)
+        {
+            ModifiedFiles.Models.File fileInList = ListModifiedFiles.FirstOrDefault(f => f == SelectedModifiedFile);
+            if (fileInList != null)
+            {
+                ListModifiedFiles.Remove(fileInList);
+
+                ModifiedFilesMain.Files = ListModifiedFiles.ToList();
+            }
         }
 
         private void ButtonModifiedFilesChangeVisibility_Click(object sender, RoutedEventArgs e)
