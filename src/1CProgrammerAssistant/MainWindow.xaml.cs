@@ -34,7 +34,7 @@ namespace _1CProgrammerAssistant
     {
         private readonly TaskbarIcon _taskbarIcon;
         private readonly GlobalHotKeyManager _hotKeyManager = new GlobalHotKeyManager();
-        private readonly string[] _pagesAddition = new string[2] 
+        private readonly string[] _pagesAddition = new string[2]
         {
             "AdditionsDescriptionQuery",
             "AdditionsModifiedFiles"
@@ -254,7 +254,22 @@ namespace _1CProgrammerAssistant
 
         #region Modified files
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ButtonModifiedFilesAddFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Filter = "Внешние обработки|*.epf|Внешние отчёты|*.erf|Внешние обработки и отчёты|*.epf;*.erf",
+                Multiselect = true,
+                ReadOnlyChecked = true,
+                ShowReadOnly = true,
+                Title = "Выбор файлов версионирования"
+            };
+            openFileDialog.ShowDialog();
+        }
+
+        private void ButtonModifiedFilesChangeVisibility_Click(object sender, RoutedEventArgs e)
         {
             ModifiedFilesChangeVisibilityListVesions();
         }

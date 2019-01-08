@@ -17,7 +17,7 @@
     <Grid x:Name="GridParent"
           Margin="2">
         <Grid.RowDefinitions>
-            <RowDefinition Height="32"/>
+            <RowDefinition Height="33"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -150,14 +150,15 @@
 
                         <StackPanel Orientation="Horizontal"
                                     Margin="2 2">
-                            <Button Margin="2">
+                            <Button Margin="2"
+                                    Click="ButtonModifiedFilesAddFile_Click">
                                 <md:PackIcon Kind="CirclesAdd"/>
                             </Button>
                             <Button Margin="2">
                                 <md:PackIcon Kind="MinusCircleOutline"/>
                             </Button>
                             <Button Margin="2"
-                                    Click="Button_Click">
+                                    Click="ButtonModifiedFilesChangeVisibility_Click">
                                 <md:PackIcon Kind="FormatListBulleted"/>
                             </Button>
                         </StackPanel>
