@@ -130,6 +130,10 @@
       <Project>{3a111e44-981d-45df-9099-bf1175a10f75}</Project>
       <Name>MethodStore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ModifiedFiles\ModifiedFiles.csproj">
+      <Project>{b2094d77-99e9-4299-83c4-345d0a61d0e3}</Project>
+      <Name>ModifiedFiles</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QueryParameters\QueryParameters.csproj">
       <Project>{506cd915-b2cf-4f23-99ae-3c7f82039a62}</Project>
       <Name>QueryParameters</Name>

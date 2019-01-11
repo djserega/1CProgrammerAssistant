@@ -3,6 +3,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -34,7 +35,7 @@ namespace _1CProgrammerAssistant
     {
         private readonly TaskbarIcon _taskbarIcon;
         private readonly GlobalHotKeyManager _hotKeyManager = new GlobalHotKeyManager();
-        private readonly string[] _pagesAddition = new string[2] 
+        private readonly string[] _pagesAddition = new string[2]
         {
             "AdditionsDescriptionQuery",
             "AdditionsModifiedFiles"
@@ -56,6 +57,8 @@ namespace _1CProgrammerAssistant
                 IconSource = new BitmapImage(new Uri("pack://application:,,,/Помощник 1Сника;component/" + "1CProgrammerAssistant.ico")),
                 ToolTipText = "Помощник 1Сника"
             };
+
+            ListModifiedFiles = new ObservableCollection<ModifiedFiles.Models.File>();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -122,9 +125,10 @@ namespace _1CProgrammerAssistant
 
         #region Public properties - Additions classes
 
-        public DescriptionsTheMethods.Main DescriptionsTheMethodsMain { get; set; } = new DescriptionsTheMethods.Main();
-        public QueryParameters.Main QueryParametersMain { get; set; } = new QueryParameters.Main();
+        public DescriptionsTheMethods.Main DescriptionsTheMethodsMain { get; } = new DescriptionsTheMethods.Main();
+        public QueryParameters.Main QueryParametersMain { get; } = new QueryParameters.Main();
         //    new MethodStore.Class1();
+        public ModifiedFiles.Main ModifiedFilesMain { get; } = new ModifiedFiles.Main();
 
         #endregion
 
@@ -243,7 +247,7 @@ namespace _1CProgrammerAssistant
         }
 
         #endregion
-        
+
         private void SetColumn(int newColumn)
         {
             Grid.SetColumn(BorderSelectionButton, newColumn);
@@ -251,5 +255,73 @@ namespace _1CProgrammerAssistant
             for (int i = 0; i < _pagesAddition.Count(); i++)
                 ((Grid)this.FindName(_pagesAddition[i])).Visibility = i == newColumn ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        #region Modified files
+
+        public ObservableCollection<ModifiedFiles.Models.File> ListModifiedFiles
+        {
+            get { return (ObservableCollection<ModifiedFiles.Models.File>)GetValue(ListModifiedFilesProperty); }
+            set { SetValue(ListModifiedFilesProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ModifiedFiles.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ListModifiedFilesProperty =
+            DependencyProperty.Register("ListModifiedFiles", typeof(ObservableCollection<ModifiedFiles.Models.File>), typeof(MainWindow), null);
+
+        public ModifiedFiles.Models.File SelectedModifiedFile { get; set; }
+
+        private void ButtonModifiedFilesAddFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Filter = "Внешние обработки|*.epf|Внешние отчёты|*.erf|Внешние обработки и отчёты|*.epf;*.erf",
+                Multiselect = true,
+                ReadOnlyChecked = true,
+                ShowReadOnly = true,
+                Title = "Выбор файлов версионирования"
+            };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                foreach (string fileName in openFileDialog.FileNames)
+                    ListModifiedFiles.Add(new ModifiedFiles.Models.File(fileName));
+
+                ModifiedFilesMain.Files = ListModifiedFiles.ToList();
+            };
+        }
+
+        private void ButtonModifiedFilesRemoveFile_Click(object sender, RoutedEventArgs e)
+        {
+            ModifiedFiles.Models.File fileInList = ListModifiedFiles.FirstOrDefault(f => f == SelectedModifiedFile);
+            if (fileInList != null)
+            {
+                ListModifiedFiles.Remove(fileInList);
+
+                ModifiedFilesMain.Files = ListModifiedFiles.ToList();
+            }
+        }
+
+        private void ButtonModifiedFilesChangeVisibility_Click(object sender, RoutedEventArgs e)
+        {
+            ModifiedFilesChangeVisibilityListVesions();
+        }
+
+
+        private void ModifiedFilesChangeVisibilityListVesions()
+        {
+            Visibility newVisibility = ReverseValueVisibility(GridSplitterModifiedFiles.Visibility);
+
+            GridSplitterModifiedFiles.Visibility = newVisibility;
+            DataGridModifiedFilesVersion.Visibility = newVisibility;
+
+            ColumnDefinitionModifiedFiles1.Width = new GridLength(DataGridModifiedFiles.ActualWidth, GridUnitType.Auto);
+        }
+
+        #endregion
+
+        private Visibility ReverseValueVisibility(Visibility currentVisibility)
+            => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
+
     }
 }
