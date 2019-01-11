@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace _1CProgrammerAssistant
 {
-    internal partial class GlobalHotKeyManager : IDisposable
+    internal sealed class GlobalHotKeyManager : IDisposable
     {
         private LowLevelKeyboardListener _listener;
 

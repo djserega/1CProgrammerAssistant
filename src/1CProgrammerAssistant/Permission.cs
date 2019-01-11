@@ -15,7 +15,7 @@ namespace _1CProgrammerAssistant
 {
     internal static class Permission
     {
-        private static string _fullPathApplication;
+        private static readonly string _fullPathApplication;
         private static readonly string _nameApplication;
 
         static Permission()
@@ -109,7 +109,7 @@ namespace _1CProgrammerAssistant
                 Application.Current.Shutdown();
             }
             catch (Win32Exception) { }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Ошибка повышения прав.");
             }
