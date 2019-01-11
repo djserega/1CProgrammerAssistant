@@ -14,6 +14,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,6 +22,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -312,10 +314,79 @@ namespace _1CProgrammerAssistant
         {
             Visibility newVisibility = ReverseValueVisibility(GridSplitterModifiedFiles.Visibility);
 
-            GridSplitterModifiedFiles.Visibility = newVisibility;
-            DataGridModifiedFilesVersion.Visibility = newVisibility;
+            if (newVisibility == Visibility.Visible)
+                ModifiedFilesChangeVisibilityListVesionsAnimationOpen(newVisibility);
+            else
+                ModifiedFilesChangeVisibilityListVesionsAnimationClose(newVisibility);
+        }
 
-            ColumnDefinitionModifiedFiles1.Width = new GridLength(DataGridModifiedFiles.ActualWidth, GridUnitType.Auto);
+        private void ModifiedFilesChangeVisibilityListVesionsAnimationOpen(Visibility newVisibility)
+        {
+            Storyboard storyboard = new Storyboard();
+            DoubleAnimation animation = new DoubleAnimation
+            {
+                EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut },
+                Duration = new Duration(TimeSpan.FromSeconds(2)),
+                From = 0,
+                To = 350
+            };
+            animation.Completed += (object sender, EventArgs e) =>
+            {
+            };
+            storyboard.Children.Add(animation);
+            Storyboard.SetTarget(animation, ColumnDefinitionModifiedFilesVersion);
+            Storyboard.SetTargetProperty(animation, new PropertyPath("(ColumnDefinition.MaxWidth)"));
+
+            ModifiedFilesChangeVisibilityListVesionsChangeVisibility(newVisibility);
+
+
+            DoubleAnimation splitterAmimation = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                Duration = TimeSpan.FromMilliseconds(500)
+            };
+            GridSplitterModifiedFiles.BeginAnimation(OpacityProperty, splitterAmimation);
+
+            storyboard.Begin();
+        }
+
+        private void ModifiedFilesChangeVisibilityListVesionsAnimationClose(Visibility newVisibility)
+        {
+            Storyboard storyboard = new Storyboard();
+            DoubleAnimation animation = new DoubleAnimation
+            {
+                EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut },
+                Duration = new Duration(TimeSpan.FromSeconds(2)),
+                From = 350,
+                To = 0
+            };
+            animation.Completed += (object sender, EventArgs e) =>
+            {
+                DoubleAnimation splitterAmimation = new DoubleAnimation
+                {
+                    From = 1,
+                    To = 0,
+                    Duration = TimeSpan.FromMilliseconds(500)
+                };
+                splitterAmimation.Completed += (object senderSplitter, EventArgs eSplitter) =>
+                {
+                    ModifiedFilesChangeVisibilityListVesionsChangeVisibility(newVisibility);
+                };
+                GridSplitterModifiedFiles.BeginAnimation(OpacityProperty, splitterAmimation);
+            };
+            storyboard.Children.Add(animation);
+            Storyboard.SetTarget(animation, ColumnDefinitionModifiedFilesVersion);
+            Storyboard.SetTargetProperty(animation, new PropertyPath("(ColumnDefinition.MaxWidth)"));
+
+            storyboard.Begin();
+        }
+
+        private void ModifiedFilesChangeVisibilityListVesionsChangeVisibility(Visibility newVisibility)
+        {
+            GridSplitterModifiedFiles.Visibility = newVisibility;
+
+            ColumnDefinitionModifiedFilesFile.Width = new GridLength(DataGridModifiedFiles.ActualWidth, GridUnitType.Auto);
         }
 
         #endregion

@@ -167,10 +167,12 @@
                         <Grid Grid.Row="1"
                               Margin="1.5 1 1.5 0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition x:Name="ColumnDefinitionModifiedFiles1"
+                                <ColumnDefinition x:Name="ColumnDefinitionModifiedFilesFile"
                                                   Width="auto"/>
                                 <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition x:Name="ColumnDefinitionModifiedFilesVersion"
+                                                  Width="auto"
+                                                  MaxWidth="0"/>
                             </Grid.ColumnDefinitions>
                             
                             <DataGrid x:Name="DataGridModifiedFiles"
@@ -192,12 +194,12 @@
                                           Width="5"
                                           VerticalAlignment="Stretch"
                                           HorizontalAlignment="Center"
+                                          Opacity="0"
                                           Visibility="Collapsed"/>
 
                             <DataGrid x:Name="DataGridModifiedFilesVersion"
                                       Grid.Column="2"
-                                      Background="{x:Null}"
-                                      Visibility="Collapsed">
+                                      Background="{x:Null}">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Версия"/>
                                     <DataGridTextColumn Header="Комментарий"/>
