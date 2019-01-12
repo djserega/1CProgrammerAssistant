@@ -37,11 +37,12 @@ namespace _1CProgrammerAssistant
     {
         private readonly TaskbarIcon _taskbarIcon;
         private readonly GlobalHotKeyManager _hotKeyManager = new GlobalHotKeyManager();
-        private readonly string[] _pagesAddition = new string[2]
+        private readonly string[] _namesAddition = new string[2]
         {
-            "AdditionsDescriptionQuery",
-            "AdditionsModifiedFiles"
+            "DescriptionQuery",
+            "ModifiedFiles"
         };
+        private int? _previousPageID = null;
 
         public MainWindow()
         {
@@ -65,7 +66,8 @@ namespace _1CProgrammerAssistant
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            SetColumn(0);
+            ChangePagesAdditions(0);
+
             InitializeTaskbarIcon();
         }
 
@@ -225,12 +227,12 @@ namespace _1CProgrammerAssistant
 
         private void ButtonDescriptionQuery_Click(object sender, RoutedEventArgs e)
         {
-            SetColumn(Grid.GetColumn((Button)sender));
+            ChangePagesAdditions(Grid.GetColumn((Button)sender));
         }
 
         private void ButtonModifiedFiles_Click(object sender, RoutedEventArgs e)
         {
-            SetColumn(Grid.GetColumn((Button)sender));
+            ChangePagesAdditions(Grid.GetColumn((Button)sender));
         }
 
         private void ButtonCopyResultToClipboard_Click(object sender, RoutedEventArgs e)
@@ -250,13 +252,105 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
-        private void SetColumn(int newColumn)
+        private void ChangePagesAdditions(int newColumn)
         {
-            Grid.SetColumn(BorderSelectionButton, newColumn);
+            if (_previousPageID == null)
+            {
+                for (int i = 0; i < _namesAddition.Count(); i++)
+                {
+                    Border findedBorder = GetFindedBorderByPageID(i);
+                    DoubleAnimation animation = new DoubleAnimation(0d, new Duration(TimeSpan.FromMilliseconds(0)))
+                    {
+                        EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut },
+                    };
+                    findedBorder.BeginAnimation(WidthProperty, animation);
+                    findedBorder.Visibility = Visibility.Collapsed;
+                }
+            }
 
-            for (int i = 0; i < _pagesAddition.Count(); i++)
-                ((Grid)this.FindName(_pagesAddition[i])).Visibility = i == newColumn ? Visibility.Visible : Visibility.Collapsed;
+            Button buttonNewPage = null;
+            Button buttonPreviousPage = null;
+
+            Border borderVisible = null;
+            Border borderCollapsed = null;
+
+            Grid gridVisible = null;
+            Grid gridCollapsed = null;
+
+            for (int i = 0; i < _namesAddition.Count(); i++)
+            {
+                if (i == newColumn)
+                {
+                    buttonNewPage = GetFindedButtonByPageID(i);
+                    borderVisible = GetFindedBorderByPageID(i);
+                    gridVisible = GetFindedGridByPageID(i);
+                }
+                else if (i == _previousPageID)
+                {
+                    buttonPreviousPage = GetFindedButtonByPageID(i);
+                    borderCollapsed = (Border)FindName(GetNameAdditionsBorder(i));
+                    gridCollapsed = GetFindedGridByPageID(i);
+                }
+            }
+
+            ChangePagesAdditionsInitializeAnimation(buttonNewPage, buttonPreviousPage, borderVisible, borderCollapsed, gridVisible, gridCollapsed);
+
+            _previousPageID = newColumn;
         }
+
+        private void ChangePagesAdditionsInitializeAnimation(
+            Button buttonNewPage,
+            Button buttonPreviousPage,
+            Border borderVisible,
+            Border borderCollapsed,
+            Grid gridVisible,
+            Grid gridCollapsed)
+        {
+            DoubleAnimation animationVisible = null;
+            DoubleAnimation animationCollapsed = null;
+
+            animationVisible = new DoubleAnimation(buttonNewPage.ActualWidth, TimeSpan.FromMilliseconds(500));
+            animationCollapsed = new DoubleAnimation(0, TimeSpan.FromMilliseconds(300));
+
+            ChangePagesAdditionsBeginAnimation(borderVisible, animationVisible, borderCollapsed, animationCollapsed);
+
+            TimeSpan timeAnimation = TimeSpan.FromMilliseconds(400);
+            animationVisible = new DoubleAnimation(GridParent.ActualWidth, timeAnimation);
+            animationCollapsed = new DoubleAnimation(0, timeAnimation);
+
+            ChangePagesAdditionsBeginAnimation(gridVisible, animationVisible, gridCollapsed, animationCollapsed);
+        }
+
+        private void ChangePagesAdditionsBeginAnimation(
+            FrameworkElement borderVisible,
+            DoubleAnimation animationVisible,
+            FrameworkElement borderCollapsed,
+            DoubleAnimation animationCollapsed)
+        {
+            if (borderCollapsed != null)
+            {
+                animationCollapsed.Completed += (object sender, EventArgs e) => { borderCollapsed.Visibility = Visibility.Visible; };
+                borderCollapsed.BeginAnimation(WidthProperty, animationCollapsed);
+            }
+
+            if (borderVisible != null)
+            {
+                borderVisible.Visibility = Visibility.Visible;
+                borderVisible.BeginAnimation(WidthProperty, animationVisible);
+            }
+        }
+
+        private Button GetFindedButtonByPageID(int i) => (Button)FindName(GetNameAdditionsButton(i));
+
+        private Border GetFindedBorderByPageID(int i) => (Border)FindName(GetNameAdditionsBorder(i));
+
+        private Grid GetFindedGridByPageID(int i) => (Grid)FindName(GetNameAdditionsPage(i));
+
+        private string GetNameAdditionsButton(int i) => "Button" + _namesAddition[i];
+
+        private string GetNameAdditionsBorder(int i) => "Border" + _namesAddition[i];
+
+        private string GetNameAdditionsPage(int i) => "Additions" + _namesAddition[i];
 
         #region Modified files
 

@@ -36,19 +36,31 @@
                 <RowDefinition Height="2"/>
             </Grid.RowDefinitions>
 
-            <Button Grid.Column="0"
+            <Button x:Name="ButtonDescriptionQuery"
+                    Grid.Column="0"
                     Grid.Row="0"
+                    Width="300"
                     Background="{DynamicResource MaterialDesignFlatButtonRipple}"
                     Content="Параметры запроса, описание метода"
                     Click="ButtonDescriptionQuery_Click"/>
-            <Button Grid.Column="1"
+            <Button x:Name="ButtonModifiedFiles"
+                    Grid.Column="1"
                     Grid.Row="0"
+                    Width="150"
                     Background="{DynamicResource MaterialDesignFlatButtonRipple}"
                     Content="Версии файлов"
                     Click="ButtonModifiedFiles_Click"/>
 
-            <Border x:Name="BorderSelectionButton"
+            <Border x:Name="BorderDescriptionQuery"
                     Grid.Row="1"
+                    Grid.Column="0"
+                    Width="300"
+                    Background="Red"/>
+
+            <Border x:Name="BorderModifiedFiles"
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Width="150"
                     Background="Red"/>
 
         </Grid>
@@ -141,7 +153,11 @@
             <Grid x:Name="AdditionsModifiedFiles"
                   Visibility="Visible"
                   Width="{Binding ElementName=GridParent, Path=ActualWidth}">
-                <Border CornerRadius="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="31*"/>
+                    <ColumnDefinition Width="117*"/>
+                </Grid.ColumnDefinitions>
+                <Border CornerRadius="5" Grid.ColumnSpan="2">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40"/>
@@ -174,7 +190,7 @@
                                                   Width="auto"
                                                   MaxWidth="0"/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <DataGrid x:Name="DataGridModifiedFiles"
                                       Grid.Column="0"
                                       Background="{x:Null}"
@@ -205,7 +221,7 @@
                                     <DataGridTextColumn Header="Комментарий"/>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            
+
                         </Grid>
 
                     </Grid>
