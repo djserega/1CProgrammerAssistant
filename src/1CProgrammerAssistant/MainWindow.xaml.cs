@@ -252,6 +252,8 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
+        #region Changes pages
+
         private void ChangePagesAdditions(int newColumn)
         {
             if (_previousPageID == null)
@@ -351,6 +353,8 @@ namespace _1CProgrammerAssistant
         private string GetNameAdditionsBorder(int i) => "Border" + _namesAddition[i];
 
         private string GetNameAdditionsPage(int i) => "Additions" + _namesAddition[i];
+
+        #endregion
 
         #region Modified files
 
