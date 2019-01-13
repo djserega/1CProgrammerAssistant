@@ -67,6 +67,8 @@ namespace ModifiedFiles
 
                 i++;
             }
+
+            watcher.RemoveUnusedFiles(_files);
         }
 
         public void OpenDirectoryVersion()
