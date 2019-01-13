@@ -71,6 +71,12 @@ namespace _1CProgrammerAssistant
             InitializeTaskbarIcon();
         }
 
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (_previousPageID != null)
+                ChangePagesAdditions((int)_previousPageID);
+        }
+
         private void InitializeTaskbarIcon()
         {
             #region Create HeaderTemplate_VisualTree
