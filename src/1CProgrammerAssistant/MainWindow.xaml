@@ -167,18 +167,22 @@
                         <StackPanel Orientation="Horizontal"
                                     Margin="2 2">
                             <Button Margin="2"
+                                    ToolTip="Новый файл версионирования"
                                     Click="ButtonModifiedFilesAddFile_Click">
                                 <md:PackIcon Kind="CirclesAdd"/>
                             </Button>
                             <Button Margin="2"
+                                    ToolTip="Отлючения файла от версионирования"
                                     Click="ButtonModifiedFilesRemoveFile_Click">
                                 <md:PackIcon Kind="MinusCircleOutline"/>
                             </Button>
                             <Button Margin="2"
+                                    ToolTip="Список версий файла активной строки"
                                     Click="ButtonModifiedFilesChangeVisibility_Click">
                                 <md:PackIcon Kind="FormatListBulleted"/>
                             </Button>
                             <Button Margin="2"
+                                    ToolTip="Открытие каталога версий файлов"
                                     Click="ButtonOpenFolderVersion_Click">
                                 <md:PackIcon Kind="FolderOutline"/>
                             </Button>
