@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading;
 
 namespace ModifiedFiles
 {
@@ -29,7 +30,24 @@ namespace ModifiedFiles
 
                 FileInfo fileInfoVersion = new FileInfo(pathVersion);
                 if (!fileInfoVersion.Exists)
-                    fileInfoNewVersion.CopyTo(pathVersion);
+                {
+                    bool copied = false;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        try
+                        {
+                            fileInfoNewVersion.CopyTo(pathVersion);
+                            copied = true;
+                        }
+                        catch (Exception)
+                        {
+                            Thread.Sleep(1000);
+                        }
+
+                        if (copied)
+                            break;
+                    }
+                }
             };
         }
 
