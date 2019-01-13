@@ -451,7 +451,7 @@ namespace _1CProgrammerAssistant
             DoubleAnimation animation = new DoubleAnimation
             {
                 EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut },
-                Duration = new Duration(TimeSpan.FromSeconds(2)),
+                Duration = new Duration(TimeSpan.FromMilliseconds(800)),
                 From = 0,
                 To = 350
             };
@@ -482,7 +482,7 @@ namespace _1CProgrammerAssistant
             DoubleAnimation animation = new DoubleAnimation
             {
                 EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut },
-                Duration = new Duration(TimeSpan.FromSeconds(2)),
+                Duration = new Duration(TimeSpan.FromMilliseconds(500)),
                 From = 350,
                 To = 0
             };
@@ -492,7 +492,7 @@ namespace _1CProgrammerAssistant
                 {
                     From = 1,
                     To = 0,
-                    Duration = TimeSpan.FromMilliseconds(500)
+                    Duration = TimeSpan.FromMilliseconds(300)
                 };
                 splitterAmimation.Completed += (object senderSplitter, EventArgs eSplitter) =>
                 {
