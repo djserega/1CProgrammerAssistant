@@ -77,8 +77,28 @@ namespace _1CProgrammerAssistant
                 ChangePagesAdditions((int)_previousPageID);
         }
 
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (WindowState == WindowState.Minimized)
+                Hide();
+            else
+                Show();
+        }
+
         private void InitializeTaskbarIcon()
         {
+            #region menuItemShowMainWindow
+
+            MenuItem menuItemShowMainWindow = new MenuItem()
+            {
+                Header = "Развернуть окно"
+            };
+            menuItemShowMainWindow.Click += (object sender, RoutedEventArgs e) => { Show(); WindowState = WindowState.Normal; };
+
+            #endregion
+
+            #region menuItemAutostart
+
             #region Create HeaderTemplate_VisualTree
 
             FrameworkElementFactory elementFactoryAutostartTextBlock = new FrameworkElementFactory(typeof(TextBlock));
@@ -116,16 +136,24 @@ namespace _1CProgrammerAssistant
             };
             menuItemAutostart.Click += (object sender, RoutedEventArgs e) => { Permission.SetRemoveAutostart(menuItemAutostart.IsChecked); };
 
+            #endregion
+
+            #region menuItemExit
+
             MenuItem menuItemExit = new MenuItem()
             {
                 Header = "Выход"
             };
             menuItemExit.Click += (object sender, RoutedEventArgs e) => { Application.Current.Shutdown(); };
 
+            #endregion
+
             _taskbarIcon.ContextMenu = new ContextMenu()
             {
                 Items =
                 {
+                    menuItemShowMainWindow,
+                    new Separator(),
                     menuItemAutostart,
                     new Separator(),
                     menuItemExit
@@ -362,7 +390,7 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
-        #region Modified files
+        #region Addition Modified files
 
         private ModifiedFiles.Models.File _selectedModifiedFile;
 
@@ -403,6 +431,8 @@ namespace _1CProgrammerAssistant
             }
         }
 
+        #region Buttons
+
         private void ButtonModifiedFilesAddFile_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
@@ -440,6 +470,14 @@ namespace _1CProgrammerAssistant
             ModifiedFilesChangeVisibilityListVesions();
         }
 
+        private void ButtonOpenFolderVersion_Click(object sender, RoutedEventArgs e)
+        {
+            ModifiedFilesMain.OpenDirectoryVersion();
+        }
+
+        #endregion
+
+        #region Visibility table list version
 
         private void ModifiedFilesChangeVisibilityListVesions()
         {
@@ -522,12 +560,10 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
+        #endregion
+
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
 
-        private void ButtonOpenFolderVersion_Click(object sender, RoutedEventArgs e)
-        {
-            ModifiedFilesMain.OpenDirectoryVersion();
-        }
     }
 }
