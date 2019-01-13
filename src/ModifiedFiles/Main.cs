@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 
@@ -50,5 +51,11 @@ namespace ModifiedFiles
             }
         }
 
+        public void OpenDirectoryVersion()
+        {
+            _directoryVersion.Refresh();
+            if (_directoryVersion.Exists)
+                Process.Start("explorer.exe", _directoryVersion.FullName);
+        }
     }
 }

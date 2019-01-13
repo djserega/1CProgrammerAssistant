@@ -492,5 +492,9 @@ namespace _1CProgrammerAssistant
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
 
+        private void ButtonOpenFolderVersion_Click(object sender, RoutedEventArgs e)
+        {
+            ModifiedFilesMain.OpenDirectoryVersion();
+        }
     }
 }

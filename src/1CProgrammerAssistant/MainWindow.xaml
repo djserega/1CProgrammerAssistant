@@ -178,6 +178,10 @@
                                     Click="ButtonModifiedFilesChangeVisibility_Click">
                                 <md:PackIcon Kind="FormatListBulleted"/>
                             </Button>
+                            <Button Margin="2"
+                                    Click="ButtonOpenFolderVersion_Click">
+                                <md:PackIcon Kind="FolderOutline"/>
+                            </Button>
                         </StackPanel>
 
                         <Grid Grid.Row="1"
