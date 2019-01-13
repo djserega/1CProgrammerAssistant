@@ -358,6 +358,8 @@ namespace _1CProgrammerAssistant
 
         #region Modified files
 
+        private ModifiedFiles.Models.File _selectedModifiedFile;
+
         public ObservableCollection<ModifiedFiles.Models.File> ListModifiedFiles
         {
             get { return (ObservableCollection<ModifiedFiles.Models.File>)GetValue(ListModifiedFilesProperty); }
@@ -368,7 +370,32 @@ namespace _1CProgrammerAssistant
         public static readonly DependencyProperty ListModifiedFilesProperty =
             DependencyProperty.Register("ListModifiedFiles", typeof(ObservableCollection<ModifiedFiles.Models.File>), typeof(MainWindow), null);
 
-        public ModifiedFiles.Models.File SelectedModifiedFile { get; set; }
+
+        public ObservableCollection<ModifiedFiles.Models.Version> ListModifiedFilesVersion
+        {
+            get { return (ObservableCollection<ModifiedFiles.Models.Version>)GetValue(ListModifiedFilesVersionProperty); }
+            set { SetValue(ListModifiedFilesVersionProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ListModifiedFilesVersion.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ListModifiedFilesVersionProperty =
+            DependencyProperty.Register("ListModifiedFilesVersion", typeof(ObservableCollection<ModifiedFiles.Models.Version>), typeof(MainWindow), null);
+
+
+        public ModifiedFiles.Models.File SelectedModifiedFile
+        {
+            get => _selectedModifiedFile;
+            set
+            {
+                _selectedModifiedFile = value;
+
+                ListModifiedFilesVersion?.Clear();
+
+                List<ModifiedFiles.Models.Version> listVersion = ModifiedFilesMain.GetListVersion(value);
+                if (listVersion != null)
+                    ListModifiedFilesVersion = new ObservableCollection<ModifiedFiles.Models.Version>(listVersion);
+            }
+        }
 
         private void ButtonModifiedFilesAddFile_Click(object sender, RoutedEventArgs e)
         {

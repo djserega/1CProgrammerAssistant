@@ -19,15 +19,13 @@ namespace ModifiedFiles
         {
             if (!_directoryVersion.Exists)
                 _directoryVersion.Create();
-
-
-
+               
             Events.CreateNewVersionEvent.CreateNewVersionEvents += (FileInfo fileInfoNewVersion) =>
             {
                 _version.CreateNewVersion(fileInfoNewVersion, _files[_idFileByPath[fileInfoNewVersion.FullName]].DirectoryVersion);
             };
         }
-
+       
         public List<Models.File> Files { get => _files; set { _files = value; InitializeListFiles(); } }
 
         private void InitializeListFiles()
@@ -42,6 +40,8 @@ namespace ModifiedFiles
 
                 _watcher.Subscribe(file);
 
+                _version.InitializeControlHashByDirectory(file.DirectoryVersion);
+
                 i++;
             }
 
@@ -54,5 +54,7 @@ namespace ModifiedFiles
             if (_directoryVersion.Exists)
                 Process.Start("explorer.exe", _directoryVersion.FullName);
         }
+
+        public List<Models.Version> GetListVersion(Models.File file) => _version[file?.DirectoryVersion];
     }
 }

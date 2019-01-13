@@ -203,6 +203,7 @@
                                       Grid.Column="0"
                                       Background="{x:Null}"
                                       AutoGenerateColumns="False"
+                                      IsReadOnly="True"
                                       ItemsSource="{Binding ListModifiedFiles}"
                                       SelectedItem="{Binding SelectedModifiedFile}">
                                 <DataGrid.Columns>
@@ -223,9 +224,12 @@
 
                             <DataGrid x:Name="DataGridModifiedFilesVersion"
                                       Grid.Column="2"
-                                      Background="{x:Null}">
+                                      Background="{x:Null}"
+                                      AutoGenerateColumns="False"
+                                      IsReadOnly="True"
+                                      ItemsSource="{Binding ListModifiedFilesVersion}">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Версия"/>
+                                    <DataGridTextColumn Header="Версия"         Binding="{Binding DateVersion, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"/>
                                     <DataGridTextColumn Header="Комментарий"/>
                                 </DataGrid.Columns>
                             </DataGrid>

@@ -13,8 +13,35 @@ namespace ModifiedFiles
         /// Dictionary version: hash -> name file version
         /// </summary>
         private readonly Dictionary<string, Dictionary<string, string>> _controlHash = new Dictionary<string, Dictionary<string, string>>();
+        
+        internal List<Models.Version> this[string dirVersion]
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(dirVersion))
+                    return null;
+
+                if (_controlHash.ContainsKey(dirVersion))
+                {
+                    List<Models.Version> filesVersion = new List<Models.Version>();
+
+                    foreach (KeyValuePair<string, string> keyHashPath in _controlHash[dirVersion])
+                        filesVersion.Add(new Models.Version(keyHashPath.Value));
+
+                    return filesVersion;
+                }
+                else
+                    return null;
+            }
+        }
 
         internal bool CheckHash { get; set; } = true;
+
+        internal void InitializeControlHashByDirectory(string dirVersion)
+        {
+            if (!_controlHash.ContainsKey(dirVersion))
+                _controlHash.Add(dirVersion, InitializeHashFiles(dirVersion));
+        }
 
         internal void CreateNewVersion(FileInfo file, string dirVersion)
         {
@@ -52,8 +79,7 @@ namespace ModifiedFiles
 
         private bool FileExistsByHash(string dirVersion, string path)
         {
-            if (!_controlHash.ContainsKey(dirVersion))
-                _controlHash.Add(dirVersion, new Dictionary<string, string>());
+            InitializeControlHashByDirectory(dirVersion);
 
             string currentHash = GetMD5(path);
 
@@ -66,6 +92,20 @@ namespace ModifiedFiles
                     path);
                 return false;
             }
+        }
+
+        private Dictionary<string, string> InitializeHashFiles(string dirVersion)
+        {
+            Dictionary<string, string> hashFiles = new Dictionary<string, string>();
+
+            foreach (FileInfo file in new DirectoryInfo(dirVersion).GetFiles())
+            {
+                string currentHash = GetMD5(file.FullName);
+                if (!hashFiles.ContainsKey(currentHash))
+                    hashFiles.Add(currentHash, file.FullName);
+            }
+            
+            return hashFiles;
         }
 
         private string GetMD5(string path)
