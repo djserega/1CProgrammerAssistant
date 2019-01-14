@@ -9,6 +9,6 @@ namespace ModifiedFiles.Events
     internal class CreateNewVersionEvent : EventArgs
     {
         internal static event CreateNewVersionEvents CreateNewVersionEvents;
-        internal static void NewVersion(FileInfo fileInfoNewVersion) => CreateNewVersionEvents?.Invoke(fileInfoNewVersion);
+        internal static void FileModified(FileInfo fileInfoNewVersion) => CreateNewVersionEvents?.Invoke(fileInfoNewVersion);
     }
 }

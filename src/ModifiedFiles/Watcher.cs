@@ -33,7 +33,7 @@ namespace ModifiedFiles
                 };
                 fileWatcher.Changed += (object sender, FileSystemEventArgs e) =>
                 {
-                    Events.CreateNewVersionEvent.NewVersion(new FileInfo(e.FullPath));
+                    Events.CreateNewVersionEvent.FileModified(new FileInfo(e.FullPath));
                 };
                 fileWatcher.EnableRaisingEvents = true;
 
