@@ -174,7 +174,7 @@
                                 <md:PackIcon Kind="CirclesAdd"/>
                             </Button>
                             <Button Margin="2"
-                                    ToolTip="Отлючения файла от версионирования"
+                                    ToolTip="Отключение файла от версионирования"
                                     Click="ButtonModifiedFilesRemoveFile_Click">
                                 <md:PackIcon Kind="MinusCircleOutline"/>
                             </Button>
