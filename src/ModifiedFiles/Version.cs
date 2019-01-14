@@ -112,25 +112,28 @@ namespace ModifiedFiles
         {
             string hash = string.Empty;
 
-            try
+            if (new FileInfo(path).Exists)
             {
-                using (MD5 md5 = MD5.Create())
+                try
                 {
-                    using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    using (MD5 md5 = MD5.Create())
                     {
-                        byte[] hashByte = md5.ComputeHash(stream);
-                        hash = BitConverter.ToString(hashByte).Replace("-", "").ToLowerInvariant();
-                        stream.Close();
-                    }
+                        using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+                        {
+                            byte[] hashByte = md5.ComputeHash(stream);
+                            hash = BitConverter.ToString(hashByte).Replace("-", "").ToLowerInvariant();
+                            stream.Close();
+                        }
 
-                    md5.Clear();
+                        md5.Clear();
+                    }
                 }
-            }
-            catch (FileNotFoundException)
-            {
-            }
-            catch (IOException)
-            {
+                catch (FileNotFoundException)
+                {
+                }
+                catch (IOException)
+                {
+                }
             }
 
             return hash;
