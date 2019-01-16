@@ -69,6 +69,13 @@ namespace _1CProgrammerAssistant
             ChangePagesAdditions(0);
 
             InitializeTaskbarIcon();
+
+            LoadListModifiedFiles();
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            SaveListModifiedFiles();
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -429,6 +436,29 @@ namespace _1CProgrammerAssistant
                 if (listVersion != null)
                     ListModifiedFilesVersion = new ObservableCollection<ModifiedFiles.Models.Version>(listVersion);
             }
+        }
+
+        private void LoadListModifiedFiles()
+        {
+            if (Properties.Settings.Default.ListModifiedFiles == null)
+                Properties.Settings.Default.ListModifiedFiles = new System.Collections.Specialized.StringCollection();
+
+            ModifiedFilesMain.Files.Clear();
+
+            foreach (string path in Properties.Settings.Default.ListModifiedFiles)
+                ListModifiedFiles.Add(new ModifiedFiles.Models.File(path));
+
+            ModifiedFilesMain.Files = ListModifiedFiles.ToList();
+        }
+
+        private void SaveListModifiedFiles()
+        {
+            Properties.Settings.Default.ListModifiedFiles.Clear();
+
+            foreach (ModifiedFiles.Models.File file in ModifiedFilesMain.Files)
+                Properties.Settings.Default.ListModifiedFiles.Add(file.Path);
+
+            Properties.Settings.Default.Save();
         }
 
         #region Buttons

@@ -12,6 +12,7 @@ namespace ModifiedFiles.Models
             Path = path;
 
             FileInfo fileInfo = new FileInfo(path);
+
             FileName = fileInfo.Name;
             Extension = fileInfo.Extension;
             FileNameWithoutExtension = FileName.Substring(0, FileName.Length - Extension.Length);
