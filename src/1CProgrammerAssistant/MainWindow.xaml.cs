@@ -442,7 +442,6 @@ namespace _1CProgrammerAssistant
                 LoadVersionSelectedModifiedFiles();
             }
         }
-
         private void LoadVersionSelectedModifiedFiles()
         {
             ListModifiedFilesVersion?.Clear();
