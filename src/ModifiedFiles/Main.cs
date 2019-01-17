@@ -6,6 +6,7 @@ using System.Text;
 
 namespace ModifiedFiles
 {
+    
     public class Main
     {
         private List<Models.File> _files = new List<Models.File>();
@@ -20,9 +21,11 @@ namespace ModifiedFiles
             if (!_directoryVersion.Exists)
                 _directoryVersion.Create();
                
-            Events.CreateNewVersionEvent.CreateNewVersionEvents += (FileInfo fileInfoNewVersion) =>
+            Events.CreateNewVersionEvent.CreateNewVersionEvents += (FileInfo modifiedFile) =>
             {
-                _version.CreateNewVersion(fileInfoNewVersion, _files[_idFileByPath[fileInfoNewVersion.FullName]].DirectoryVersion);
+                _version.CreateNewVersion(modifiedFile, _files[_idFileByPath[modifiedFile.FullName]].DirectoryVersion);
+
+                Events.CreateNewVersionEvent.NewVersionCreated(modifiedFile);
             };
         }
        

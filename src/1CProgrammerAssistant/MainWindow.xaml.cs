@@ -13,6 +13,7 @@ using System.Reflection;
 using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -62,6 +63,14 @@ namespace _1CProgrammerAssistant
             };
 
             ListModifiedFiles = new ObservableCollection<ModifiedFiles.Models.File>();
+
+            ModifiedFiles.Events.CreateNewVersionEvent.NewVersionCreatedEvents += (FileInfo modifiedFile) =>
+            {
+                Dispatcher.Invoke(new ThreadStart(delegate
+                {
+                    LoadVersionSelectedModifiedFiles();
+                }));
+            };
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -423,12 +432,17 @@ namespace _1CProgrammerAssistant
             {
                 _selectedModifiedFile = value;
 
-                ListModifiedFilesVersion?.Clear();
-
-                List<ModifiedFiles.Models.Version> listVersion = ModifiedFilesMain.GetListVersion(value);
-                if (listVersion != null)
-                    ListModifiedFilesVersion = new ObservableCollection<ModifiedFiles.Models.Version>(listVersion);
+                LoadVersionSelectedModifiedFiles();
             }
+        }
+
+        private void LoadVersionSelectedModifiedFiles()
+        {
+            ListModifiedFilesVersion?.Clear();
+
+            List<ModifiedFiles.Models.Version> listVersion = ModifiedFilesMain.GetListVersion(_selectedModifiedFile);
+            if (listVersion != null)
+                ListModifiedFilesVersion = new ObservableCollection<ModifiedFiles.Models.Version>(listVersion);
         }
 
         #region Buttons
