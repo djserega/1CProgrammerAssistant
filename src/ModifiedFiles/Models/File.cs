@@ -16,6 +16,7 @@ namespace ModifiedFiles.Models
             FileName = fileInfo.Name;
             Extension = fileInfo.Extension;
             FileNameWithoutExtension = FileName.Substring(0, FileName.Length - Extension.Length);
+            DateVersion = fileInfo.LastWriteTime;
         }
 
         public string Path { get; }
