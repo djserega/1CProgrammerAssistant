@@ -66,7 +66,7 @@ namespace ModifiedFiles
                         file.CopyTo(pathVersion);
                         copied = true;
                     }
-                    catch (Exception)
+                    catch (IOException)
                     {
                         Thread.Sleep(1000);
                     }
@@ -82,6 +82,9 @@ namespace ModifiedFiles
             InitializeControlHashByDirectory(dirVersion);
 
             string currentHash = GetMD5(path);
+
+            if (string.IsNullOrEmpty(currentHash))
+                return true;
 
             if (_controlHash[dirVersion].ContainsKey(currentHash))
                 return true;
@@ -131,8 +134,9 @@ namespace ModifiedFiles
                 catch (FileNotFoundException)
                 {
                 }
-                catch (IOException)
+                catch (IOException ex)
                 {
+                    new IOException("Файл источник 'обрабатывается' другим приложением.", ex);
                 }
             }
 
