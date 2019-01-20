@@ -432,6 +432,20 @@ namespace _1CProgrammerAssistant
             DependencyProperty.Register("ListModifiedFilesVersion", typeof(ObservableCollection<ModifiedFiles.Models.Version>), typeof(MainWindow), null);
 
 
+
+
+        public ModifiedFiles.Models.Version ListModifiedFilesVersionSelectedItem
+        {
+            get { return (ModifiedFiles.Models.Version)GetValue(ListModifiedFilesVersionSelectedItemProperty); }
+            set { SetValue(ListModifiedFilesVersionSelectedItemProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ListModifiedFilesVersionSelectedItem.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ListModifiedFilesVersionSelectedItemProperty =
+            DependencyProperty.Register("ListModifiedFilesVersionSelectedItem", typeof(ModifiedFiles.Models.Version), typeof(MainWindow), null);
+
+
+
         public ModifiedFiles.Models.File SelectedModifiedFile
         {
             get => _selectedModifiedFile;
@@ -450,7 +464,7 @@ namespace _1CProgrammerAssistant
             if (listVersion != null)
                 ListModifiedFilesVersion = new ObservableCollection<ModifiedFiles.Models.Version>(listVersion);
         }
-        
+
         private void LoadListModifiedFiles()
         {
             if (Properties.Settings.Default.ListModifiedFiles == null)
@@ -518,7 +532,15 @@ namespace _1CProgrammerAssistant
             ModifiedFilesMain.OpenDirectoryVersion();
         }
 
-        #endregion
+        private void ButtonOpenFileVersion(object sender, RoutedEventArgs e)
+        {
+            if (ListModifiedFilesVersionSelectedItem == null)
+                return;
+
+            new ViewerFiles.Main().OpenFileVersion(ListModifiedFilesVersionSelectedItem.Path);
+        }
+
+       #endregion
 
         #region Visibility table list version
 
@@ -607,6 +629,5 @@ namespace _1CProgrammerAssistant
 
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
-
     }
 }

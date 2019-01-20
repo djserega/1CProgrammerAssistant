@@ -230,7 +230,15 @@
                                       Background="{x:Null}"
                                       AutoGenerateColumns="False"
                                       IsReadOnly="True"
-                                      ItemsSource="{Binding ListModifiedFilesVersion}">
+                                      ItemsSource="{Binding ListModifiedFilesVersion}"
+                                      SelectedItem="{Binding ListModifiedFilesVersionSelectedItem}">
+                                <DataGrid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Открыть файл"
+                                                  Click="ButtonOpenFileVersion"/>
+                                    </ContextMenu>
+                                </DataGrid.ContextMenu>
+                                
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Версия"         Binding="{Binding DateVersion, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"/>
                                     <DataGridTextColumn Header="Комментарий"/>

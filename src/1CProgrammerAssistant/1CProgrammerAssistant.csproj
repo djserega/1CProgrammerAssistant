@@ -138,6 +138,10 @@
       <Project>{506cd915-b2cf-4f23-99ae-3c7f82039a62}</Project>
       <Name>QueryParameters</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ViewerFiles\ViewerFiles.csproj">
+      <Project>{97750844-7779-4e45-aa6e-254713411acd}</Project>
+      <Name>ViewerFiles</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="1CProgrammerAssistant.ico" />
