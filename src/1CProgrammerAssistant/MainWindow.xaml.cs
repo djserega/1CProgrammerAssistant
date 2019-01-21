@@ -85,6 +85,7 @@ namespace _1CProgrammerAssistant
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             SaveListModifiedFiles();
+            ViewerFilesMain.Dispose();
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -183,6 +184,7 @@ namespace _1CProgrammerAssistant
         public QueryParameters.Main QueryParametersMain { get; } = new QueryParameters.Main();
         //    new MethodStore.Class1();
         public ModifiedFiles.Main ModifiedFilesMain { get; } = new ModifiedFiles.Main();
+        public ViewerFiles.Main ViewerFilesMain { get; } = new ViewerFiles.Main();
 
         #endregion
 
@@ -432,8 +434,6 @@ namespace _1CProgrammerAssistant
             DependencyProperty.Register("ListModifiedFilesVersion", typeof(ObservableCollection<ModifiedFiles.Models.Version>), typeof(MainWindow), null);
 
 
-
-
         public ModifiedFiles.Models.Version ListModifiedFilesVersionSelectedItem
         {
             get { return (ModifiedFiles.Models.Version)GetValue(ListModifiedFilesVersionSelectedItemProperty); }
@@ -456,6 +456,9 @@ namespace _1CProgrammerAssistant
                 LoadVersionSelectedModifiedFiles();
             }
         }
+
+        private List<ModifiedFiles.Models.Version> _selectedVersions = new List<ModifiedFiles.Models.Version>();
+
         private void LoadVersionSelectedModifiedFiles()
         {
             ListModifiedFilesVersion?.Clear();
@@ -532,15 +535,15 @@ namespace _1CProgrammerAssistant
             ModifiedFilesMain.OpenDirectoryVersion();
         }
 
-        private void ButtonOpenFileVersion(object sender, RoutedEventArgs e)
+        private void MenuItemVersionOpenFile(object sender, RoutedEventArgs e)
         {
             if (ListModifiedFilesVersionSelectedItem == null)
                 return;
 
-            new ViewerFiles.Main().OpenFileVersion(ListModifiedFilesVersionSelectedItem.Path);
+            ViewerFilesMain.OpenFileVersion(ListModifiedFilesVersionSelectedItem.Path);
         }
 
-       #endregion
+        #endregion
 
         #region Visibility table list version
 
@@ -629,5 +632,21 @@ namespace _1CProgrammerAssistant
 
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
+
+        private void MenuItemCompareVersion_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedVersions.Count > 1)
+                ViewerFilesMain.CompareFilesVersion(_selectedVersions[0].Path, _selectedVersions[_selectedVersions.Count - 1].Path);
+            else
+                MessageBox.Show("Для сравнения версий нужно выделить более одного файла версии.");
+        }
+
+        private void DataGridModifiedFilesVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _selectedVersions.Clear();
+
+            foreach (ModifiedFiles.Models.Version itemVersion in ((DataGrid)sender).SelectedItems)
+                _selectedVersions.Add(itemVersion);
+        }
     }
 }

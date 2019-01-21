@@ -231,11 +231,14 @@
                                       AutoGenerateColumns="False"
                                       IsReadOnly="True"
                                       ItemsSource="{Binding ListModifiedFilesVersion}"
-                                      SelectedItem="{Binding ListModifiedFilesVersionSelectedItem}">
+                                      SelectedItem="{Binding ListModifiedFilesVersionSelectedItem}"
+                                      SelectionChanged="DataGridModifiedFilesVersion_SelectionChanged">
                                 <DataGrid.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Открыть файл"
-                                                  Click="ButtonOpenFileVersion"/>
+                                                  Click="MenuItemVersionOpenFile"/>
+                                        <MenuItem Header="Сравнить две версии"
+                                                  Click="MenuItemCompareVersion_Click"/>
                                     </ContextMenu>
                                 </DataGrid.ContextMenu>
                                 

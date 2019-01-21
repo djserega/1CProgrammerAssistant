@@ -11,9 +11,17 @@ using System.Windows;
 
 namespace ViewerFiles
 {
-    public class Main
+    public class Main : IDisposable
     {
         private readonly string _locationPath = AppDomain.CurrentDomain.BaseDirectory;
+        private readonly List<Process> _processesV8 = new List<Process>();
+
+        public void Dispose()
+        {
+            foreach (Process itemProcess in _processesV8)
+                if (!itemProcess.HasExited)
+                    itemProcess.CloseMainWindow();
+        }
 
         public void OpenFileVersion(string path)
         {
@@ -24,6 +32,21 @@ namespace ViewerFiles
                     $"\"{path}\"")
             };
             processV8.Start();
+
+            _processesV8.Add(processV8);
+        }
+
+        public void CompareFilesVersion(string firstPath, string secondPath)
+        {
+            Process processV8 = new Process()
+            {
+                StartInfo = new ProcessStartInfo(
+                    Path.Combine(_locationPath, "v8viewer.exe"),
+                    $"-diff -name1 \"{firstPath}\" -nam2 \"{secondPath}\"")
+            };
+            processV8.Start();
+
+            _processesV8.Add(processV8);
         }
 
         private void Temp()
