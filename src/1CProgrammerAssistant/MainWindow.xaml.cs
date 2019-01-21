@@ -670,5 +670,17 @@ namespace _1CProgrammerAssistant
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
 
+        private void DataGridModifiedFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (((DataGrid)sender).CurrentColumn?.SortMemberPath == "Description"
+                && SelectedModifiedFile != null)
+            {
+                InputBox inputBox = new InputBox("Описание внешнего файла:", SelectedModifiedFile.FileName);
+                inputBox.ShowDialog();
+
+                if (inputBox.ClickButtonOK)
+                    SelectedModifiedFile.Description = inputBox.TextBoxDescription;
+            }
+        }
     }
 }

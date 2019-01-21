@@ -28,5 +28,6 @@ namespace ModifiedFiles.Models
         public uint Version { get; private set; }
         public DateTime DateVersion { get; private set; }
         public string DirectoryVersion { get; internal set; }
+        public string Description { get; set; }
     }
 }
