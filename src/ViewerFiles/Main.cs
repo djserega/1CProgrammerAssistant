@@ -42,7 +42,7 @@ namespace ViewerFiles
             {
                 StartInfo = new ProcessStartInfo(
                     Path.Combine(_locationPath, "v8viewer.exe"),
-                    $"-diff -name1 \"{firstPath}\" -nam2 \"{secondPath}\"")
+                    $"-diff -name1 \"{firstPath}\" -name2 \"{secondPath}\"")
             };
             processV8.Start();
 
