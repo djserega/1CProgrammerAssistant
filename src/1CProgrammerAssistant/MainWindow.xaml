@@ -208,7 +208,9 @@
                                       AutoGenerateColumns="False"
                                       IsReadOnly="True"
                                       ItemsSource="{Binding ListModifiedFiles}"
-                                      SelectedItem="{Binding SelectedModifiedFile}">
+                                      SelectedItem="{Binding SelectedModifiedFile}"
+                                      AllowDrop="True"
+                                      Drop="DataGridModifiedFiles_Drop">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Имя файла"              Binding="{Binding FileName}"/>
                                     <DataGridTextColumn Header="№ версии"               Binding="{Binding Version}"/>

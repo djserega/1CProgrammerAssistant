@@ -412,6 +412,9 @@ namespace _1CProgrammerAssistant
 
         private ModifiedFiles.Models.File _selectedModifiedFile;
 
+
+        #region DependencyProperty
+
         public ObservableCollection<ModifiedFiles.Models.File> ListModifiedFiles
         {
             get { return (ObservableCollection<ModifiedFiles.Models.File>)GetValue(ListModifiedFilesProperty); }
@@ -444,7 +447,19 @@ namespace _1CProgrammerAssistant
         public static readonly DependencyProperty ListModifiedFilesVersionSelectedItemProperty =
             DependencyProperty.Register("ListModifiedFilesVersionSelectedItem", typeof(ModifiedFiles.Models.Version), typeof(MainWindow), null);
 
+        #endregion
 
+
+        private void DataGridModifiedFiles_Drop(object sender, DragEventArgs e)
+        {
+            string[] dropFiles = (string[])e.Data.GetData("FileDrop");
+            foreach (string path in dropFiles)
+            {
+                FileInfo fileInfo = new FileInfo(path);
+                if (fileInfo.Extension == ".epf" || fileInfo.Extension == ".erf")
+                    ModifiedFilesAddFileByPath(path);
+            }
+        }
 
         public ModifiedFiles.Models.File SelectedModifiedFile
         {
@@ -491,6 +506,22 @@ namespace _1CProgrammerAssistant
             Properties.Settings.Default.Save();
         }
 
+        private void MenuItemCompareVersion_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedVersions.Count > 1)
+                ViewerFilesMain.CompareFilesVersion(_selectedVersions[0].Path, _selectedVersions[_selectedVersions.Count - 1].Path);
+            else
+                MessageBox.Show("Для сравнения версий нужно выделить более одного файла версии.");
+        }
+
+        private void DataGridModifiedFilesVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _selectedVersions.Clear();
+
+            foreach (ModifiedFiles.Models.Version itemVersion in ((DataGrid)sender).SelectedItems)
+                _selectedVersions.Add(itemVersion);
+        }
+
         #region Buttons
 
         private void ButtonModifiedFilesAddFile_Click(object sender, RoutedEventArgs e)
@@ -506,12 +537,8 @@ namespace _1CProgrammerAssistant
                 Title = "Выбор файлов версионирования"
             };
             if (openFileDialog.ShowDialog() == true)
-            {
                 foreach (string fileName in openFileDialog.FileNames)
-                    ListModifiedFiles.Add(new ModifiedFiles.Models.File(fileName));
-
-                ModifiedFilesMain.Files = ListModifiedFiles.ToList();
-            };
+                    ModifiedFilesAddFileByPath(fileName);
         }
 
         private void ButtonModifiedFilesRemoveFile_Click(object sender, RoutedEventArgs e)
@@ -544,6 +571,16 @@ namespace _1CProgrammerAssistant
         }
 
         #endregion
+
+        private void ModifiedFilesAddFileByPath(string path)
+        {
+            if (ListModifiedFiles.FirstOrDefault(f => f.Path == path) == null)
+            {
+                ListModifiedFiles.Add(new ModifiedFiles.Models.File(path));
+
+                ModifiedFilesMain.Files = ListModifiedFiles.ToList();
+            }
+        }
 
         #region Visibility table list version
 
@@ -633,20 +670,5 @@ namespace _1CProgrammerAssistant
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
 
-        private void MenuItemCompareVersion_Click(object sender, RoutedEventArgs e)
-        {
-            if (_selectedVersions.Count > 1)
-                ViewerFilesMain.CompareFilesVersion(_selectedVersions[0].Path, _selectedVersions[_selectedVersions.Count - 1].Path);
-            else
-                MessageBox.Show("Для сравнения версий нужно выделить более одного файла версии.");
-        }
-
-        private void DataGridModifiedFilesVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            _selectedVersions.Clear();
-
-            foreach (ModifiedFiles.Models.Version itemVersion in ((DataGrid)sender).SelectedItems)
-                _selectedVersions.Add(itemVersion);
-        }
     }
 }
