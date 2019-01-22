@@ -211,11 +211,12 @@
                                       SelectedItem="{Binding SelectedModifiedFile}"
                                       AllowDrop="True"
                                       Drop="DataGridModifiedFiles_Drop"
-                                      MouseDoubleClick="DataGridModifiedFiles_MouseDoubleClick">
+                                      MouseDoubleClick="DataGridModifiedFiles_MouseDoubleClick"
+                                      KeyDown="DataGridModifiedFiles_KeyDown">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Имя файла"              Binding="{Binding FileName}"/>
-                                    <DataGridTextColumn Header="Дата изменения"         Binding="{Binding DateVersion, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"/>
-                                    <DataGridTextColumn Header="Последний комментарий"  Binding="{Binding Description}" MaxWidth="300" x:Name="ModifiedFileColumnDescription"/>
+                                    <DataGridTextColumn Header="Имя файла"      Binding="{Binding FileName}"/>
+                                    <DataGridTextColumn Header="Дата изменения" Binding="{Binding DateVersion, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"/>
+                                    <DataGridTextColumn Header="Комментарий"    Binding="{Binding Description}" MaxWidth="300" x:Name="ModifiedFileColumnDescription"/>
                                 </DataGrid.Columns>
                             </DataGrid>
 

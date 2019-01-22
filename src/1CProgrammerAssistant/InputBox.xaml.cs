@@ -30,6 +30,7 @@ namespace _1CProgrammerAssistant
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             TextBoxDescription.Focus();
+            TextBoxDescription.SelectAll();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

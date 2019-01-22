@@ -10,6 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -177,6 +178,7 @@ namespace _1CProgrammerAssistant
                 }
             };
         }
+
 
         #region Public properties - Additions classes
 
@@ -450,6 +452,17 @@ namespace _1CProgrammerAssistant
         #endregion
 
 
+        private void DataGridModifiedFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            EnterDescriptionSelectedModifiedFile(sender);
+        }
+
+        private void DataGridModifiedFiles_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F2)
+                EnterDescriptionSelectedModifiedFile(sender);
+        }
+
         private void DataGridModifiedFiles_Drop(object sender, DragEventArgs e)
         {
             string[] dropFiles = (string[])e.Data.GetData("FileDrop");
@@ -460,6 +473,25 @@ namespace _1CProgrammerAssistant
                     ModifiedFilesAddFileByPath(path);
             }
         }
+
+        private void EnterDescriptionSelectedModifiedFile(object sender)
+        {
+            if (((DataGrid)sender).CurrentColumn?.SortMemberPath == "Description"
+                && SelectedModifiedFile != null)
+            {
+                InputBox inputBox = new InputBox("Описание внешнего файла:", SelectedModifiedFile.FileName)
+                {
+                    Description = SelectedModifiedFile.Description ?? string.Empty
+                };
+                inputBox.ShowDialog();
+
+                if (inputBox.ClickButtonOK)
+                    SelectedModifiedFile.Description = inputBox.Description;
+
+                DataGridModifiedFiles.Items.Refresh();
+            }
+        }
+
 
         public ModifiedFiles.Models.File SelectedModifiedFile
         {
@@ -487,8 +519,6 @@ namespace _1CProgrammerAssistant
         {
             if (Properties.Settings.Default.ListModifiedFiles == null)
                 Properties.Settings.Default.ListModifiedFiles = new System.Collections.Specialized.StringCollection();
-
-            ModifiedFilesMain.Files.Clear();
 
             foreach (string path in Properties.Settings.Default.ListModifiedFiles)
                 ListModifiedFiles.Add(new ModifiedFiles.Models.File(path));
@@ -669,18 +699,5 @@ namespace _1CProgrammerAssistant
 
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
-
-        private void DataGridModifiedFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (((DataGrid)sender).CurrentColumn?.SortMemberPath == "Description"
-                && SelectedModifiedFile != null)
-            {
-                InputBox inputBox = new InputBox("Описание внешнего файла:", SelectedModifiedFile.FileName);
-                inputBox.ShowDialog();
-
-                if (inputBox.ClickButtonOK)
-                    SelectedModifiedFile.Description = inputBox.Description;
-            }
-        }
     }
 }
