@@ -11,7 +11,9 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Background="{DynamicResource PrimaryHueMidBrush}"
         Title="Ввод текста" Height="200" Width="350"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded"
+        KeyDown="Window_KeyDown">
     <Grid Margin="5 2">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -25,9 +27,12 @@
                Content="{Binding LabelDescriptionSecond, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
         <Border Grid.Row="2"
                 CornerRadius="2 2 5 5">
-            <TextBox TextWrapping="Wrap"
+            <TextBox x:Name="TextBoxDescription"
+                     TextWrapping="Wrap"
+                     Margin="3"
                      VerticalContentAlignment="Top"
-                     Text="{Binding TextBoxDescription}"/>
+                     Text="{Binding Description}"
+                     KeyDown="TextBoxDescription_KeyDown"/>
         </Border>
         <StackPanel Grid.Row="3" 
                     HorizontalAlignment="Center"

@@ -679,7 +679,7 @@ namespace _1CProgrammerAssistant
                 inputBox.ShowDialog();
 
                 if (inputBox.ClickButtonOK)
-                    SelectedModifiedFile.Description = inputBox.TextBoxDescription;
+                    SelectedModifiedFile.Description = inputBox.Description;
             }
         }
     }

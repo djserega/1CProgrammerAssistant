@@ -27,7 +27,20 @@ namespace _1CProgrammerAssistant
             LabelDescriptionSecond = label2;
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            TextBoxDescription.Focus();
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+                SetOKAndCloseForm();
+        }
+
         public bool ClickButtonOK { get; private set; }
+
+        #region DependencyProperty
 
         public string LabelDescriptionFirst
         {
@@ -51,21 +64,34 @@ namespace _1CProgrammerAssistant
             DependencyProperty.Register("LabelDescriptionSecond", typeof(string), typeof(InputBox), null);
 
 
-        public string TextBoxDescription
+        public string Description
         {
-            get { return (string)GetValue(TextBoxDescriptionProperty); }
-            set { SetValue(TextBoxDescriptionProperty, value); }
+            get { return (string)GetValue(DescriptionProperty); }
+            set { SetValue(DescriptionProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for TextBoxDescription.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty TextBoxDescriptionProperty =
-            DependencyProperty.Register("TextBoxDescription", typeof(string), typeof(InputBox), null);
+        // Using a DependencyProperty as the backing store for Description.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DescriptionProperty =
+            DependencyProperty.Register("Description", typeof(string), typeof(InputBox), null);
 
+        #endregion
 
         private void ButtonOK_Click(object sender, RoutedEventArgs e)
+        {
+            SetOKAndCloseForm();
+        }
+
+        private void TextBoxDescription_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                SetOKAndCloseForm();
+        }
+
+        private void SetOKAndCloseForm()
         {
             ClickButtonOK = true;
             Close();
         }
+
     }
 }
