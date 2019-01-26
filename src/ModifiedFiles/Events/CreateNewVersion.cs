@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ModifiedFiles.Events
+namespace _1CProgrammerAssistant.ModifiedFiles.Events
 {
     public delegate void NewVersionCreatedEvents(FileInfo modifiedFile);
     internal delegate void CreateNewVersionEvents(FileInfo modifiedFile);

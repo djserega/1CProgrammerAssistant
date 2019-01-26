@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace ModifiedFiles
+namespace _1CProgrammerAssistant.ModifiedFiles
 {
     
     public class Main
@@ -59,5 +59,11 @@ namespace ModifiedFiles
         }
 
         public List<Models.Version> GetListVersion(Models.File file) => _version[file?.DirectoryVersion];
+
+        public void SetDescriptionLastVersion(Models.File file, Models.Version version)
+        {
+            version.Description = file.Description;
+            Additions;
+        }
     }
 }

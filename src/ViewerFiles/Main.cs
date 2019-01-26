@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ViewerFiles
+namespace _1CProgrammerAssistant.ViewerFiles
 {
     public class Main : IDisposable
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ModifiedFiles
+namespace _1CProgrammerAssistant.ModifiedFiles
 {
     internal class Watcher
     {

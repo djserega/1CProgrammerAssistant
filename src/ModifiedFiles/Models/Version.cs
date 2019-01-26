@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ModifiedFiles.Models
+namespace _1CProgrammerAssistant.ModifiedFiles.Models
 {
     public class Version
     {
@@ -16,5 +16,6 @@ namespace ModifiedFiles.Models
         public string Path { get; set; }
         public int NumberVersion { get; set; }
         public DateTime DateVersion { get; set; }
+        public string Description { get; set; }
     }
 }

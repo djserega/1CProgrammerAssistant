@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 
-namespace ModifiedFiles
+namespace _1CProgrammerAssistant.ModifiedFiles
 {
     internal class Version
     {
