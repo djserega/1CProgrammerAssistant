@@ -7,6 +7,8 @@ namespace _1CProgrammerAssistant.ModifiedFiles.Models
 {
     public class Version
     {
+        public static string FileNameVersion { get; } = "description.json";
+
         public Version(string path)
         {
             Path = path;

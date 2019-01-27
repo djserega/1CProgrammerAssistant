@@ -73,7 +73,7 @@ namespace _1CProgrammerAssistant.ModifiedFiles
 
             new Additions.JsonConverter<List<Models.Version>>().Save(
                 listVersions,
-                $"{file.DirectoryVersion}\\description.json");
+                Path.Combine(file.DirectoryVersion, Models.Version.FileNameVersion));
         }
     }
 }
