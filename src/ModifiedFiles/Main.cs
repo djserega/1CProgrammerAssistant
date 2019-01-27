@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 
 namespace _1CProgrammerAssistant.ModifiedFiles
 {
-    
+
     public class Main
     {
         private List<Models.File> _files = new List<Models.File>();
@@ -20,7 +21,7 @@ namespace _1CProgrammerAssistant.ModifiedFiles
         {
             if (!_directoryVersion.Exists)
                 _directoryVersion.Create();
-               
+
             Events.CreateNewVersionEvent.CreateNewVersionEvents += (FileInfo modifiedFile) =>
             {
                 _version.CreateNewVersion(modifiedFile, _files[_idFileByPath[modifiedFile.FullName]].DirectoryVersion);
@@ -28,7 +29,7 @@ namespace _1CProgrammerAssistant.ModifiedFiles
                 Events.CreateNewVersionEvent.NewVersionCreated(modifiedFile);
             };
         }
-       
+
         public List<Models.File> Files { get => _files; set { _files = value; InitializeListFiles(); } }
 
         private void InitializeListFiles()
@@ -60,10 +61,19 @@ namespace _1CProgrammerAssistant.ModifiedFiles
 
         public List<Models.Version> GetListVersion(Models.File file) => _version[file?.DirectoryVersion];
 
-        public void SetDescriptionLastVersion(Models.File file, Models.Version version)
+        public void SetDescriptionLastVersion(Models.File file, ObservableCollection<Models.Version> versions)
         {
-            version.Description = file.Description;
-            Additions;
+            if (versions.Count > 0)
+                versions[versions.Count - 1].Description = file.Description;
+
+            List<Models.Version> listVersions = new List<Models.Version>();
+            foreach (Models.Version version in versions)
+                if (!string.IsNullOrWhiteSpace(version.Description))
+                    listVersions.Add(version);
+
+            new Additions.JsonConverter<List<Models.Version>>().Save(
+                listVersions,
+                $"{file.DirectoryVersion}\\description.json");
         }
     }
 }

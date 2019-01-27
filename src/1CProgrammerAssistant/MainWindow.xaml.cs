@@ -486,7 +486,12 @@ namespace _1CProgrammerAssistant
                 inputBox.ShowDialog();
 
                 if (inputBox.ClickButtonOK)
+                {
                     SelectedModifiedFile.Description = inputBox.Description;
+                    if (ListModifiedFilesVersion.Count > 0)
+                        ModifiedFilesMain.SetDescriptionLastVersion(SelectedModifiedFile, ListModifiedFilesVersion);
+                }
+
 
                 DataGridModifiedFiles.Items.Refresh();
             }

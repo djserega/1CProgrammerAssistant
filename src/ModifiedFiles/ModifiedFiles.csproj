@@ -5,4 +5,8 @@
     <RootNamespace>ModifiedFiles</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Additions\Additions.csproj" />
+  </ItemGroup>
+
 </Project>
