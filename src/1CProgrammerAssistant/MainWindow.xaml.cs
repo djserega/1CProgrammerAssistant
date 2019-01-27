@@ -509,7 +509,7 @@ namespace _1CProgrammerAssistant
             }
         }
 
-        private List<ModifiedFiles.Models.Version> _selectedVersions = new List<ModifiedFiles.Models.Version>();
+        private readonly List<ModifiedFiles.Models.Version> _selectedVersions = new List<ModifiedFiles.Models.Version>();
 
         private void LoadVersionSelectedModifiedFiles()
         {
