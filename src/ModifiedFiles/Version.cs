@@ -13,7 +13,7 @@ namespace _1CProgrammerAssistant.ModifiedFiles
         /// Dictionary version: hash -> name file version
         /// </summary>
         private readonly Dictionary<string, Dictionary<string, string>> _controlHash = new Dictionary<string, Dictionary<string, string>>();
-        
+
         internal List<Models.Version> this[string dirVersion]
         {
             get
@@ -25,8 +25,14 @@ namespace _1CProgrammerAssistant.ModifiedFiles
                 {
                     List<Models.Version> filesVersion = new List<Models.Version>();
 
+                    List<Models.Version> descriptons = new Additions.JsonConverter<List<Models.Version>>().Load(
+                        Path.Combine(dirVersion, Models.Version.FileNameVersion));
+
                     foreach (KeyValuePair<string, string> keyHashPath in _controlHash[dirVersion])
-                        filesVersion.Add(new Models.Version(keyHashPath.Value));
+                        filesVersion.Add(
+                            new Models.Version(
+                                keyHashPath.Value,
+                                descriptons?.Find(f => f.Path == keyHashPath.Value)?.Description));
 
                     return filesVersion;
                 }
@@ -103,11 +109,14 @@ namespace _1CProgrammerAssistant.ModifiedFiles
 
             foreach (FileInfo file in new DirectoryInfo(dirVersion).GetFiles())
             {
-                string currentHash = GetMD5(file.FullName);
-                if (!hashFiles.ContainsKey(currentHash))
-                    hashFiles.Add(currentHash, file.FullName);
+                if (file.Extension != "json")
+                {
+                    string currentHash = GetMD5(file.FullName);
+                    if (!hashFiles.ContainsKey(currentHash))
+                        hashFiles.Add(currentHash, file.FullName);
+                }
             }
-            
+
             return hashFiles;
         }
 

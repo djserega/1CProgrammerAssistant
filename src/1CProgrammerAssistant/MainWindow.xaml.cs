@@ -491,7 +491,7 @@ namespace _1CProgrammerAssistant
                     if (ListModifiedFilesVersion.Count > 0)
                         ModifiedFilesMain.SetDescriptionLastVersion(SelectedModifiedFile, ListModifiedFilesVersion);
                 }
-
+                LoadVersionSelectedModifiedFiles();
 
                 DataGridModifiedFiles.Items.Refresh();
             }
@@ -515,9 +515,23 @@ namespace _1CProgrammerAssistant
         {
             ListModifiedFilesVersion?.Clear();
 
+            string lastComment = string.Empty;
             List<ModifiedFiles.Models.Version> listVersion = ModifiedFilesMain.GetListVersion(_selectedModifiedFile);
             if (listVersion != null)
+            {
                 ListModifiedFilesVersion = new ObservableCollection<ModifiedFiles.Models.Version>(listVersion);
+                DataGridModifiedFilesVersion.Items.SortDescriptions.Add(new SortDescription("DateVersion", ListSortDirection.Descending));
+
+                ModifiedFiles.Models.Version lastCommentedVersion = ListModifiedFilesVersion.LastOrDefault(f => !string.IsNullOrWhiteSpace(f.Description));
+                if (lastCommentedVersion != null)
+                    lastComment = lastCommentedVersion.Description;
+            }
+
+            if (_selectedModifiedFile != null)
+            {
+                _selectedModifiedFile.Description = lastComment;
+                //DataGridModifiedFiles.Items.Refresh();
+            }
         }
 
         private void LoadListModifiedFiles()
@@ -704,5 +718,6 @@ namespace _1CProgrammerAssistant
 
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
+
     }
 }

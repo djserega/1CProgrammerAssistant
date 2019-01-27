@@ -244,10 +244,10 @@
                                                   Click="MenuItemCompareVersion_Click"/>
                                     </ContextMenu>
                                 </DataGrid.ContextMenu>
-                                
+
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Версия"         Binding="{Binding DateVersion, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"/>
-                                    <DataGridTextColumn Header="Комментарий"/>
+                                    <DataGridTextColumn Header="Комментарий"    Binding="{Binding Description}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
 
