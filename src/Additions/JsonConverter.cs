@@ -10,18 +10,29 @@ namespace _1CProgrammerAssistant.Additions
     {
         public void Save(T obj, string fileName)
         {
-            using (StreamWriter file = File.CreateText(fileName))
+            using (StreamWriter writer = File.CreateText(fileName))
             {
-                new JsonSerializer().Serialize(file, obj);
+                new JsonSerializer().Serialize(writer, obj);
             }
         }
 
         public T Load(string fileName)
         {
-            if (!File.Exists(fileName))
-                return null;
+            object obj = null;
 
-            object obj = new JsonSerializer().Deserialize(new JsonTextReader(new StringReader(fileName)), typeof(T));
+            if (File.Exists(fileName))
+            {
+                try
+                {
+                    using (StreamReader reader = File.OpenText(fileName))
+                    {
+                        obj = new JsonSerializer().Deserialize(new JsonTextReader(reader), typeof(T));
+                    }
+                }
+                catch (Exception ex)
+                {
+                }
+            }
 
             return obj as T;
         }
