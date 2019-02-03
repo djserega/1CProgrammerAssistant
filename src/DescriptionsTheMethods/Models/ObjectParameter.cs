@@ -8,6 +8,9 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods.Models
 {
     internal class ObjectParameter : TypeObjectParameter
     {
+
+        #region Constructors
+
         public ObjectParameter()
         {
         }
@@ -27,6 +30,8 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods.Models
             Description = description;
         }
 
+        #endregion
+        
         internal override string Name { get; set; }
         internal override string Type { get; set; }
         internal string Description { get; set; }

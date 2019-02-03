@@ -21,7 +21,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModifiedFiles", "ModifiedFi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewerFiles", "ViewerFiles\ViewerFiles.csproj", "{97750844-7779-4E45-AA6E-254713411ACD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MakingCode", "MakingCode\MakingCode.csproj", "{6A84D5CA-39E0-428A-A166-B34EE397208D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MakingCode", "MakingCode\MakingCode.csproj", "{6A84D5CA-39E0-428A-A166-B34EE397208D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{82C6A171-030E-4E05-9EE2-80D8744F9D35} = {82C6A171-030E-4E05-9EE2-80D8744F9D35}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

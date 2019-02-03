@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
 
 namespace _1CProgrammerAssistant.ModifiedFiles
@@ -13,6 +12,8 @@ namespace _1CProgrammerAssistant.ModifiedFiles
         /// Dictionary version: hash -> name file version
         /// </summary>
         private readonly Dictionary<string, Dictionary<string, string>> _controlHash = new Dictionary<string, Dictionary<string, string>>();
+
+        private const byte _tryCount = 3;
 
         internal List<Models.Version> this[string dirVersion]
         {
@@ -61,7 +62,7 @@ namespace _1CProgrammerAssistant.ModifiedFiles
             if (!fileInfoVersion.Exists)
             {
                 bool copied = false;
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < _tryCount; i++)
                 {
                     try
                     {
@@ -100,10 +101,7 @@ namespace _1CProgrammerAssistant.ModifiedFiles
             if (string.IsNullOrEmpty(currentHash))
                 return true;
 
-            if (_controlHash[dirVersion].ContainsKey(currentHash))
-                return true;
-            else
-                return false;
+            return _controlHash[dirVersion].ContainsKey(currentHash);
         }
 
         private Dictionary<string, string> InitializeHashFiles(string dirVersion)

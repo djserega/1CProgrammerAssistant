@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-
-namespace MakingCode
+﻿namespace MakingCode
 {
     public class Main
     {

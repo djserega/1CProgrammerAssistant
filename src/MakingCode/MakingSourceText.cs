@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using _1CProgrammerAssistant.Additions;
 using System.Text;
 
 namespace MakingCode
@@ -45,7 +44,7 @@ namespace MakingCode
 
                 if (CheckStartParameters && currentSymbol == '(')
                 {
-                    AppendText(Source.Substring(0, i + 1), false);
+                    AppendText(Source.Left(i + 1), false);
 
                     CheckStartParameters = false;
                     CheckEndParameters = true;

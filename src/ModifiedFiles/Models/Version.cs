@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace _1CProgrammerAssistant.ModifiedFiles.Models
 {
@@ -22,9 +20,13 @@ namespace _1CProgrammerAssistant.ModifiedFiles.Models
             Description = description ?? string.Empty;
         }
 
+        #region Properties
+
         public string Path { get; set; }
         public int NumberVersion { get; set; }
         public DateTime DateVersion { get; set; }
         public string Description { get; set; } = string.Empty;
+
+        #endregion
     }
 }

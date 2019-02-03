@@ -1,6 +1,5 @@
 ﻿using _1CProgrammerAssistant.Additions;
 using _1CProgrammerAssistant.DescriptionsTheMethods.Models;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -39,7 +38,8 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
         #region Notify property changed
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        public virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "") 
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         #endregion
 
@@ -133,7 +133,7 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
 
                             int positionEqual = paramenterName.IndexOf('=');
                             if (positionEqual > 0)
-                                paramenterName = paramenterName.Substring(0, positionEqual);
+                                paramenterName = paramenterName.Left(positionEqual);
 
                             ObjectParameter objectParameter = new ObjectParameter(paramenterName);
                             objectParameter.SetTypeByName();

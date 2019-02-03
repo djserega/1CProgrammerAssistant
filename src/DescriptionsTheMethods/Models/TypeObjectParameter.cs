@@ -11,6 +11,8 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods.Models
         internal virtual string Name { get; set; }
         internal virtual string Type { get; set; }
 
+        #region Type object
+
         internal bool IsArray { get => NameStartsWith("мс"); }
         internal bool IsMap { get => NameStartsWith("со"); }
         internal bool IsStructure { get => NameStartsWith("ст"); }
@@ -27,7 +29,6 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods.Models
 
         internal bool IsDynamicList { get => NameStartsWith("дс"); }
 
-
         internal bool IsString
         {
             get
@@ -43,8 +44,10 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods.Models
             }
         }
 
+        #endregion
 
-        private bool NameStartsWith(string text) => Name.StartsWith(text, true, null);
+        private bool NameStartsWith(string text) 
+            => Name.StartsWith(text, true, null);
 
         internal void SetTypeByName()
         {

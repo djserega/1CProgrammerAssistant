@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace _1CProgrammerAssistant.Additions
 {
@@ -29,7 +27,7 @@ namespace _1CProgrammerAssistant.Additions
                         obj = new JsonSerializer().Deserialize(new JsonTextReader(reader), typeof(T));
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                 }
             }

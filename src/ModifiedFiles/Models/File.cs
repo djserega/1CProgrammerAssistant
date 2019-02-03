@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using _1CProgrammerAssistant.Additions;
+using System;
 using System.IO;
-using System.Text;
 
 namespace _1CProgrammerAssistant.ModifiedFiles.Models
 {
@@ -15,9 +14,11 @@ namespace _1CProgrammerAssistant.ModifiedFiles.Models
 
             FileName = fileInfo.Name;
             Extension = fileInfo.Extension;
-            FileNameWithoutExtension = FileName.Substring(0, FileName.Length - Extension.Length);
+            FileNameWithoutExtension = FileName.Left(FileName.Length - Extension.Length);
             DateVersion = fileInfo.LastWriteTime;
         }
+
+        #region Properties
 
         public string Path { get; }
         public string FileName { get; }
@@ -29,5 +30,7 @@ namespace _1CProgrammerAssistant.ModifiedFiles.Models
         public DateTime DateVersion { get; private set; }
         public string DirectoryVersion { get; internal set; }
         public string Description { get; set; }
+
+        #endregion
     }
 }
