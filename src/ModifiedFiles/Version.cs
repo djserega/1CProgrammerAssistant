@@ -65,11 +65,21 @@ namespace _1CProgrammerAssistant.ModifiedFiles
                 {
                     try
                     {
+                        string currentHash = null;
                         if (CheckHash)
-                            if (FileExistsByHash(dirVersion, file.FullName))
+                        {
+                            currentHash = GetMD5(file.FullName);
+                            if (FileExistsByHash(dirVersion, currentHash))
                                 break;
+                        }
 
                         file.CopyTo(pathVersion);
+
+                        if (CheckHash)
+                            _controlHash[dirVersion].Add(
+                                currentHash,
+                                pathVersion);
+
                         copied = true;
                     }
                     catch (IOException)
@@ -83,11 +93,9 @@ namespace _1CProgrammerAssistant.ModifiedFiles
             }
         }
 
-        private bool FileExistsByHash(string dirVersion, string path)
+        private bool FileExistsByHash(string dirVersion, string currentHash)
         {
             InitializeControlHashByDirectory(dirVersion);
-
-            string currentHash = GetMD5(path);
 
             if (string.IsNullOrEmpty(currentHash))
                 return true;
@@ -95,12 +103,7 @@ namespace _1CProgrammerAssistant.ModifiedFiles
             if (_controlHash[dirVersion].ContainsKey(currentHash))
                 return true;
             else
-            {
-                _controlHash[dirVersion].Add(
-                    currentHash,
-                    path);
                 return false;
-            }
         }
 
         private Dictionary<string, string> InitializeHashFiles(string dirVersion)
