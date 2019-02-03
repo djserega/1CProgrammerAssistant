@@ -187,6 +187,7 @@ namespace _1CProgrammerAssistant
         //    new MethodStore.Class1();
         public ModifiedFiles.Main ModifiedFilesMain { get; } = new ModifiedFiles.Main();
         public ViewerFiles.Main ViewerFilesMain { get; } = new ViewerFiles.Main();
+        public MakingCode.Main MakingCodeMain { get; } = new MakingCode.Main();
 
         #endregion
 
@@ -243,6 +244,15 @@ namespace _1CProgrammerAssistant
                         message += $": {QueryParametersMain.NameVariableQueryObject.Trim()}";
 
                     ShowNotification(message);
+                    return true;
+                }
+
+                MakingCodeMain.SourceText = textInClipboard;
+                if (MakingCodeMain.Making())
+                {
+                    ResultText = MakingCodeMain.ResultText;
+
+                    ShowNotification("Обработан код");
                     return true;
                 }
 

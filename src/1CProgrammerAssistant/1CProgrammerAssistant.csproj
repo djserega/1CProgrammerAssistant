@@ -133,6 +133,10 @@
       <Project>{89bac6ab-407c-41d1-83e9-1e2800c15c6f}</Project>
       <Name>DescriptionsTheMethods</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MakingCode\MakingCode.csproj">
+      <Project>{6a84d5ca-39e0-428a-a166-b34ee397208d}</Project>
+      <Name>MakingCode</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MethodStore\MethodStore.csproj">
       <Project>{3a111e44-981d-45df-9099-bf1175a10f75}</Project>
       <Name>MethodStore</Name>
