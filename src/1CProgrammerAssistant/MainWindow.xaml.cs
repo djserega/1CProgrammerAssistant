@@ -45,6 +45,8 @@ namespace _1CProgrammerAssistant
             "ModifiedFiles"
         };
         private int? _previousPageID = null;
+        
+        #region Window event
 
         public MainWindow()
         {
@@ -102,6 +104,8 @@ namespace _1CProgrammerAssistant
             else
                 Show();
         }
+
+        #endregion
 
         private void InitializeTaskbarIcon()
         {
@@ -224,40 +228,7 @@ namespace _1CProgrammerAssistant
 
                 SourceText = textInClipboard;
 
-                DescriptionsTheMethodsMain.StringMethod = textInClipboard;
-                if (string.IsNullOrEmpty(DescriptionsTheMethodsMain.TextError)
-                    && !string.IsNullOrEmpty(DescriptionsTheMethodsMain.Description))
-                {
-                    ResultText = DescriptionsTheMethodsMain.Description;
-                    ShowNotification($"Получено описание метода: {DescriptionsTheMethodsMain.MethodName}");
-                    return true;
-                }
-
-                QueryParametersMain.QueryText = textInClipboard;
-                if (string.IsNullOrEmpty(QueryParametersMain.TextError)
-                    && !string.IsNullOrEmpty(QueryParametersMain.QueryParameters))
-                {
-                    ResultText = QueryParametersMain.QueryParameters;
-
-                    string message = "Получены параметры запроса";
-                    if (!string.IsNullOrEmpty(QueryParametersMain.NameVariableQueryObject))
-                        message += $": {QueryParametersMain.NameVariableQueryObject.Trim()}";
-
-                    ShowNotification(message);
-                    return true;
-                }
-
-                MakingCodeMain.SourceText = textInClipboard;
-                if (MakingCodeMain.Making())
-                {
-                    ResultText = MakingCodeMain.ResultText;
-
-                    ShowNotification("Обработан код");
-                    return true;
-                }
-
-
-                return false;
+                return HandleText(textInClipboard);
             }
 
             return false;
@@ -728,6 +699,41 @@ namespace _1CProgrammerAssistant
 
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
+
+        private bool HandleText(string text)
+        {
+            DescriptionsTheMethodsMain.StringMethod = text;
+            if (DescriptionsTheMethodsMain.Making())
+            {
+                ResultText = DescriptionsTheMethodsMain.Description;
+                ShowNotification($"Получено описание метода: {DescriptionsTheMethodsMain.MethodName}");
+                return true;
+            }
+
+            QueryParametersMain.QueryText = text;
+            if (QueryParametersMain.Making())
+            {
+                ResultText = QueryParametersMain.QueryParameters;
+
+                string message = "Получены параметры запроса";
+                if (!string.IsNullOrEmpty(QueryParametersMain.NameVariableQueryObject))
+                    message += $": {QueryParametersMain.NameVariableQueryObject.Trim()}";
+
+                ShowNotification(message);
+                return true;
+            }
+
+            MakingCodeMain.SourceText = text;
+            if (MakingCodeMain.Making())
+            {
+                ResultText = MakingCodeMain.ResultText;
+
+                ShowNotification("Обработан код");
+                return true;
+            }
+
+            return false;
+        }
 
     }
 }

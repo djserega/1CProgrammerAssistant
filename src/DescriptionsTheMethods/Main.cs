@@ -11,9 +11,8 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
 {
     public class Main : INotifyPropertyChanged
     {
-        #region Private fields
 
-        private string _stringMethod;
+        #region Private fields
         private string _stringMethodWithoutDirectiveCompilation;
 
         private List<ObjectParameter> _parametersMethod = new List<ObjectParameter>();
@@ -23,7 +22,7 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
         #region Public properties
 
         public string MethodName { get; private set; }
-        public string StringMethod { get => _stringMethod; set { _stringMethod = value; SetDescription(); } }
+        public string StringMethod { get; set; }
         public string Description { get; set; } = string.Empty;
         public string TextError { get; private set; } = string.Empty;
         public bool IncludeStringMethod { get; set; } = true;
@@ -44,17 +43,25 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
 
         #endregion
 
-        #region Private methods
-
-        private void SetDescription()
+        public bool Making()
         {
             TextError = string.Empty;
             Description = string.Empty;
 
-            if (string.IsNullOrEmpty(_stringMethod))
+            SetDescription();
+
+            return string.IsNullOrWhiteSpace(TextError)
+                && !string.IsNullOrWhiteSpace(Description);
+        }
+
+        #region Private methods
+
+        private void SetDescription()
+        {
+            if (string.IsNullOrEmpty(StringMethod))
                 return;
 
-            _stringMethodWithoutDirectiveCompilation = RemoveNonUsedStartText(_stringMethod, false);
+            _stringMethodWithoutDirectiveCompilation = RemoveNonUsedStartText(StringMethod, false);
 
             if (StringIsFunction || StringIsProcedure)
                 CompileDescription();
@@ -90,14 +97,14 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
             Description = builderDescription.ToString();
 
             if (IncludeStringMethod)
-                Description += _stringMethod;
+                Description += StringMethod;
         }
 
         private void SetParametersMethod()
         {
             _parametersMethod.Clear();
 
-            string parser = _stringMethod;
+            string parser = StringMethod;
 
             parser = RemoveNonUsedStartText(parser);
 

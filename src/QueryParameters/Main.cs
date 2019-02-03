@@ -12,24 +12,26 @@ namespace _1CProgrammerAssistant.QueryParameters
 
         private const string _partRegexPattern = "[Нн][Оо][Вв][Ыы][Йй] [Зз][Аа][Пп][Рр][Оо][Сс]";
 
-        private string _queryText;
-
         #endregion
 
         #region Public properties
 
         public string NameVariableQueryObject { get; private set; }
-        public string QueryText
-        {
-            get { return _queryText; }
-            set { _queryText = value; SetQueryParameters(); }
-        }
+        public string QueryText { get; set; }
         public List<string> ParametersName { get; } = new List<string>();
 
         public string QueryParameters { get; private set; }
         public string TextError { get; private set; }
 
         #endregion
+
+        public bool Making()
+        {
+            SetQueryParameters();
+
+            return string.IsNullOrEmpty(TextError)
+                && !string.IsNullOrEmpty(QueryParameters);
+        }
 
         #region Private methods
 
@@ -94,18 +96,8 @@ namespace _1CProgrammerAssistant.QueryParameters
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            int i = 0;
             foreach (string parameterName in ParametersName)
-            {
-                i++;
-
-                string textInResult = $"{NameVariableQueryObject}.УстановитьПараметр(\"{parameterName}\", );";
-
-                if (i == ParametersName.Count)
-                    stringBuilder.Append(textInResult);
-                else
-                    stringBuilder.AppendLine(textInResult);
-            }
+                stringBuilder.AppendLine($"{NameVariableQueryObject}.УстановитьПараметр(\"{parameterName}\", );");
 
             QueryParameters = stringBuilder.ToString();
         }

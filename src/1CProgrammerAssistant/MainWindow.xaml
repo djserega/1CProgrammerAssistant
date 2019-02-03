@@ -42,9 +42,9 @@
             <Button x:Name="ButtonDescriptionQuery"
                     Grid.Column="0"
                     Grid.Row="0"
-                    Width="300"
+                    Width="150"
                     Background="{DynamicResource MaterialDesignFlatButtonRipple}"
-                    Content="Параметры запроса, описание метода"
+                    Content="Работа с кодом"
                     Click="ButtonDescriptionQuery_Click"/>
             <Button x:Name="ButtonModifiedFiles"
                     Grid.Column="1"
@@ -57,7 +57,7 @@
             <Border x:Name="BorderDescriptionQuery"
                     Grid.Row="1"
                     Grid.Column="0"
-                    Width="300"
+                    Width="150"
                     Background="Red"/>
 
             <Border x:Name="BorderModifiedFiles"
