@@ -227,36 +227,22 @@ namespace _1CProgrammerAssistant
 
         private void ProcessTextWithClipboard()
         {
-            if (Clipboard.ContainsText())
+            SafeAction(() =>
             {
-                string textInClipboard = Clipboard.GetText();
+                if (Clipboard.ContainsText())
+                {
+                    string textInClipboard = Clipboard.GetText();
 
-                SourceText = textInClipboard;
+                    SourceText = textInClipboard;
 
-                HandleText(textInClipboard);
-            }
+                    HandleText(textInClipboard);
+                }
+            });
         }
 
         private void SetResultTextToClipboard()
         {
-            try
-            {
-                Clipboard.SetText(ResultText);
-            }
-            catch (Exception ex)
-            {
-                using (EventLog eventLog = new EventLog("Application"))
-                {
-                    eventLog.Source = "Application";
-                    eventLog.WriteEntry(
-                        ex.Message
-                        + "\n" +
-                        ex.InnerException?.Message
-                        + "\n" +
-                        ex.InnerException?.InnerException?.Message,
-                        EventLogEntryType.Warning);
-                }
-            }
+            SafeAction(() => { Clipboard.SetText(ResultText); });
         }
 
         #endregion
@@ -772,7 +758,19 @@ namespace _1CProgrammerAssistant
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                using (EventLog eventLog = new EventLog("Application"))
+                {
+                    eventLog.Source = "Application";
+                    eventLog.WriteEntry(
+                        ex.Message
+                        + "\n" + "\n" +
+                        ex.InnerException?.Message
+                        + "\n" + "\n" +
+                        ex.InnerException?.InnerException?.Message
+                        + "\n" + "\n" +
+                        ex.InnerException?.InnerException?.InnerException?.Message,
+                        EventLogEntryType.Warning);
+                }
             }
         }
 
