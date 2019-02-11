@@ -225,7 +225,7 @@ namespace _1CProgrammerAssistant
 
         #region Clipboard
 
-        private void ProcessTextWithClipboard()
+        private void ProcessTextWithClipboard(bool showMessage = false)
         {
             SafeAction(() =>
             {
@@ -236,13 +236,26 @@ namespace _1CProgrammerAssistant
                     SourceText = textInClipboard;
 
                     HandleText(textInClipboard);
+
+                    if (showMessage)
+                        if (!_handleResult)
+                            ShowNotification("Не удалось распознать данные буфера обмена.", BalloonIcon.Error);
                 }
             });
         }
 
-        private void SetResultTextToClipboard()
+        private void SetResultTextToClipboard(bool showMessage = false)
         {
-            SafeAction(() => { Clipboard.SetText(ResultText); });
+            SafeAction(() =>
+            {
+                if (!string.IsNullOrEmpty(ResultText))
+                {
+                    Clipboard.SetText(ResultText);
+
+                    if (showMessage)
+                        ShowNotification("Результат помещен в буфер обмена.");
+                }
+            });
         }
 
         #endregion
@@ -259,11 +272,11 @@ namespace _1CProgrammerAssistant
             ChangePagesAdditions(Grid.GetColumn((Button)sender));
         }
 
-        private void ButtonCopyResultToClipboard_Click(object sender, RoutedEventArgs e)
-            => SetResultTextToClipboard();
-
         private void ButtonProcessingTextInClipboard_Click(object sender, RoutedEventArgs e)
-            => ProcessTextWithClipboard();
+            => ProcessTextWithClipboard(true);
+
+        private void ButtonCopyResultToClipboard_Click(object sender, RoutedEventArgs e)
+            => SetResultTextToClipboard(true);
 
         #endregion
 
