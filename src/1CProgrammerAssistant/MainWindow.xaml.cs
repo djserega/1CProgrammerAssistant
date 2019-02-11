@@ -72,6 +72,9 @@ namespace _1CProgrammerAssistant
                 Dispatcher.Invoke(new ThreadStart(delegate
                 {
                     LoadVersionSelectedModifiedFiles();
+                    ShowNotification(
+                        $"{modifiedFile.Name}\n{modifiedFile.LastWriteTime.ToString("HH:mm:ss")}",
+                        BalloonIcon.Info);
                 }));
             };
         }
