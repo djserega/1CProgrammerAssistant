@@ -45,7 +45,8 @@ namespace _1CProgrammerAssistant
             "ModifiedFiles"
         };
         private int? _previousPageID = null;
-        
+        private bool _handleResult;
+
         #region Window event
 
         public MainWindow()
@@ -55,7 +56,8 @@ namespace _1CProgrammerAssistant
             ProcessTextInClipboardEvents.ProcessTextInClipboardEvent +=
                 () =>
                 {
-                    if (ProcessTextWithClipboard())
+                    ProcessTextWithClipboard();
+                    if (_handleResult)
                         SetResultTextToClipboard();
                 };
 
@@ -223,7 +225,7 @@ namespace _1CProgrammerAssistant
 
         #region Clipboard
 
-        private bool ProcessTextWithClipboard()
+        private void ProcessTextWithClipboard()
         {
             if (Clipboard.ContainsText())
             {
@@ -231,10 +233,8 @@ namespace _1CProgrammerAssistant
 
                 SourceText = textInClipboard;
 
-                return HandleText(textInClipboard);
+                HandleText(textInClipboard);
             }
-
-            return false;
         }
 
         private void SetResultTextToClipboard()
@@ -703,39 +703,77 @@ namespace _1CProgrammerAssistant
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
 
-        private bool HandleText(string text)
+        private void HandleText(string text)
         {
-            DescriptionsTheMethodsMain.StringMethod = text;
-            if (DescriptionsTheMethodsMain.Making())
+            _handleResult = false;
+
+            SafeAction(() => { HandleTextDescriptionsTheMethods(text); });
+            SafeAction(() => { HandleTextQueryParameters(text); });
+            SafeAction(() => { HandleTextMakingCode(text); });
+        }
+
+        #region HandleText Methods
+
+        private void HandleTextDescriptionsTheMethods(string text)
+        {
+            if (!_handleResult)
             {
-                ResultText = DescriptionsTheMethodsMain.Description;
-                ShowNotification($"Получено описание метода: {DescriptionsTheMethodsMain.MethodName}");
-                return true;
+                DescriptionsTheMethodsMain.StringMethod = text;
+                if (DescriptionsTheMethodsMain.Making())
+                {
+                    ResultText = DescriptionsTheMethodsMain.Description;
+                    ShowNotification($"Получено описание метода: {DescriptionsTheMethodsMain.MethodName}");
+                    _handleResult = true;
+                }
             }
+        }
 
-            QueryParametersMain.QueryText = text;
-            if (QueryParametersMain.Making())
+        private void HandleTextQueryParameters(string text)
+        {
+            if (!_handleResult)
             {
-                ResultText = QueryParametersMain.QueryParameters;
+                QueryParametersMain.QueryText = text;
+                if (QueryParametersMain.Making())
+                {
+                    ResultText = QueryParametersMain.QueryParameters;
 
-                string message = "Получены параметры запроса";
-                if (!string.IsNullOrEmpty(QueryParametersMain.NameVariableQueryObject))
-                    message += $": {QueryParametersMain.NameVariableQueryObject.Trim()}";
+                    string message = "Получены параметры запроса";
+                    if (!string.IsNullOrEmpty(QueryParametersMain.NameVariableQueryObject))
+                        message += $": {QueryParametersMain.NameVariableQueryObject.Trim()}";
 
-                ShowNotification(message);
-                return true;
+                    ShowNotification(message);
+                    _handleResult = true;
+                }
             }
+        }
 
-            MakingCodeMain.SourceText = text;
-            if (MakingCodeMain.Making())
+        private void HandleTextMakingCode(string text)
+        {
+            if (!_handleResult)
             {
-                ResultText = MakingCodeMain.ResultText;
+                MakingCodeMain.SourceText = text;
+                if (MakingCodeMain.Making())
+                {
+                    ResultText = MakingCodeMain.ResultText;
 
-                ShowNotification("Обработан код");
-                return true;
+                    ShowNotification("Обработан код");
+                    _handleResult = true;
+                }
             }
+        }
 
-            return false;
+        #endregion
+
+        private void SafeAction(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
     }
