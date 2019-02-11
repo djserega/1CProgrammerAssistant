@@ -154,7 +154,7 @@
             </Grid>
 
             <Grid x:Name="AdditionsModifiedFiles"
-                  Visibility="Visible"
+                  Visibility="Collapsed"
                   Width="{Binding ElementName=GridParent, Path=ActualWidth}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="31*"/>
