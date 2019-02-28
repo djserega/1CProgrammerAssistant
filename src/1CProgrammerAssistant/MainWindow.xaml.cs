@@ -39,10 +39,11 @@ namespace _1CProgrammerAssistant
     {
         private readonly TaskbarIcon _taskbarIcon;
         private readonly GlobalHotKeyManager _hotKeyManager = new GlobalHotKeyManager();
-        private readonly string[] _namesAddition = new string[2]
+        private readonly string[] _namesAddition = new string[3]
         {
             "DescriptionQuery",
-            "ModifiedFiles"
+            "ModifiedFiles",
+            "MethodStore"
         };
         private int? _previousPageID = null;
         private bool _handleResult;
@@ -193,7 +194,7 @@ namespace _1CProgrammerAssistant
 
         public DescriptionsTheMethods.Main DescriptionsTheMethodsMain { get; } = new DescriptionsTheMethods.Main();
         public QueryParameters.Main QueryParametersMain { get; } = new QueryParameters.Main();
-        //    new MethodStore.Class1();
+        public MethodStore.Main MethodStoreMain { get; } = new MethodStore.Main();
         public ModifiedFiles.Main ModifiedFilesMain { get; } = new ModifiedFiles.Main();
         public ViewerFiles.Main ViewerFilesMain { get; } = new ViewerFiles.Main();
         public MakingCode.Main MakingCodeMain { get; } = new MakingCode.Main();
@@ -263,14 +264,14 @@ namespace _1CProgrammerAssistant
         #region Button
 
         private void ButtonDescriptionQuery_Click(object sender, RoutedEventArgs e)
-        {
-            ChangePagesAdditions(Grid.GetColumn((Button)sender));
-        }
-
+            => ClickButtonsAdditions(sender);
         private void ButtonModifiedFiles_Click(object sender, RoutedEventArgs e)
-        {
-            ChangePagesAdditions(Grid.GetColumn((Button)sender));
-        }
+            => ClickButtonsAdditions(sender);
+        private void ButtonMethodStore_Click(object sender, RoutedEventArgs e)
+            => ClickButtonsAdditions(sender);
+
+        private void ClickButtonsAdditions(object sender)
+            => ChangePagesAdditions(Grid.GetColumn((Button)sender));
 
         private void ButtonProcessingTextInClipboard_Click(object sender, RoutedEventArgs e)
             => ProcessTextWithClipboard(true);
@@ -345,8 +346,8 @@ namespace _1CProgrammerAssistant
             Grid gridVisible,
             Grid gridCollapsed)
         {
-            DoubleAnimation animationVisible = null;
-            DoubleAnimation animationCollapsed = null;
+            DoubleAnimation animationVisible;
+            DoubleAnimation animationCollapsed;
 
             animationVisible = new DoubleAnimation(buttonNewPage.ActualWidth, TimeSpan.FromMilliseconds(500));
             animationCollapsed = new DoubleAnimation(0, TimeSpan.FromMilliseconds(300));

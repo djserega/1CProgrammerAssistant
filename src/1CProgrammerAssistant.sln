@@ -10,6 +10,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryParameters", "QueryParameters\QueryParameters.csproj", "{506CD915-B2CF-4F23-99AE-3C7F82039A62}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MethodStore", "MethodStore\MethodStore.csproj", "{3A111E44-981D-45DF-9099-BF1175A10F75}"
+	ProjectSection(ProjectDependencies) = postProject
+		{82C6A171-030E-4E05-9EE2-80D8744F9D35} = {82C6A171-030E-4E05-9EE2-80D8744F9D35}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Additions", "Additions\Additions.csproj", "{82C6A171-030E-4E05-9EE2-80D8744F9D35}"
 EndProject

@@ -33,6 +33,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -53,6 +54,13 @@
                     Background="{DynamicResource MaterialDesignFlatButtonRipple}"
                     Content="Версии файлов"
                     Click="ButtonModifiedFiles_Click"/>
+            <Button x:Name="ButtonMethodStore"
+                    Grid.Column="2"
+                    Grid.Row="0"
+                    Width="150"
+                    Background="{DynamicResource MaterialDesignFlatButtonRipple}"
+                    Content="Методы"
+                    Click="ButtonMethodStore_Click"/>
 
             <Border x:Name="BorderDescriptionQuery"
                     Grid.Row="1"
@@ -61,6 +69,12 @@
                     Background="Red"/>
 
             <Border x:Name="BorderModifiedFiles"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Width="150"
+                    Background="Red"/>
+
+            <Border x:Name="BorderMethodStore"
                     Grid.Row="1"
                     Grid.Column="2"
                     Width="150"
@@ -171,7 +185,8 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <StackPanel Orientation="Horizontal"
+                        <StackPanel Grid.Row="0"
+                                    Orientation="Horizontal"
                                     Margin="2 2">
                             <Button Margin="2"
                                     ToolTip="Новый файл версионирования"
@@ -258,6 +273,52 @@
                         </Grid>
 
                     </Grid>
+                </Border>
+            </Grid>
+
+            <Grid x:Name="AdditionsMethodStore"
+                  Visibility="Visible"
+                  Width="{Binding ElementName=GridParent, Path=ActualWidth}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="31*"/>
+                    <ColumnDefinition Width="117*"/>
+                </Grid.ColumnDefinitions>
+                <Border CornerRadius="5" Grid.ColumnSpan="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        
+                        <StackPanel Grid.Row="0"
+                                    Orientation="Horizontal"
+                                    Margin="2 2">
+                            <Button Margin="2"
+                                    ToolTip="Новый метод">
+                                <md:PackIcon Kind="CirclesAdd"/>
+                            </Button>
+                            <Button Margin="2"
+                                    ToolTip="Редактировать">
+                                <md:PackIcon Kind="Edit"/>
+                            </Button>
+                            <Button Margin="2"
+                                    ToolTip="Удаление файла">
+                                <md:PackIcon Kind="MinusCircleOutline"/>
+                            </Button>
+                        </StackPanel>
+
+                        <DataGrid Grid.Row="1">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Группа"/>
+                                <DataGridTextColumn Header="Тип"/>
+                                <DataGridTextColumn Header="Модуль"/>
+                                <DataGridTextColumn Header="Метод"/>
+                            </DataGrid.Columns>
+                            
+                        </DataGrid>
+                        
+                    </Grid>
+                    
                 </Border>
             </Grid>
 
