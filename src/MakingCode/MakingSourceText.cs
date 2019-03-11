@@ -99,11 +99,7 @@ namespace MakingCode
 
         private void MakeTextCondition()
         {
-            int startPosition = 0;
             string currentWord = string.Empty;
-            bool CheckStartCondition = true;
-            bool CheckEndCondition = false;
-            int countCondition = 0;
 
             Regex regex = new Regex("если\\s|\\sи\\s|\\sили\\s|\\sтогда", RegexOptions.IgnoreCase); // если\s|\sи\s|\sили\s|\sтогда
 
