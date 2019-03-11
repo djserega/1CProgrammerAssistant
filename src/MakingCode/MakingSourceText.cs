@@ -99,8 +99,6 @@ namespace MakingCode
 
         private void MakeTextCondition()
         {
-            string currentWord = string.Empty;
-
             Regex regex = new Regex("если\\s|\\sи\\s|\\sили\\s|\\sтогда", RegexOptions.IgnoreCase); // если\s|\sи\s|\sили\s|\sтогда
 
             MatchCollection matches = regex.Matches(Source);
