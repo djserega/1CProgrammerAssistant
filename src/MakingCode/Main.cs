@@ -14,12 +14,12 @@
 
             string workText = SourceText.Trim();
 
-            if (!workText.EndsWith(";"))
-                return false;
+            //if (!workText.EndsWith(";"))
+            //    return false;
 
-            if (!workText.Contains("(")
-                || !workText.Contains(");"))
-                return false;
+            //if (!workText.Contains("(")
+            //    || !workText.Contains(");"))
+            //    return false;
 
             string result = new MakingSourceText(SourceText).MakeText();
             

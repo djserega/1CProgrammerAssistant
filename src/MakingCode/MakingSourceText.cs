@@ -1,11 +1,13 @@
 ﻿using _1CProgrammerAssistant.Additions;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MakingCode
 {
     internal class MakingSourceText
     {
         private readonly string _prefixString = "\t\t\t";
+        private readonly string _prefixStringCondition = "\t";
         private readonly string _prefixText = string.Empty;
         private readonly int _lengthSource = 0;
 
@@ -14,19 +16,52 @@ namespace MakingCode
         internal MakingSourceText(string source)
         {
             Source = source;
+            SourceToUpper = Source.ToUpper();
 
             _prefixText = GetPrefixSpaceSourceText();
 
             Source = Source.Trim();
 
             _lengthSource = Source.Length;
+
+            if (Source.Contains("(")
+                && Source.Contains(",")
+                && Source.Contains(");"))
+            {
+                TypeSourceCode = TypeSourceCode.CallMethod;
+            }
+            if (Source.StartsWith("Если", true, null)
+                && Source.EndsWith("Тогда", true, null))
+            {
+                TypeSourceCode = TypeSourceCode.Condition;
+            }
         }
 
         internal string Source { get; }
+        internal string SourceToUpper { get; }
+        internal TypeSourceCode TypeSourceCode { get; }
 
         internal string MakeText()
         {
             _textBuilder.Clear();
+
+            switch (TypeSourceCode)
+            {
+                case TypeSourceCode.CallMethod:
+                    MakeTextCallMethod();
+                    break;
+                case TypeSourceCode.Condition:
+                    MakeTextCondition();
+                    break;
+                case TypeSourceCode.None:
+                default:
+                    return string.Empty;
+            }
+            return _textBuilder.ToString();
+        }
+
+        private void MakeTextCallMethod()
+        {
 
             int startPosition = 0;
             char currentSymbol = char.MinValue;
@@ -60,18 +95,83 @@ namespace MakingCode
                     AppendText(Source.Substring(startPosition + 1), true);
                 }
             }
-
-            return _textBuilder.ToString();
         }
 
-        private void AppendText(string text, bool appendPrefixString)
+        private void MakeTextCondition()
         {
+            int startPosition = 0;
+            string currentWord = string.Empty;
+            bool CheckStartCondition = true;
+            bool CheckEndCondition = false;
+            int countCondition = 0;
+
+            Regex regex = new Regex("если\\s|\\sи\\s|\\sили\\s|\\sтогда", RegexOptions.IgnoreCase); // если\s|\sи\s|\sили\s|\sтогда
+
+            MatchCollection matches = regex.Matches(Source);
+            Match previousMatch = null;
+            foreach (Match match in matches)
+            {
+                string currentValue = match.Value;
+                string currentValueToLower = currentValue.ToLower();
+                if (currentValueToLower.Equals("если "))
+                {
+                    AppendText(currentValue, false, false);
+                }
+                else
+                {
+                    if (previousMatch != null)
+                    {
+                        int startIndex = previousMatch.Index + previousMatch.Length;
+                        string text = Source.Substring(
+                            startIndex,
+                            match.Index - startIndex);
+
+                        bool isEndCondition = currentValueToLower.Equals(" тогда");
+
+                        AppendText(
+                            text,
+                            true,
+                            !isEndCondition,
+                            posfixString: (isEndCondition ? " " : _prefixStringCondition) + currentValue.Trim());
+
+                    }
+                }
+                previousMatch = match;
+            }
+        }
+
+        private void AppendText(string text,
+                                bool appendPrefixString,
+                                bool appendEndLine = true,
+                                bool appendBeforeLine = false,
+                                string posfixString = null)
+        {
+            if (appendBeforeLine)
+                _textBuilder.AppendLine();
+
             _textBuilder.Append(_prefixText);
 
             if (appendPrefixString)
-                _textBuilder.Append(_prefixString);
+            {
+                switch (TypeSourceCode)
+                {
+                    case TypeSourceCode.CallMethod:
+                        _textBuilder.Append(_prefixString);
+                        break;
+                    case TypeSourceCode.Condition:
+                        _textBuilder.Append(_prefixStringCondition);
+                        break;
+                }
+            }
 
-            _textBuilder.AppendLine(text.Trim());
+            _textBuilder.Append(text.Trim());
+
+            if (appendEndLine)
+                _textBuilder.AppendLine();
+
+            if (posfixString != null)
+                _textBuilder.Append(posfixString);
+
         }
 
         private string GetPrefixSpaceSourceText()
