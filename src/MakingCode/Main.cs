@@ -12,15 +12,6 @@
             if (string.IsNullOrWhiteSpace(SourceText))
                 return false;
 
-            string workText = SourceText.Trim();
-
-            //if (!workText.EndsWith(";"))
-            //    return false;
-
-            //if (!workText.Contains("(")
-            //    || !workText.Contains(");"))
-            //    return false;
-
             string result = new MakingSourceText(SourceText).MakeText();
             
             if (string.IsNullOrWhiteSpace(result))
