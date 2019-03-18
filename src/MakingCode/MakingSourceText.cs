@@ -109,6 +109,7 @@ namespace MakingCode
                 string currentValueToLower = currentValue.ToLower();
                 if (currentValueToLower.Equals("если "))
                 {
+                    _textBuilder.Append(_prefixText);
                     AppendText(currentValue, false, false);
                 }
                 else
@@ -126,7 +127,7 @@ namespace MakingCode
                             text,
                             true,
                             !isEndCondition,
-                            posfixString: (isEndCondition ? " " : _prefixStringCondition) + currentValue.Trim());
+                            posfixString: (isEndCondition ? " " : _prefixText + _prefixStringCondition) + currentValue.Trim());
 
                     }
                 }
@@ -142,8 +143,6 @@ namespace MakingCode
         {
             if (appendBeforeLine)
                 _textBuilder.AppendLine();
-
-            _textBuilder.Append(_prefixText);
 
             if (appendPrefixString)
             {
