@@ -14,7 +14,7 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
         #region Private fields
         private string _stringMethodWithoutDirectiveCompilation;
 
-        private List<ObjectParameter> _parametersMethod = new List<ObjectParameter>();
+        private readonly List<ObjectParameter> _parametersMethod = new List<ObjectParameter>();
 
         #endregion
 
