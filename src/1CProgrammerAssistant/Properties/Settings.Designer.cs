@@ -33,5 +33,17 @@ namespace _1CProgrammerAssistant.Properties {
                 this["ListModifiedFiles"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsTopmost {
+            get {
+                return ((bool)(this["IsTopmost"]));
+            }
+            set {
+                this["IsTopmost"] = value;
+            }
+        }
     }
 }

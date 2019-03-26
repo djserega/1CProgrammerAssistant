@@ -89,6 +89,8 @@ namespace _1CProgrammerAssistant
             InitializeTaskbarIcon();
 
             LoadListModifiedFiles();
+
+            Topmost = Properties.Settings.Default.IsTopmost;
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -125,38 +127,41 @@ namespace _1CProgrammerAssistant
 
             #endregion
 
-            #region menuItemAutostart
+            #region menuItemTopmostInWindow
 
-            #region Create HeaderTemplate_VisualTree
-
-            FrameworkElementFactory elementFactoryAutostartTextBlock = new FrameworkElementFactory(typeof(TextBlock));
-            elementFactoryAutostartTextBlock.SetValue(TextBlock.TextProperty, "Запускать при старте системы");
-            elementFactoryAutostartTextBlock.SetValue(MarginProperty, new Thickness(0, 0, 5, 0));
-
-            ImageSource Icon = Imaging.CreateBitmapSourceFromHBitmap(
-                  SystemIcons.Shield.ToBitmap().GetHbitmap(),
-                  IntPtr.Zero,
-                  Int32Rect.Empty,
-                  BitmapSizeOptions.FromEmptyOptions());
-
-            FrameworkElementFactory elementFactoryAutostartIcon = new FrameworkElementFactory(typeof(Image));
-            elementFactoryAutostartIcon.SetValue(Image.SourceProperty, Icon);
-            elementFactoryAutostartIcon.SetValue(WidthProperty, 14.0);
-            elementFactoryAutostartIcon.SetValue(HeightProperty, 14.0);
-
-            FrameworkElementFactory elementFactoryAutostart = new FrameworkElementFactory(typeof(StackPanel));
-            elementFactoryAutostart.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
-            elementFactoryAutostart.AppendChild(elementFactoryAutostartTextBlock);
-            elementFactoryAutostart.AppendChild(elementFactoryAutostartIcon);
+            MenuItem menuItemTopmostInWindow = new MenuItem()
+            {
+                HeaderTemplate = new DataTemplate()
+                {
+                    DataType = typeof(MenuItem),
+                    VisualTree = CreateHeaderTemplate_VisualTree("Поверх всех окон")
+                },
+                IsChecked = Properties.Settings.Default.IsTopmost,
+                IsCheckable = true
+            };
+            menuItemTopmostInWindow.Click += (object sender, RoutedEventArgs e) => 
+            {
+                bool newValueIsTopmost = !Properties.Settings.Default.IsTopmost;
+                Properties.Settings.Default.IsTopmost = newValueIsTopmost;
+                Topmost = newValueIsTopmost;
+            };
 
             #endregion
+
+            #region menuItemAutostart
+
+            ImageSource IconShield = Imaging.CreateBitmapSourceFromHBitmap(
+               SystemIcons.Shield.ToBitmap().GetHbitmap(),
+               IntPtr.Zero,
+               Int32Rect.Empty,
+               BitmapSizeOptions.FromEmptyOptions());
 
             MenuItem menuItemAutostart = new MenuItem()
             {
                 HeaderTemplate = new DataTemplate()
                 {
                     DataType = typeof(MenuItem),
-                    VisualTree = elementFactoryAutostart
+                    VisualTree = CreateHeaderTemplate_VisualTree("Запускать при старте системы", IconShield)
                 },
                 ToolTip = "Для изменения значения требуются права администратора",
                 IsChecked = Permission.GetStatusAutostart(),
@@ -182,11 +187,35 @@ namespace _1CProgrammerAssistant
                 {
                     menuItemShowMainWindow,
                     new Separator(),
+                    menuItemTopmostInWindow,
                     menuItemAutostart,
                     new Separator(),
                     menuItemExit
                 }
             };
+        }
+
+        private static FrameworkElementFactory CreateHeaderTemplate_VisualTree(string header, ImageSource image = null)
+        {
+            FrameworkElementFactory elementFactoryAutostartTextBlock = new FrameworkElementFactory(typeof(TextBlock));
+            elementFactoryAutostartTextBlock.SetValue(TextBlock.TextProperty, header);
+            elementFactoryAutostartTextBlock.SetValue(MarginProperty, new Thickness(0, 0, 5, 0));
+
+            FrameworkElementFactory elementFactoryAutostart = new FrameworkElementFactory(typeof(StackPanel));
+            elementFactoryAutostart.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
+            elementFactoryAutostart.AppendChild(elementFactoryAutostartTextBlock);
+
+            if (image != null)
+            {
+                FrameworkElementFactory elementFactoryAutostartIcon = new FrameworkElementFactory(typeof(Image));
+                elementFactoryAutostartIcon.SetValue(Image.SourceProperty, image);
+                elementFactoryAutostartIcon.SetValue(WidthProperty, 14.0);
+                elementFactoryAutostartIcon.SetValue(HeightProperty, 14.0);
+
+                elementFactoryAutostart.AppendChild(elementFactoryAutostartIcon);
+            }
+
+            return elementFactoryAutostart;
         }
 
 
