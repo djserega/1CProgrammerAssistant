@@ -12,6 +12,8 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
     {
 
         #region Private fields
+
+        private readonly string _prefixString = "\t\t\t";
         private string _stringMethodWithoutDirectiveCompilation;
 
         private readonly List<ObjectParameter> _parametersMethod = new List<ObjectParameter>();
@@ -20,7 +22,7 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
 
         #region Public properties
 
-        public string MethodName { get; private set; }
+        public string MethodName { get; private set; } = string.Empty;
         public string StringMethod { get; set; }
         public string Description { get; set; } = string.Empty;
         public string TextError { get; private set; } = string.Empty;
@@ -32,13 +34,16 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
 
         private bool StringIsFunction { get => _stringMethodWithoutDirectiveCompilation.TrimStart().StartsWith("функция", true, null); }
         private bool StringIsProcedure { get => _stringMethodWithoutDirectiveCompilation.TrimStart().StartsWith("процедура", true, null); }
+        private bool ExportMethod { get => StringMethod.TrimEnd().EndsWith("экспорт", true, null); }
+        private string WrapLineParameters { get; set; }
+        private bool ManyParameters { get => _parametersMethod.Count() > 1; }
 
         #endregion
 
         #region Notify property changed
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "") 
+        public virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         #endregion
@@ -97,7 +102,20 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
             Description = builderDescription.ToString();
 
             if (IncludeStringMethod)
-                Description += StringMethod;
+            {
+                if (ManyParameters)
+                {
+                    int positionOpeningBracket = StringMethod.IndexOf("(");
+                    string methodNameBeforeBracket = StringMethod.Substring(0, positionOpeningBracket);
+
+                    Description += $"{methodNameBeforeBracket}({WrapLineParameters})";
+                    Description += ExportMethod ? " Экспорт " : "  ";
+                }
+                else
+                {
+                    Description += StringMethod;
+                }
+            }
         }
 
         private void SetParametersMethod()
@@ -111,8 +129,6 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
             int countOpeningBracket = parser.Count(f => f == '(');
             if (countOpeningBracket == 1)
             {
-                parser = parser.RemoveSpace();
-
                 int positionOpeningBracket = parser.IndexOf("(");
 
                 MethodName = parser.Substring(0, positionOpeningBracket);
@@ -125,21 +141,35 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
                 {
                     parser = parser.NonUsedEnd();
 
+                    StringBuilder builderWrapParameters = new StringBuilder();
+                    builderWrapParameters.AppendLine();
+
                     string[] parserParameters = parser.Split(',');
+                    int parametersLeft = parserParameters.Count();
                     foreach (string itemParameter in parserParameters)
+                    {
                         if (!string.IsNullOrWhiteSpace(itemParameter))
                         {
-                            string paramenterName = itemParameter.RemoveStartText("знач").Trim();
+                            parametersLeft--;
+
+                            builderWrapParameters.Append(_prefixString);
+                            builderWrapParameters.Append(itemParameter.Trim());
+                            builderWrapParameters.AppendLine(parametersLeft > 0 ? "," : "");
+
+                            string paramenterName = itemParameter.TrimStart().RemoveStartText("знач").Trim();
 
                             int positionEqual = paramenterName.IndexOf('=');
                             if (positionEqual > 0)
-                                paramenterName = paramenterName.Left(positionEqual);
+                                paramenterName = paramenterName.Left(positionEqual).TrimEnd();
 
                             ObjectParameter objectParameter = new ObjectParameter(paramenterName);
                             objectParameter.SetTypeByName();
 
                             _parametersMethod.Add(objectParameter);
                         }
+                    }
+
+                    WrapLineParameters = builderWrapParameters.ToString().TrimEnd();
                 }
             }
         }
