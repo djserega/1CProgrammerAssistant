@@ -61,7 +61,7 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
             if (string.IsNullOrEmpty(StringMethod))
                 return;
 
-            _stringMethodWithoutDirectiveCompilation = RemoveNonUsedStartText(StringMethod, false);
+            _stringMethodWithoutDirectiveCompilation = StringMethod.NonUsedStart(false);
 
             if (StringIsFunction || StringIsProcedure)
                 CompileDescription();
@@ -106,7 +106,7 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
 
             string parser = StringMethod;
 
-            parser = RemoveNonUsedStartText(parser);
+            parser = parser.NonUsedStart();
 
             int countOpeningBracket = parser.Count(f => f == '(');
             if (countOpeningBracket == 1)
@@ -123,7 +123,7 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
 
                 if (countClosingBracket == 1)
                 {
-                    parser = RemoveNonUsedEndText(parser);
+                    parser = parser.NonUsedEnd();
 
                     string[] parserParameters = parser.Split(',');
                     foreach (string itemParameter in parserParameters)
@@ -142,37 +142,6 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
                         }
                 }
             }
-        }
-
-        private static string RemoveNonUsedEndText(string parser)
-        {
-            parser = parser.Replace("\r", "");
-            parser = parser.Replace("\n", "");
-            parser = parser.Replace("\t", "");
-            parser = parser.TrimEnd(';');
-            parser = parser.TrimEnd();
-            parser = parser.RemoveEndText("Экспорт");
-            parser = parser.TrimEnd();
-            parser = parser.TrimEnd(')');
-            return parser;
-        }
-
-        private static string RemoveNonUsedStartText(string parser, bool removeTypeMethod = true)
-        {
-            parser = parser.TrimStart();
-            parser = parser.RemoveStartText("&НаКлиентеНаСервереБезКонтекста");
-            parser = parser.RemoveStartText("&НаСервереБезКонтекста");
-            parser = parser.RemoveStartText("&НаСервере");
-            parser = parser.RemoveStartText("&НаКлиенте");
-            parser = parser.TrimStart();
-            if (removeTypeMethod)
-            {
-                parser = parser.RemoveStartText("Процедура");
-                parser = parser.RemoveStartText("Функция");
-            }
-            parser = parser.TrimStart();
-
-            return parser;
         }
 
         #endregion
