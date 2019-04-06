@@ -37,8 +37,11 @@ namespace _1CProgrammerAssistant
     /// </summary>
     public partial class MainWindow : Window
     {
-        private AssistantTaskbarIcon _assistantTaskbar = new AssistantTaskbarIcon();
+        private readonly AssistantTaskbarIcon _assistantTaskbar = new AssistantTaskbarIcon();
+        private readonly AssistantObjects _assistantObjects = new AssistantObjects();
         private readonly GlobalHotKeyManager _hotKeyManager = new GlobalHotKeyManager();
+        private readonly ActionClipboard _actionClipboard;
+
         private readonly string[] _namesAddition = new string[3]
         {
             "DescriptionQuery",
@@ -46,7 +49,6 @@ namespace _1CProgrammerAssistant
             "MethodStore"
         };
         private int? _previousPageID = null;
-        private bool _handleResult;
 
         #region Window event
 
@@ -54,13 +56,10 @@ namespace _1CProgrammerAssistant
         {
             InitializeComponent();
 
-            ProcessTextInClipboardEvents.ProcessTextInClipboardEvent +=
-                () =>
-                {
-                    ProcessTextWithClipboard();
-                    if (_handleResult)
-                        SetResultTextToClipboard();
-                };
+            _actionClipboard = new ActionClipboard(_assistantObjects, _assistantTaskbar);
+
+            _actionClipboard.ChangedSourceTextEvents += (string value) => { SourceText = value; };
+            _actionClipboard.ChangedResultTextEvents += (string value) => { ResultText = value; };
 
             ListModifiedFiles = new ObservableCollection<ModifiedFiles.Models.File>();
 
@@ -90,7 +89,7 @@ namespace _1CProgrammerAssistant
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             SaveListModifiedFiles();
-            ViewerFilesMain.Dispose();
+            _assistantObjects.ViewerFilesMain.Dispose();
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -106,18 +105,6 @@ namespace _1CProgrammerAssistant
             else
                 Show();
         }
-
-        #endregion
-
-
-        #region Public properties - Additions classes
-
-        public DescriptionsTheMethods.Main DescriptionsTheMethodsMain { get; } = new DescriptionsTheMethods.Main();
-        public QueryParameters.Main QueryParametersMain { get; } = new QueryParameters.Main();
-        public MethodStore.Main MethodStoreMain { get; } = new MethodStore.Main();
-        public ModifiedFiles.Main ModifiedFilesMain { get; } = new ModifiedFiles.Main();
-        public ViewerFiles.Main ViewerFilesMain { get; } = new ViewerFiles.Main();
-        public MakingCode.Main MakingCodeMain { get; } = new MakingCode.Main();
 
         #endregion
 
@@ -144,43 +131,6 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
-        #region Clipboard
-
-        private void ProcessTextWithClipboard(bool showMessage = false)
-        {
-            Safe.SafeAction(() =>
-            {
-                if (Clipboard.ContainsText())
-                {
-                    string textInClipboard = Clipboard.GetText();
-
-                    SourceText = textInClipboard;
-
-                    HandleText(textInClipboard);
-
-                    if (showMessage)
-                        if (!_handleResult)
-                            ShowNotification("Не удалось распознать данные буфера обмена.", BalloonIcon.Error);
-                }
-            });
-        }
-
-        private void SetResultTextToClipboard(bool showMessage = false)
-        {
-            Safe.SafeAction(() =>
-            {
-                if (!string.IsNullOrEmpty(ResultText))
-                {
-                    Clipboard.SetText(ResultText);
-
-                    if (showMessage)
-                        ShowNotification("Результат помещен в буфер обмена.");
-                }
-            });
-        }
-
-        #endregion
-
         #region Button
 
         private void ButtonDescriptionQuery_Click(object sender, RoutedEventArgs e)
@@ -194,10 +144,10 @@ namespace _1CProgrammerAssistant
             => ChangePagesAdditions(Grid.GetColumn((Button)sender));
 
         private void ButtonProcessingTextInClipboard_Click(object sender, RoutedEventArgs e)
-            => ProcessTextWithClipboard(true);
+            => _actionClipboard.ProcessTextWithClipboard(true);
 
         private void ButtonCopyResultToClipboard_Click(object sender, RoutedEventArgs e)
-            => SetResultTextToClipboard(true);
+            => _actionClipboard.SetResultTextToClipboard(true);
 
         #endregion
 
@@ -393,7 +343,7 @@ namespace _1CProgrammerAssistant
                 {
                     SelectedModifiedFile.Description = inputBox.Description;
                     if (ListModifiedFilesVersion.Count > 0)
-                        ModifiedFilesMain.SetDescriptionLastVersion(SelectedModifiedFile, ListModifiedFilesVersion);
+                        _assistantObjects.ModifiedFilesMain.SetDescriptionLastVersion(SelectedModifiedFile, ListModifiedFilesVersion);
                 }
                 LoadVersionSelectedModifiedFiles();
 
@@ -420,7 +370,7 @@ namespace _1CProgrammerAssistant
             ListModifiedFilesVersion?.Clear();
 
             string lastComment = string.Empty;
-            List<ModifiedFiles.Models.Version> listVersion = ModifiedFilesMain.GetListVersion(_selectedModifiedFile);
+            List<ModifiedFiles.Models.Version> listVersion = _assistantObjects.ModifiedFilesMain.GetListVersion(_selectedModifiedFile);
             if (listVersion != null)
             {
                 ListModifiedFilesVersion = new ObservableCollection<ModifiedFiles.Models.Version>(listVersion);
@@ -446,14 +396,14 @@ namespace _1CProgrammerAssistant
             foreach (string path in Properties.Settings.Default.ListModifiedFiles)
                 ListModifiedFiles.Add(new ModifiedFiles.Models.File(path));
 
-            ModifiedFilesMain.Files = ListModifiedFiles.ToList();
+            _assistantObjects.ModifiedFilesMain.Files = ListModifiedFiles.ToList();
         }
 
         private void SaveListModifiedFiles()
         {
             Properties.Settings.Default.ListModifiedFiles.Clear();
 
-            foreach (ModifiedFiles.Models.File file in ModifiedFilesMain.Files)
+            foreach (ModifiedFiles.Models.File file in _assistantObjects.ModifiedFilesMain.Files)
                 Properties.Settings.Default.ListModifiedFiles.Add(file.Path);
 
             Properties.Settings.Default.Save();
@@ -462,7 +412,7 @@ namespace _1CProgrammerAssistant
         private void MenuItemCompareVersion_Click(object sender, RoutedEventArgs e)
         {
             if (_selectedVersions.Count > 1)
-                ViewerFilesMain.CompareFilesVersion(_selectedVersions[0].Path, _selectedVersions[_selectedVersions.Count - 1].Path);
+                _assistantObjects.ViewerFilesMain.CompareFilesVersion(_selectedVersions[0].Path, _selectedVersions[_selectedVersions.Count - 1].Path);
             else
                 MessageBox.Show("Для сравнения версий нужно выделить более одного файла версии.");
         }
@@ -501,7 +451,7 @@ namespace _1CProgrammerAssistant
             {
                 ListModifiedFiles.Remove(fileInList);
 
-                ModifiedFilesMain.Files = ListModifiedFiles.ToList();
+                _assistantObjects.ModifiedFilesMain.Files = ListModifiedFiles.ToList();
             }
         }
 
@@ -512,7 +462,7 @@ namespace _1CProgrammerAssistant
 
         private void ButtonOpenFolderVersion_Click(object sender, RoutedEventArgs e)
         {
-            ModifiedFilesMain.OpenDirectoryVersion();
+            _assistantObjects.ModifiedFilesMain.OpenDirectoryVersion();
         }
 
         private void MenuItemVersionOpenFile(object sender, RoutedEventArgs e)
@@ -520,7 +470,7 @@ namespace _1CProgrammerAssistant
             if (ListModifiedFilesVersionSelectedItem == null)
                 return;
 
-            ViewerFilesMain.OpenFileVersion(ListModifiedFilesVersionSelectedItem.Path);
+            _assistantObjects.ViewerFilesMain.OpenFileVersion(ListModifiedFilesVersionSelectedItem.Path);
         }
 
         #endregion
@@ -531,7 +481,7 @@ namespace _1CProgrammerAssistant
             {
                 ListModifiedFiles.Add(new ModifiedFiles.Models.File(path));
 
-                ModifiedFilesMain.Files = ListModifiedFiles.ToList();
+                _assistantObjects.ModifiedFilesMain.Files = ListModifiedFiles.ToList();
             }
         }
 
@@ -641,67 +591,6 @@ namespace _1CProgrammerAssistant
 
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
-
-        private void HandleText(string text)
-        {
-            _handleResult = false;
-
-            Safe.SafeAction(() => { HandleTextDescriptionsTheMethods(text); });
-            Safe.SafeAction(() => { HandleTextQueryParameters(text); });
-            Safe.SafeAction(() => { HandleTextMakingCode(text); });
-        }
-
-        #region HandleText Methods
-
-        private void HandleTextDescriptionsTheMethods(string text)
-        {
-            if (!_handleResult)
-            {
-                DescriptionsTheMethodsMain.StringMethod = text;
-                if (DescriptionsTheMethodsMain.Making())
-                {
-                    ResultText = DescriptionsTheMethodsMain.Description;
-                    ShowNotification($"Получено описание метода: {DescriptionsTheMethodsMain.MethodName}");
-                    _handleResult = true;
-                }
-            }
-        }
-
-        private void HandleTextQueryParameters(string text)
-        {
-            if (!_handleResult)
-            {
-                QueryParametersMain.QueryText = text;
-                if (QueryParametersMain.Making())
-                {
-                    ResultText = QueryParametersMain.QueryParameters;
-
-                    string message = "Получены параметры запроса";
-                    if (!string.IsNullOrEmpty(QueryParametersMain.NameVariableQueryObject))
-                        message += $": {QueryParametersMain.NameVariableQueryObject.Trim()}";
-
-                    ShowNotification(message);
-                    _handleResult = true;
-                }
-            }
-        }
-
-        private void HandleTextMakingCode(string text)
-        {
-            if (!_handleResult)
-            {
-                MakingCodeMain.SourceText = text;
-                if (MakingCodeMain.Making())
-                {
-                    ResultText = MakingCodeMain.ResultText;
-
-                    ShowNotification("Обработан код");
-                    _handleResult = true;
-                }
-            }
-        }
-
-        #endregion
 
     }
 }
