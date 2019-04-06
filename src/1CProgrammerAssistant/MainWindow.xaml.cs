@@ -19,7 +19,6 @@ namespace _1CProgrammerAssistant
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly AssistantTaskbarIcon _assistantTaskbar = new AssistantTaskbarIcon();
         private readonly AssistantObjects _assistantObjects = new AssistantObjects();
         private readonly GlobalHotKeyManager _hotKeyManager = new GlobalHotKeyManager();
         private readonly ActionClipboard _actionClipboard;
@@ -38,7 +37,7 @@ namespace _1CProgrammerAssistant
         {
             InitializeComponent();
 
-            _actionClipboard = new ActionClipboard(_assistantObjects, _assistantTaskbar);
+            _actionClipboard = new ActionClipboard(_assistantObjects);
 
             _actionClipboard.ChangedSourceTextEvents += (string value) => { SourceText = value; };
             _actionClipboard.ChangedResultTextEvents += (string value) => { ResultText = value; };
@@ -137,7 +136,7 @@ namespace _1CProgrammerAssistant
 
         private void ShowNotification(string message, BalloonIcon icon = BalloonIcon.None)
         {
-            _assistantTaskbar.ShowNotification(message, icon);
+            AssistantTaskbarIcon.ShowNotification(message, icon);
         }
 
         #endregion
@@ -554,7 +553,7 @@ namespace _1CProgrammerAssistant
 
         private void InitializeTaskbarIcon()
         {
-            _assistantTaskbar.InitializeTaskbarIcon(
+            AssistantTaskbarIcon.InitializeTaskbarIcon(
                 
                 () =>
                 {

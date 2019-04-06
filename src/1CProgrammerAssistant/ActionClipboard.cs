@@ -11,19 +11,15 @@ namespace _1CProgrammerAssistant
         internal event ChangedSourceTextEvents ChangedSourceTextEvents;
         internal event ChangedSourceTextEvents ChangedResultTextEvents;
 
-        private readonly AssistantTaskbarIcon _assistantTaskbar = new AssistantTaskbarIcon();
         private readonly AssistantObjects _assistantObjects = new AssistantObjects();
 
         private bool _handleResult;
-        private string _sourceText;
         private string _resultText;
 
-        public ActionClipboard(AssistantObjects assistantObjects, AssistantTaskbarIcon assistantTaskbar)
+        public ActionClipboard(AssistantObjects assistantObjects)
         {
             _assistantObjects = assistantObjects;
-            _assistantTaskbar = assistantTaskbar;
-
-
+            
             ProcessTextInClipboardEvents.ProcessTextInClipboardEvent +=
             () =>
             {
@@ -33,7 +29,6 @@ namespace _1CProgrammerAssistant
             };
         }
 
-        private string SourceText { set { _sourceText = value; ChangedSourceTextEvents?.Invoke(value); } }
         private string ResultText { get => _resultText; set { _resultText = value; ChangedResultTextEvents?.Invoke(value); } }
 
         
@@ -45,7 +40,7 @@ namespace _1CProgrammerAssistant
                 {
                     string textInClipboard = Clipboard.GetText();
 
-                    SourceText = textInClipboard;
+                    ChangedSourceTextEvents?.Invoke(textInClipboard);
 
                     HandleText(textInClipboard);
 
@@ -133,7 +128,7 @@ namespace _1CProgrammerAssistant
 
         private void ShowNotification(string message, BalloonIcon icon = BalloonIcon.None)
         {
-            _assistantTaskbar.ShowNotification(message, icon);
+            AssistantTaskbarIcon.ShowNotification(message, icon);
         }
 
     }

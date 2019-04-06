@@ -14,11 +14,11 @@ using Image = System.Windows.Controls.Image;
 
 namespace _1CProgrammerAssistant
 {
-    internal class AssistantTaskbarIcon
+    internal static class AssistantTaskbarIcon
     {
-        private readonly TaskbarIcon _taskbarIcon;
+        private static readonly TaskbarIcon _taskbarIcon;
 
-        internal AssistantTaskbarIcon()
+        static AssistantTaskbarIcon()
         {
             _taskbarIcon = new TaskbarIcon
             {
@@ -27,7 +27,7 @@ namespace _1CProgrammerAssistant
             };
         }
 
-        internal void InitializeTaskbarIcon(Action ActionShowMainWindow,
+        internal static void InitializeTaskbarIcon(Action ActionShowMainWindow,
                                             Action ActionTopmostWindow)
         {
             #region menuItemShowMainWindow
@@ -126,7 +126,7 @@ namespace _1CProgrammerAssistant
             return elementFactoryAutostart;
         }
 
-        internal void ShowNotification(string message, BalloonIcon icon = BalloonIcon.None)
+        internal static void ShowNotification(string message, BalloonIcon icon = BalloonIcon.None)
         {
             _taskbarIcon.ShowBalloonTip("Помощник 1Сника", message, icon);
         }
