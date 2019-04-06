@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;net47</TargetFrameworks>
     <AssemblyName>DescriptionsTheMethods</AssemblyName>
+    <RootNamespace>_1CProgrammerAssistant.DescriptionsTheMethods</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
