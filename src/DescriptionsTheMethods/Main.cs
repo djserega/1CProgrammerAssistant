@@ -1,12 +1,4 @@
-﻿using _1CProgrammerAssistant.Additions;
-using _1CProgrammerAssistant.DescriptionsTheMethods.Models;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-
-namespace _1CProgrammerAssistant.DescriptionsTheMethods
+﻿namespace _1CProgrammerAssistant.DescriptionsTheMethods
 {
     public class Main
     {
