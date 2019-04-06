@@ -38,7 +38,7 @@ namespace _1CProgrammerAssistant
             };
         }
 
-        private string SourceText { get => _sourceText; set { _sourceText = value; ChangedSourceTextEvents?.Invoke(value); } }
+        private string SourceText { set { _sourceText = value; ChangedSourceTextEvents?.Invoke(value); } }
         private string ResultText { get => _resultText; set { _resultText = value; ChangedResultTextEvents?.Invoke(value); } }
 
         
