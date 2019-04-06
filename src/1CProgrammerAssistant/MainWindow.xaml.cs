@@ -49,7 +49,7 @@ namespace _1CProgrammerAssistant
                 Dispatcher.Invoke(new ThreadStart(delegate
                 {
                     LoadVersionSelectedModifiedFiles();
-                    ShowNotification(
+                    AssistantTaskbarIcon.ShowNotification(
                         $"{modifiedFile.Name}\n{modifiedFile.LastWriteTime.ToString("HH:mm:ss")}",
                         BalloonIcon.Info);
                 }));
@@ -131,16 +131,7 @@ namespace _1CProgrammerAssistant
             => _actionClipboard.SetResultTextToClipboard(true);
 
         #endregion
-
-        #region Notifications
-
-        private void ShowNotification(string message, BalloonIcon icon = BalloonIcon.None)
-        {
-            AssistantTaskbarIcon.ShowNotification(message, icon);
-        }
-
-        #endregion
-
+        
         #region Changes pages
 
         private void ChangePagesAdditions(int newColumn)
@@ -249,7 +240,6 @@ namespace _1CProgrammerAssistant
 
         private ModifiedFiles.Models.File _selectedModifiedFile;
 
-
         #region DependencyProperty
 
         public ObservableCollection<ModifiedFiles.Models.File> ListModifiedFiles
@@ -286,6 +276,7 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
+        #region DataGridModifiedFiles
 
         private void DataGridModifiedFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -308,6 +299,8 @@ namespace _1CProgrammerAssistant
                     ModifiedFilesAddFileByPath(path);
             }
         }
+
+        #endregion
 
         private void EnterDescriptionSelectedModifiedFile(object sender)
         {
