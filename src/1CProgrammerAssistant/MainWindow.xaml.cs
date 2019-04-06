@@ -37,7 +37,7 @@ namespace _1CProgrammerAssistant
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly TaskbarIcon _taskbarIcon;
+        private AssistantTaskbarIcon _assistantTaskbar = new AssistantTaskbarIcon();
         private readonly GlobalHotKeyManager _hotKeyManager = new GlobalHotKeyManager();
         private readonly string[] _namesAddition = new string[3]
         {
@@ -61,12 +61,6 @@ namespace _1CProgrammerAssistant
                     if (_handleResult)
                         SetResultTextToClipboard();
                 };
-
-            _taskbarIcon = new TaskbarIcon
-            {
-                IconSource = new BitmapImage(new Uri("pack://application:,,,/Помощник 1Сника;component/" + "1CProgrammerAssistant.ico")),
-                ToolTipText = "Помощник 1Сника"
-            };
 
             ListModifiedFiles = new ObservableCollection<ModifiedFiles.Models.File>();
 
@@ -115,109 +109,6 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
-        private void InitializeTaskbarIcon()
-        {
-            #region menuItemShowMainWindow
-
-            MenuItem menuItemShowMainWindow = new MenuItem()
-            {
-                Header = "Развернуть окно"
-            };
-            menuItemShowMainWindow.Click += (object sender, RoutedEventArgs e) => { Show(); WindowState = WindowState.Normal; };
-
-            #endregion
-
-            #region menuItemTopmostInWindow
-
-            MenuItem menuItemTopmostInWindow = new MenuItem()
-            {
-                HeaderTemplate = new DataTemplate()
-                {
-                    DataType = typeof(MenuItem),
-                    VisualTree = CreateHeaderTemplate_VisualTree("Поверх всех окон")
-                },
-                IsChecked = Properties.Settings.Default.IsTopmost,
-                IsCheckable = true
-            };
-            menuItemTopmostInWindow.Click += (object sender, RoutedEventArgs e) => 
-            {
-                bool newValueIsTopmost = !Properties.Settings.Default.IsTopmost;
-                Properties.Settings.Default.IsTopmost = newValueIsTopmost;
-                Topmost = newValueIsTopmost;
-            };
-
-            #endregion
-
-            #region menuItemAutostart
-
-            ImageSource IconShield = Imaging.CreateBitmapSourceFromHBitmap(
-               SystemIcons.Shield.ToBitmap().GetHbitmap(),
-               IntPtr.Zero,
-               Int32Rect.Empty,
-               BitmapSizeOptions.FromEmptyOptions());
-
-            MenuItem menuItemAutostart = new MenuItem()
-            {
-                HeaderTemplate = new DataTemplate()
-                {
-                    DataType = typeof(MenuItem),
-                    VisualTree = CreateHeaderTemplate_VisualTree("Запускать при старте системы", IconShield)
-                },
-                ToolTip = "Для изменения значения требуются права администратора",
-                IsChecked = Permission.GetStatusAutostart(),
-                IsCheckable = true
-            };
-            menuItemAutostart.Click += (object sender, RoutedEventArgs e) => { Permission.SetRemoveAutostart(menuItemAutostart.IsChecked); };
-
-            #endregion
-
-            #region menuItemExit
-
-            MenuItem menuItemExit = new MenuItem()
-            {
-                Header = "Выход"
-            };
-            menuItemExit.Click += (object sender, RoutedEventArgs e) => { Application.Current.Shutdown(); };
-
-            #endregion
-
-            _taskbarIcon.ContextMenu = new ContextMenu()
-            {
-                Items =
-                {
-                    menuItemShowMainWindow,
-                    new Separator(),
-                    menuItemTopmostInWindow,
-                    menuItemAutostart,
-                    new Separator(),
-                    menuItemExit
-                }
-            };
-        }
-
-        private static FrameworkElementFactory CreateHeaderTemplate_VisualTree(string header, ImageSource image = null)
-        {
-            FrameworkElementFactory elementFactoryAutostartTextBlock = new FrameworkElementFactory(typeof(TextBlock));
-            elementFactoryAutostartTextBlock.SetValue(TextBlock.TextProperty, header);
-            elementFactoryAutostartTextBlock.SetValue(MarginProperty, new Thickness(0, 0, 5, 0));
-
-            FrameworkElementFactory elementFactoryAutostart = new FrameworkElementFactory(typeof(StackPanel));
-            elementFactoryAutostart.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
-            elementFactoryAutostart.AppendChild(elementFactoryAutostartTextBlock);
-
-            if (image != null)
-            {
-                FrameworkElementFactory elementFactoryAutostartIcon = new FrameworkElementFactory(typeof(Image));
-                elementFactoryAutostartIcon.SetValue(Image.SourceProperty, image);
-                elementFactoryAutostartIcon.SetValue(WidthProperty, 14.0);
-                elementFactoryAutostartIcon.SetValue(HeightProperty, 14.0);
-
-                elementFactoryAutostart.AppendChild(elementFactoryAutostartIcon);
-            }
-
-            return elementFactoryAutostart;
-        }
-
 
         #region Public properties - Additions classes
 
@@ -257,7 +148,7 @@ namespace _1CProgrammerAssistant
 
         private void ProcessTextWithClipboard(bool showMessage = false)
         {
-            SafeAction(() =>
+            Safe.SafeAction(() =>
             {
                 if (Clipboard.ContainsText())
                 {
@@ -276,7 +167,7 @@ namespace _1CProgrammerAssistant
 
         private void SetResultTextToClipboard(bool showMessage = false)
         {
-            SafeAction(() =>
+            Safe.SafeAction(() =>
             {
                 if (!string.IsNullOrEmpty(ResultText))
                 {
@@ -314,7 +205,7 @@ namespace _1CProgrammerAssistant
 
         private void ShowNotification(string message, BalloonIcon icon = BalloonIcon.None)
         {
-            _taskbarIcon.ShowBalloonTip("Помощник 1Сника", message, icon);
+            _assistantTaskbar.ShowNotification(message, icon);
         }
 
         #endregion
@@ -729,6 +620,25 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
+        private void InitializeTaskbarIcon()
+        {
+            _assistantTaskbar.InitializeTaskbarIcon(
+                
+                () =>
+                {
+                    Show(); WindowState = WindowState.Normal;
+                },
+
+                () =>
+                {
+                    bool newValueIsTopmost = !Properties.Settings.Default.IsTopmost;
+                    Properties.Settings.Default.IsTopmost = newValueIsTopmost;
+                    Topmost = newValueIsTopmost;
+                }
+                
+                );
+        }
+
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
 
@@ -736,9 +646,9 @@ namespace _1CProgrammerAssistant
         {
             _handleResult = false;
 
-            SafeAction(() => { HandleTextDescriptionsTheMethods(text); });
-            SafeAction(() => { HandleTextQueryParameters(text); });
-            SafeAction(() => { HandleTextMakingCode(text); });
+            Safe.SafeAction(() => { HandleTextDescriptionsTheMethods(text); });
+            Safe.SafeAction(() => { HandleTextQueryParameters(text); });
+            Safe.SafeAction(() => { HandleTextMakingCode(text); });
         }
 
         #region HandleText Methods
@@ -792,30 +702,6 @@ namespace _1CProgrammerAssistant
         }
 
         #endregion
-
-        private void SafeAction(Action action)
-        {
-            try
-            {
-                action();
-            }
-            catch (Exception ex)
-            {
-                using (EventLog eventLog = new EventLog("Application"))
-                {
-                    eventLog.Source = "Application";
-                    eventLog.WriteEntry(
-                        ex.Message
-                        + "\n" + "\n" +
-                        ex.InnerException?.Message
-                        + "\n" + "\n" +
-                        ex.InnerException?.InnerException?.Message
-                        + "\n" + "\n" +
-                        ex.InnerException?.InnerException?.InnerException?.Message,
-                        EventLogEntryType.Warning);
-                }
-            }
-        }
 
     }
 }

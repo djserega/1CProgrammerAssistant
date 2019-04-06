@@ -71,11 +71,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AssistantTaskbarIcon.cs" />
     <Compile Include="InputBox.xaml.cs">
       <DependentUpon>InputBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Permission.cs" />
     <Compile Include="ProcessTextInClipboardEvents.cs" />
+    <Compile Include="Safe.cs" />
     <Compile Include="UnmanagedCode\GlobalHotKeyManager.cs" />
     <Compile Include="UnmanagedCode\KeyDownArgs.cs" />
     <Compile Include="UnmanagedCode\KeyUpArgs.cs" />
