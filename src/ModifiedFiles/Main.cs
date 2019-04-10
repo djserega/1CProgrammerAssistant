@@ -22,9 +22,12 @@ namespace _1CProgrammerAssistant.ModifiedFiles
 
             Events.CreateNewVersionEvent.CreateNewVersionEvents += (FileInfo modifiedFile) =>
             {
-                _version.CreateNewVersion(modifiedFile, _files[_idFileByPath[modifiedFile.FullName]].DirectoryVersion);
+                if (_idFileByPath.ContainsKey(modifiedFile.FullName))
+                {
+                    _version.CreateNewVersion(modifiedFile, _files[_idFileByPath[modifiedFile.FullName]].DirectoryVersion);
 
-                Events.CreateNewVersionEvent.NewVersionCreated(modifiedFile);
+                    Events.CreateNewVersionEvent.NewVersionCreated(modifiedFile);
+                }
             };
         }
 
