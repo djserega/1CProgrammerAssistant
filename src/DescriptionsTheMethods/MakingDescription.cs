@@ -8,6 +8,7 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
     internal class MakingDescription
     {
         private readonly string _prefixString = "\t\t\t";
+        private readonly string _prefix = "\t";
         private readonly List<Models.ObjectParameter> _parametersMethod = new List<Models.ObjectParameter>();
 
         public MakingDescription(string source)
@@ -47,6 +48,9 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
                 {
                     Description += Source;
                 }
+
+                if (Source.Last() == '\n')
+                    Description += '\n';
             }
         }
 
@@ -84,6 +88,7 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
                         {
                             parametersLeft--;
 
+                            builderWrapParameters.Append(_prefix);
                             builderWrapParameters.Append(_prefixString);
                             builderWrapParameters.Append(itemParameter.Trim());
                             builderWrapParameters.AppendLine(parametersLeft > 0 ? "," : "");
