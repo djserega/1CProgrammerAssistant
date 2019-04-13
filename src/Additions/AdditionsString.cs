@@ -33,5 +33,10 @@ namespace _1CProgrammerAssistant.Additions
 
             return source.Substring(0, length);
         }
+
+        public static bool LeftEquals(this string source, string text, bool ignoreCase = true)
+        {
+            return string.Compare(source.Left(text.Length), text, ignoreCase) == 0;
+        }
     }
 }
