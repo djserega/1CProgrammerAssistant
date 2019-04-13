@@ -5,21 +5,21 @@
 
         #region Constructors
 
-        public ObjectParameter()
+        internal ObjectParameter()
         {
         }
 
-        public ObjectParameter(string name) : this()
+        internal ObjectParameter(string name) : this()
         {
             Name = name;
         }
 
-        public ObjectParameter(string name, string type) : this(name)
+        internal ObjectParameter(string name, string type) : this(name)
         {
             Type = type;
         }
 
-        public ObjectParameter(string name, string type, string description) : this(name, type)
+        internal ObjectParameter(string name, string type, string description) : this(name, type)
         {
             Description = description;
         }
