@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MakingCode
@@ -53,6 +54,9 @@ namespace MakingCode
                 }
                 previousMatch = match;
             }
+
+            if (Source.Last() == '\n')
+                _textBuilder.Append('\n');
 
             return _textBuilder.ToString();
         }
