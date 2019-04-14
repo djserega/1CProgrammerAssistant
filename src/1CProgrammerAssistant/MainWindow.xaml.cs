@@ -96,7 +96,6 @@ namespace _1CProgrammerAssistant
             get { return (string)GetValue(SourceTextProperty); }
             set { SetValue(SourceTextProperty, value); }
         }
-        // Using a DependencyProperty as the backing store for SourceText.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SourceTextProperty =
             DependencyProperty.Register("SourceText", typeof(string), typeof(MainWindow), new PropertyMetadata(null));
 
@@ -106,7 +105,6 @@ namespace _1CProgrammerAssistant
             set { SetValue(ResultTextProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ResultText.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ResultTextProperty =
             DependencyProperty.Register("ResultText", typeof(string), typeof(MainWindow), new PropertyMetadata(null));
 
@@ -114,21 +112,12 @@ namespace _1CProgrammerAssistant
 
         #region Button
 
-        private void ButtonDescriptionQuery_Click(object sender, RoutedEventArgs e)
-            => ClickButtonsAdditions(sender);
-        private void ButtonModifiedFiles_Click(object sender, RoutedEventArgs e)
-            => ClickButtonsAdditions(sender);
-        private void ButtonMethodStore_Click(object sender, RoutedEventArgs e)
-            => ClickButtonsAdditions(sender);
-
-        private void ClickButtonsAdditions(object sender)
-            => ChangePagesAdditions(Grid.GetColumn((Button)sender));
-
-        private void ButtonProcessingTextInClipboard_Click(object sender, RoutedEventArgs e)
-            => _actionClipboard.ProcessTextWithClipboard(true);
-
-        private void ButtonCopyResultToClipboard_Click(object sender, RoutedEventArgs e)
-            => _actionClipboard.SetResultTextToClipboard(true);
+        private void ButtonDescriptionQuery_Click(object sender, RoutedEventArgs e) => ClickButtonsAdditions(sender);
+        private void ButtonModifiedFiles_Click(object sender, RoutedEventArgs e) => ClickButtonsAdditions(sender);
+        private void ButtonMethodStore_Click(object sender, RoutedEventArgs e) => ClickButtonsAdditions(sender);
+        private void ClickButtonsAdditions(object sender) => ChangePagesAdditions(Grid.GetColumn((Button)sender));
+        private void ButtonProcessingTextInClipboard_Click(object sender, RoutedEventArgs e) => _actionClipboard.ProcessTextWithClipboard(true);
+        private void ButtonCopyResultToClipboard_Click(object sender, RoutedEventArgs e) => _actionClipboard.SetResultTextToClipboard(true);
 
         #endregion
         
@@ -137,18 +126,7 @@ namespace _1CProgrammerAssistant
         private void ChangePagesAdditions(int newColumn)
         {
             if (_previousPageID == null)
-            {
-                for (int i = 0; i < _namesAddition.Count(); i++)
-                {
-                    Border findedBorder = GetFindedBorderByPageID(i);
-                    DoubleAnimation animation = new DoubleAnimation(0d, new Duration(TimeSpan.FromMilliseconds(0)))
-                    {
-                        EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut },
-                    };
-                    findedBorder.BeginAnimation(WidthProperty, animation);
-                    findedBorder.Visibility = Visibility.Collapsed;
-                }
-            }
+                CollapsedPages();
 
             Button buttonNewPage = null;
             Button buttonPreviousPage = null;
@@ -178,6 +156,20 @@ namespace _1CProgrammerAssistant
             ChangePagesAdditionsInitializeAnimation(buttonNewPage, buttonPreviousPage, borderVisible, borderCollapsed, gridVisible, gridCollapsed);
 
             _previousPageID = newColumn;
+        }
+
+        private void CollapsedPages()
+        {
+            for (int i = 0; i < _namesAddition.Count(); i++)
+            {
+                Border findedBorder = GetFindedBorderByPageID(i);
+                DoubleAnimation animation = new DoubleAnimation(0d, new Duration(TimeSpan.FromMilliseconds(0)))
+                {
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut },
+                };
+                findedBorder.BeginAnimation(WidthProperty, animation);
+                findedBorder.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void ChangePagesAdditionsInitializeAnimation(
@@ -223,15 +215,11 @@ namespace _1CProgrammerAssistant
         }
 
         private Button GetFindedButtonByPageID(int i) => (Button)FindName(GetNameAdditionsButton(i));
-
         private Border GetFindedBorderByPageID(int i) => (Border)FindName(GetNameAdditionsBorder(i));
-
         private Grid GetFindedGridByPageID(int i) => (Grid)FindName(GetNameAdditionsPage(i));
 
         private string GetNameAdditionsButton(int i) => "Button" + _namesAddition[i];
-
         private string GetNameAdditionsBorder(int i) => "Border" + _namesAddition[i];
-
         private string GetNameAdditionsPage(int i) => "Additions" + _namesAddition[i];
 
         #endregion
@@ -248,7 +236,6 @@ namespace _1CProgrammerAssistant
             set { SetValue(ListModifiedFilesProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ModifiedFiles.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ListModifiedFilesProperty =
             DependencyProperty.Register("ListModifiedFiles", typeof(ObservableCollection<ModifiedFiles.Models.File>), typeof(MainWindow), null);
 
@@ -259,7 +246,6 @@ namespace _1CProgrammerAssistant
             set { SetValue(ListModifiedFilesVersionProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ListModifiedFilesVersion.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ListModifiedFilesVersionProperty =
             DependencyProperty.Register("ListModifiedFilesVersion", typeof(ObservableCollection<ModifiedFiles.Models.Version>), typeof(MainWindow), null);
 
@@ -270,7 +256,6 @@ namespace _1CProgrammerAssistant
             set { SetValue(ListModifiedFilesVersionSelectedItemProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ListModifiedFilesVersionSelectedItem.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ListModifiedFilesVersionSelectedItemProperty =
             DependencyProperty.Register("ListModifiedFilesVersionSelectedItem", typeof(ModifiedFiles.Models.Version), typeof(MainWindow), null);
 
@@ -324,7 +309,6 @@ namespace _1CProgrammerAssistant
                 DataGridModifiedFiles.Items.Refresh();
             }
         }
-
 
         public ModifiedFiles.Models.File SelectedModifiedFile
         {
@@ -407,7 +391,7 @@ namespace _1CProgrammerAssistant
             {
                 CheckFileExists = true,
                 CheckPathExists = true,
-                Filter = "Внешние обработки|*.epf|Внешние отчёты|*.erf|Внешние обработки и отчёты|*.epf;*.erf",
+                Filter = "Внешние обработки и отчёты|*.epf;*.erf|Внешние обработки|*.epf|Внешние отчёты|*.erf",
                 Multiselect = true,
                 ReadOnlyChecked = true,
                 ShowReadOnly = true,
@@ -560,7 +544,7 @@ namespace _1CProgrammerAssistant
                     Topmost = newValueIsTopmost;
                 }
                 
-                );
+            );
         }
 
         private Visibility ReverseValueVisibility(Visibility currentVisibility)

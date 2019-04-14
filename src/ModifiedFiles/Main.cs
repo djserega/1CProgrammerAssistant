@@ -5,7 +5,6 @@ using System.IO;
 
 namespace _1CProgrammerAssistant.ModifiedFiles
 {
-
     public class Main
     {
         private List<Models.File> _files = new List<Models.File>();
