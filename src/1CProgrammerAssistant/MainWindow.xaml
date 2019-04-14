@@ -157,7 +157,7 @@
                                      HorizontalScrollBarVisibility="Auto"/>
                             <StackPanel HorizontalAlignment="Right"
                                         VerticalAlignment="Top"
-                                        Orientation="Vertical"> 
+                                        Orientation="Vertical">
                                 <Button ToolTip="Копировать в буфер обмена"
                                         BorderThickness="0"
                                         Background="{x:Null}"
@@ -290,23 +290,74 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        
-                        <StackPanel Grid.Row="0"
-                                    Orientation="Horizontal"
-                                    Margin="2 2">
-                            <Button Margin="2"
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel Grid.Column="0"
+                                        Orientation="Horizontal"
+                                        Margin="2 2">
+                                <Button Margin="2"
                                     ToolTip="Новый метод">
-                                <md:PackIcon Kind="CirclesAdd"/>
-                            </Button>
-                            <Button Margin="2"
+                                    <md:PackIcon Kind="CirclesAdd"/>
+                                </Button>
+                                <Button Margin="2"
                                     ToolTip="Редактировать">
-                                <md:PackIcon Kind="Edit"/>
-                            </Button>
-                            <Button Margin="2"
+                                    <md:PackIcon Kind="Edit"/>
+                                </Button>
+                                <Button Margin="2"
                                     ToolTip="Удаление файла">
-                                <md:PackIcon Kind="MinusCircleOutline"/>
-                            </Button>
-                        </StackPanel>
+                                    <md:PackIcon Kind="MinusCircleOutline"/>
+                                </Button>
+                            </StackPanel>
+
+                            <Grid Grid.Column="1"
+                                  Margin="5 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0"
+                                            Orientation="Horizontal">
+                                    <Label Content="Фильтр:"
+                                           FontWeight="DemiBold"
+                                           VerticalAlignment="Bottom"/>
+
+                                    <Label Content="Группа"
+                                           VerticalAlignment="Bottom"/>
+                                    <CheckBox VerticalAlignment="Bottom"
+                                              Margin="0 4"/>
+
+                                    <Label Content="Тип"
+                                           VerticalAlignment="Bottom"/>
+                                    <CheckBox VerticalAlignment="Bottom"
+                                              Margin="0 4"/>
+
+                                    <Label Content="Модуль"
+                                           VerticalAlignment="Bottom"/>
+                                    <CheckBox VerticalAlignment="Bottom"
+                                              Margin="0 4"/>
+
+                                    <Label Content="Метод"
+                                           VerticalAlignment="Bottom"/>
+                                    <CheckBox VerticalAlignment="Bottom"
+                                              Margin="0 4"/>
+                                </StackPanel>
+
+                                <Label Grid.Column="1"
+                                       VerticalAlignment="Bottom"
+                                       FontWeight="DemiBold"
+                                       Content="Поиск:"/>
+                                <TextBox Grid.Column="2"/>
+
+                            </Grid>
+                        </Grid>
+
 
                         <DataGrid Grid.Row="1">
                             <DataGrid.Columns>
@@ -315,11 +366,11 @@
                                 <DataGridTextColumn Header="Модуль"/>
                                 <DataGridTextColumn Header="Метод"/>
                             </DataGrid.Columns>
-                            
+
                         </DataGrid>
-                        
+
                     </Grid>
-                    
+
                 </Border>
             </Grid>
 
