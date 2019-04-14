@@ -18,7 +18,7 @@ namespace MakingCode
             {
                 TypeSourceCode = TypeSourceCode.CallMethod;
             }
-            if (sourceCopy.StartsWith("Если", true, null)
+            else if (sourceCopy.StartsWith("Если", true, null)
                 && sourceCopy.EndsWith("Тогда", true, null))
             {
                 TypeSourceCode = TypeSourceCode.Condition;
