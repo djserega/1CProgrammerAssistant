@@ -23,6 +23,11 @@ namespace MakingCode
             {
                 TypeSourceCode = TypeSourceCode.Condition;
             }
+            else if (sourceCopy.StartsWith("Возврат", true, null)
+                && sourceCopy.EndsWith(";", true, null))
+            {
+                TypeSourceCode = TypeSourceCode.ReturnCondition;
+            }
         }
 
         internal string Source { get; }
@@ -37,6 +42,8 @@ namespace MakingCode
                     return new MakingTextCallMethod(Source, PrefixText).MakeText();
                 case TypeSourceCode.Condition:
                     return new MakingTextCondition(Source, PrefixText).MakeText();
+                case TypeSourceCode.ReturnCondition:
+                    return new MakingTextReturnCondition(Source, PrefixText).MakeText();
                 case TypeSourceCode.None:
                 default:
                     return string.Empty;
