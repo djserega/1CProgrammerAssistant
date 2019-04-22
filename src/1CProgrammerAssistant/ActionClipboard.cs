@@ -11,12 +11,12 @@ namespace _1CProgrammerAssistant
         internal event ChangedSourceTextEvents ChangedSourceTextEvents;
         internal event ChangedSourceTextEvents ChangedResultTextEvents;
 
-        private readonly AssistantObjects _assistantObjects = new AssistantObjects();
+        private readonly AssistantObjects _assistantObjects;
 
         private bool _handleResult;
         private string _resultText;
 
-        public ActionClipboard(AssistantObjects assistantObjects)
+        public ActionClipboard(ref AssistantObjects assistantObjects)
         {
             _assistantObjects = assistantObjects;
             

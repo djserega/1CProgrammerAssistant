@@ -37,7 +37,7 @@ namespace _1CProgrammerAssistant
         {
             InitializeComponent();
 
-            _actionClipboard = new ActionClipboard(_assistantObjects);
+            _actionClipboard = new ActionClipboard(ref _assistantObjects);
 
             _actionClipboard.ChangedSourceTextEvents += (string value) => { SourceText = value; };
             _actionClipboard.ChangedResultTextEvents += (string value) => { ResultText = value; };
@@ -542,8 +542,7 @@ namespace _1CProgrammerAssistant
                     bool newValueIsTopmost = !Properties.Settings.Default.IsTopmost;
                     Properties.Settings.Default.IsTopmost = newValueIsTopmost;
                     Topmost = newValueIsTopmost;
-                }
-                
+                }  
             );
         }
 
