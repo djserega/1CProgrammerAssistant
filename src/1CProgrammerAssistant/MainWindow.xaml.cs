@@ -549,5 +549,15 @@ namespace _1CProgrammerAssistant
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
 
+        private void ButtonMethodStoreAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var viewElementStore = new Views.MethodStore.ElementStore
+            {
+                Left = Left + 20,
+                Top = Top + 20,
+                Owner = this
+            };
+            viewElementStore.ShowDialog();
+        }
     }
 }

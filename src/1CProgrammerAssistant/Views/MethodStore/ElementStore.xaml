@@ -1,0 +1,62 @@
+﻿<Window x:Class="_1CProgrammerAssistant.Views.MethodStore.ElementStore"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_1CProgrammerAssistant.Views.MethodStore"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="ElementStore" Height="250" Width="500"
+        x:Name="WindowElementStore">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0"
+                    Orientation="Horizontal"
+                    Margin="2 2">
+            <Button Margin="2"
+                    ToolTip="Записать"
+                    Click="ButtonSave_Click">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon VerticalAlignment="Center" Kind="ContentSave"/>
+                    <TextBlock Margin="5 0">Записать</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Margin="2"
+                    ToolTip="Закрыть">
+                <md:PackIcon Kind="Delete"/>
+            </Button>
+        </StackPanel>
+
+        <Grid Grid.Row="1"
+              Margin="2 0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <Label Content="ID:"/>
+                <Label Content="Группа:"/>
+                <Label Content="Тип:"/>
+                <Label Content="Модуль:"/>
+                <Label Content="Метод:"/>
+                <Label Content="Комментарий:"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="{Binding Path=ID}" Margin="0 5"/>
+                <TextBox Text="{Binding Path=Group}"/>
+                <TextBox Text="{Binding Path=Type}"/>
+                <TextBox Text="{Binding Path=Module}"/>
+                <TextBox Text="{Binding Path=Method}"/>
+                <TextBox Text="{Binding Path=Comment}"/>
+            </StackPanel>
+
+        </Grid>
+
+    </Grid>
+</Window>
