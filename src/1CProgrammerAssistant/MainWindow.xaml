@@ -368,6 +368,7 @@
                                   Grid.Row="1"
                                   Background="{x:Null}"
                                   ItemsSource="{Binding MethodStoreListMethod}"
+                                  SelectedItem="{Binding MethodStoreListMethodSelectedItem}"
                                   AutoGenerateColumns="False"
                                   IsReadOnly="True">
                             <DataGrid.Columns>

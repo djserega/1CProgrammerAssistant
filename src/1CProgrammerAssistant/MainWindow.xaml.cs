@@ -530,7 +530,7 @@ namespace _1CProgrammerAssistant
 
         #region Addition Method store
 
-
+        #region DependencyProperty
 
         public ObservableCollection<MethodStore.Models.ElementStore> MethodStoreListMethod
         {
@@ -538,11 +538,22 @@ namespace _1CProgrammerAssistant
             set { SetValue(MethodStoreListMethodProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for MethodStoreListMethod.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MethodStoreListMethodProperty =
             DependencyProperty.Register("MethodStoreListMethod", typeof(ObservableCollection<MethodStore.Models.ElementStore>), typeof(MainWindow), null);
 
 
+        public MethodStore.Models.ElementStore MethodStoreListMethodSelectedItem
+        {
+            get { return (MethodStore.Models.ElementStore)GetValue(MyPropertyProperty); }
+            set { SetValue(MyPropertyProperty, value); }
+        }
+
+        public static readonly DependencyProperty MyPropertyProperty =
+            DependencyProperty.Register("MethodStoreListMethodSelectedItem", typeof(MethodStore.Models.ElementStore), typeof(MainWindow), null);
+
+        #endregion
+
+        #region Button
 
         private void ButtonMethodStoreAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -565,9 +576,9 @@ namespace _1CProgrammerAssistant
             _assistantObjects.MethodStoreMain.LoadMethod();
 
             MethodStoreListMethod = _assistantObjects.MethodStoreMain.ListMethods;
-
-            //DataGridMethodStoreListMethods.Items.Refresh();
         }
+
+        #endregion
 
         #endregion
 
