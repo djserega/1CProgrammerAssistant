@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using Events = _1CProgrammerAssistant.MethodStore.Events;
 using Models = _1CProgrammerAssistant.MethodStore.Models;
 
 namespace _1CProgrammerAssistant.Views.MethodStore
@@ -28,6 +29,8 @@ namespace _1CProgrammerAssistant.Views.MethodStore
 
             if (id == null)
                 _refObj = new Models.ElementStore();
+            else
+                _refObj = Events.LoadElementStoreEvent.Load((int)id);
 
             DataContext = _refObj;
         }
