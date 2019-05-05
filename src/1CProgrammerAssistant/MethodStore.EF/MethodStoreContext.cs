@@ -26,6 +26,7 @@ namespace _1CProgrammerAssistant.MethodStore.EF
             Events.UpdateElementStoreEvent.UpdateElementStoreEvents += UpdateElementStores;
             Events.LoadElementsStoreEvent.LoadElementsStoreEvents += GetElementsStores;
             Events.LoadElementStoreEvent.LoadElementStoreEvents += GetElementStores;
+            Events.RemoveElementStoreEvent.RemoveElementStoreEvents += RemoveElementStores;
         }
 
         public DbSet<Models.ElementStore> ElementStores { get; set; }
@@ -69,5 +70,13 @@ namespace _1CProgrammerAssistant.MethodStore.EF
             return elementStore;
         }
 
+        private void RemoveElementStores(int id)
+        {
+            Models.ElementStore findedElement = GetElementStores(id);
+
+            ElementStores.Remove(findedElement);
+
+            Safe.SafeAction(() => SaveChanges());
+        }
     }
 }
