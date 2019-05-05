@@ -15,7 +15,7 @@ namespace _1CProgrammerAssistant.MethodStore.Models
 
         public void Save()
         {
-
+            Events.UpdateElementStoreEvent.Update(this);
         }
     }
 }
