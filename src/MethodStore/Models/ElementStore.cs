@@ -7,11 +7,11 @@ namespace _1CProgrammerAssistant.MethodStore.Models
     public class ElementStore
     {
         public int ID { get; set; }
-        public string Group { get; set; }
-        public string Type { get; set; }
-        public string Module { get; set; }
-        public string Method { get; set; }
-        public string Comment { get; set; }
+        public string Group { get; set; } = string.Empty;
+        public string Type { get; set; } = string.Empty;
+        public string Module { get; set; } = string.Empty;
+        public string Method { get; set; } = string.Empty;
+        public string Comment { get; set; } = string.Empty;
 
         public void Save()
         {
