@@ -19,6 +19,8 @@ namespace _1CProgrammerAssistant
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Fields
+
         private readonly AssistantObjects _assistantObjects = new AssistantObjects();
         private readonly GlobalHotKeyManager _hotKeyManager = new GlobalHotKeyManager();
         private readonly ActionClipboard _actionClipboard;
@@ -30,6 +32,8 @@ namespace _1CProgrammerAssistant
             "MethodStore"
         };
         private int? _previousPageID = null;
+
+        #endregion
 
         #region Window event
 
