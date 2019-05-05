@@ -89,35 +89,12 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
-        #region DependencyProperty
-
-        public string SourceText
-        {
-            get { return (string)GetValue(SourceTextProperty); }
-            set { SetValue(SourceTextProperty, value); }
-        }
-        public static readonly DependencyProperty SourceTextProperty =
-            DependencyProperty.Register("SourceText", typeof(string), typeof(MainWindow), new PropertyMetadata(null));
-
-        public string ResultText
-        {
-            get { return (string)GetValue(ResultTextProperty); }
-            set { SetValue(ResultTextProperty, value); }
-        }
-
-        public static readonly DependencyProperty ResultTextProperty =
-            DependencyProperty.Register("ResultText", typeof(string), typeof(MainWindow), new PropertyMetadata(null));
-
-        #endregion
-
         #region Button
 
         private void ButtonDescriptionQuery_Click(object sender, RoutedEventArgs e) => ClickButtonsAdditions(sender);
         private void ButtonModifiedFiles_Click(object sender, RoutedEventArgs e) => ClickButtonsAdditions(sender);
         private void ButtonMethodStore_Click(object sender, RoutedEventArgs e) { ClickButtonsAdditions(sender); InitializeMethodStore(); }
         private void ClickButtonsAdditions(object sender) => ChangePagesAdditions(Grid.GetColumn((Button)sender));
-        private void ButtonProcessingTextInClipboard_Click(object sender, RoutedEventArgs e) => _actionClipboard.ProcessTextWithClipboard(true);
-        private void ButtonCopyResultToClipboard_Click(object sender, RoutedEventArgs e) => _actionClipboard.SetResultTextToClipboard(true);
 
         #endregion
         
@@ -221,6 +198,38 @@ namespace _1CProgrammerAssistant
         private string GetNameAdditionsButton(int i) => "Button" + _namesAddition[i];
         private string GetNameAdditionsBorder(int i) => "Border" + _namesAddition[i];
         private string GetNameAdditionsPage(int i) => "Additions" + _namesAddition[i];
+
+        #endregion
+
+        #region Addition DescriptionsTheMethods, MakingCode, QueryParameters
+
+        #region DependencyProperty
+
+        public string SourceText
+        {
+            get { return (string)GetValue(SourceTextProperty); }
+            set { SetValue(SourceTextProperty, value); }
+        }
+        public static readonly DependencyProperty SourceTextProperty =
+            DependencyProperty.Register("SourceText", typeof(string), typeof(MainWindow), new PropertyMetadata(null));
+
+        public string ResultText
+        {
+            get { return (string)GetValue(ResultTextProperty); }
+            set { SetValue(ResultTextProperty, value); }
+        }
+
+        public static readonly DependencyProperty ResultTextProperty =
+            DependencyProperty.Register("ResultText", typeof(string), typeof(MainWindow), new PropertyMetadata(null));
+
+        #endregion
+
+        #region Button
+
+        private void ButtonProcessingTextInClipboard_Click(object sender, RoutedEventArgs e) => _actionClipboard.ProcessTextWithClipboard(true);
+        private void ButtonCopyResultToClipboard_Click(object sender, RoutedEventArgs e) => _actionClipboard.SetResultTextToClipboard(true);
+
+        #endregion
 
         #endregion
 
