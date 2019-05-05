@@ -306,11 +306,13 @@
                                     <md:PackIcon Kind="CirclesAdd"/>
                                 </Button>
                                 <Button Margin="2"
-                                        ToolTip="Редактировать">
+                                        ToolTip="Редактировать"
+                                        Click="ButtonMethodStoreEdit_Click">
                                     <md:PackIcon Kind="Edit"/>
                                 </Button>
                                 <Button Margin="2"
-                                        ToolTip="Удаление файла">
+                                        ToolTip="Удаление файла"
+                                        Click="ButtonMethodStoreRemove_Click">
                                     <md:PackIcon Kind="MinusCircleOutline"/>
                                 </Button>
                                 <Button Margin="2"

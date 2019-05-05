@@ -566,7 +566,41 @@ namespace _1CProgrammerAssistant
 
         private void ButtonMethodStoreAdd_Click(object sender, RoutedEventArgs e)
         {
-            var viewElementStore = new Views.MethodStore.ElementStore
+            OpenFormMethodStoreElement();
+        }
+
+        private void ButtonMethodStoreEdit_Click(object sender, RoutedEventArgs e)
+        {
+            if (MethodStoreListMethodSelectedItem == null)
+            {
+                MessageBox.Show("Элемент не выбран.");
+                return;
+            }
+
+            OpenFormMethodStoreElement(MethodStoreListMethodSelectedItem.ID);
+        }
+
+        private void ButtonMethodStoreRemove_Click(object sender, RoutedEventArgs e)
+        {
+            if (MethodStoreListMethodSelectedItem == null)
+            {
+                MessageBox.Show("Элемент не выбран.");
+                return;
+            }
+
+            MethodStore.Events.RemoveElementStoreEvent.Remove(MethodStoreListMethodSelectedItem.ID);
+        }
+
+        private void ButtonMethodStoreUpdateList_Click(object sender, RoutedEventArgs e)
+        {
+            InitializeMethodStore();
+        }
+
+        #endregion
+
+        private void OpenFormMethodStoreElement(int? id = null)
+        {
+            var viewElementStore = new Views.MethodStore.ElementStore(id)
             {
                 Left = Left + 20,
                 Top = Top + 20,
@@ -575,19 +609,12 @@ namespace _1CProgrammerAssistant
             viewElementStore.ShowDialog();
         }
 
-        private void ButtonMethodStoreUpdateList_Click(object sender, RoutedEventArgs e)
-        {
-            InitializeMethodStore();
-        }
-
         private void InitializeMethodStore()
         {
             _assistantObjects.MethodStoreMain.LoadMethod();
 
             MethodStoreListMethod = _assistantObjects.MethodStoreMain.ListMethods;
         }
-
-        #endregion
 
         #endregion
 
@@ -611,6 +638,5 @@ namespace _1CProgrammerAssistant
 
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
-
     }
 }
