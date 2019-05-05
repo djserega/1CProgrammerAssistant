@@ -114,7 +114,7 @@ namespace _1CProgrammerAssistant
 
         private void ButtonDescriptionQuery_Click(object sender, RoutedEventArgs e) => ClickButtonsAdditions(sender);
         private void ButtonModifiedFiles_Click(object sender, RoutedEventArgs e) => ClickButtonsAdditions(sender);
-        private void ButtonMethodStore_Click(object sender, RoutedEventArgs e) => ClickButtonsAdditions(sender);
+        private void ButtonMethodStore_Click(object sender, RoutedEventArgs e) { ClickButtonsAdditions(sender); InitializeMethodStore(); }
         private void ClickButtonsAdditions(object sender) => ChangePagesAdditions(Grid.GetColumn((Button)sender));
         private void ButtonProcessingTextInClipboard_Click(object sender, RoutedEventArgs e) => _actionClipboard.ProcessTextWithClipboard(true);
         private void ButtonCopyResultToClipboard_Click(object sender, RoutedEventArgs e) => _actionClipboard.SetResultTextToClipboard(true);
@@ -528,6 +528,49 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
+        #region Addition Method store
+
+
+
+        public ObservableCollection<MethodStore.Models.ElementStore> MethodStoreListMethod
+        {
+            get { return (ObservableCollection<MethodStore.Models.ElementStore>)GetValue(MethodStoreListMethodProperty); }
+            set { SetValue(MethodStoreListMethodProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MethodStoreListMethod.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MethodStoreListMethodProperty =
+            DependencyProperty.Register("MethodStoreListMethod", typeof(ObservableCollection<MethodStore.Models.ElementStore>), typeof(MainWindow), null);
+
+
+
+        private void ButtonMethodStoreAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var viewElementStore = new Views.MethodStore.ElementStore
+            {
+                Left = Left + 20,
+                Top = Top + 20,
+                Owner = this
+            };
+            viewElementStore.ShowDialog();
+        }
+
+        private void ButtonMethodStoreUpdateList_Click(object sender, RoutedEventArgs e)
+        {
+            InitializeMethodStore();
+        }
+
+        private void InitializeMethodStore()
+        {
+            _assistantObjects.MethodStoreMain.LoadMethod();
+
+            MethodStoreListMethod = _assistantObjects.MethodStoreMain.ListMethods;
+
+            //DataGridMethodStoreListMethods.Items.Refresh();
+        }
+
+        #endregion
+
         private void InitializeTaskbarIcon()
         {
             AssistantTaskbarIcon.InitializeTaskbarIcon(
@@ -549,15 +592,5 @@ namespace _1CProgrammerAssistant
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
 
-        private void ButtonMethodStoreAdd_Click(object sender, RoutedEventArgs e)
-        {
-            var viewElementStore = new Views.MethodStore.ElementStore
-            {
-                Left = Left + 20,
-                Top = Top + 20,
-                Owner = this
-            };
-            viewElementStore.ShowDialog();
-        }
     }
 }

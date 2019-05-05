@@ -60,7 +60,7 @@
                     Width="150"
                     Background="{DynamicResource MaterialDesignFlatButtonRipple}"
                     Content="Методы"
-                    Visibility="Collapsed"
+                    Visibility="Visible"
                     Click="ButtonMethodStore_Click"/>
 
             <Border x:Name="BorderDescriptionQuery"
@@ -278,7 +278,7 @@
             </Grid>
 
             <Grid x:Name="AdditionsMethodStore"
-                  Visibility="Collapsed"
+                  Visibility="Visible"
                   Width="{Binding ElementName=GridParent, Path=ActualWidth}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="31*"/>
@@ -301,16 +301,22 @@
                                         Orientation="Horizontal"
                                         Margin="2 2">
                                 <Button Margin="2"
-                                    ToolTip="Новый метод">
+                                        ToolTip="Новый метод"
+                                        Click="ButtonMethodStoreAdd_Click">
                                     <md:PackIcon Kind="CirclesAdd"/>
                                 </Button>
                                 <Button Margin="2"
-                                    ToolTip="Редактировать">
+                                        ToolTip="Редактировать">
                                     <md:PackIcon Kind="Edit"/>
                                 </Button>
                                 <Button Margin="2"
-                                    ToolTip="Удаление файла">
+                                        ToolTip="Удаление файла">
                                     <md:PackIcon Kind="MinusCircleOutline"/>
+                                </Button>
+                                <Button Margin="2"
+                                        ToolTip="Обновить список методов"
+                                        Click="ButtonMethodStoreUpdateList_Click">
+                                    <md:PackIcon Kind="Update"/>
                                 </Button>
                             </StackPanel>
 
@@ -358,13 +364,17 @@
                             </Grid>
                         </Grid>
 
-
-                        <DataGrid Grid.Row="1">
+                        <DataGrid x:Name="DataGridMethodStoreListMethods"
+                                  Grid.Row="1"
+                                  Background="{x:Null}"
+                                  ItemsSource="{Binding MethodStoreListMethod}"
+                                  AutoGenerateColumns="False"
+                                  IsReadOnly="True">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Группа"/>
-                                <DataGridTextColumn Header="Тип"/>
-                                <DataGridTextColumn Header="Модуль"/>
-                                <DataGridTextColumn Header="Метод"/>
+                                <DataGridTextColumn Header="Группа"     Binding="{Binding Group}"/>
+                                <DataGridTextColumn Header="Тип"        Binding="{Binding Type}"/>
+                                <DataGridTextColumn Header="Модуль"     Binding="{Binding Module}"/>
+                                <DataGridTextColumn Header="Метод"      Binding="{Binding Method}"/>
                             </DataGrid.Columns>
 
                         </DataGrid>
