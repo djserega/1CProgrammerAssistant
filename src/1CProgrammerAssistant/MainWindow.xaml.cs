@@ -446,7 +446,7 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
-        private void ModifiedFilesAddFileByPath(string path)
+           private void ModifiedFilesAddFileByPath(string path)
         {
             if (ListModifiedFiles.FirstOrDefault(f => f.Path == path) == null)
             {
@@ -564,6 +564,18 @@ namespace _1CProgrammerAssistant
         public static readonly DependencyProperty MyPropertyProperty =
             DependencyProperty.Register("MethodStoreListMethodSelectedItem", typeof(MethodStore.Models.ElementStore), typeof(MainWindow), null);
 
+
+        public string FilterMethodStore
+        {
+            get { return (string)GetValue(FilterMethodStoreProperty); }
+            set { SetValue(FilterMethodStoreProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for FilterMethodStore.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty FilterMethodStoreProperty =
+            DependencyProperty.Register("FilterMethodStore", typeof(string), typeof(MainWindow), null);
+
+
         #endregion
 
         #region Button
@@ -575,13 +587,7 @@ namespace _1CProgrammerAssistant
 
         private void ButtonMethodStoreEdit_Click(object sender, RoutedEventArgs e)
         {
-            if (MethodStoreListMethodSelectedItem == null)
-            {
-                MessageBox.Show("Элемент не выбран.");
-                return;
-            }
-
-            OpenFormMethodStoreElement(MethodStoreListMethodSelectedItem.ID);
+            OpenEditFormMethodStoreElement();
         }
 
         private void ButtonMethodStoreRemove_Click(object sender, RoutedEventArgs e)
@@ -602,6 +608,33 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
+        #region DataGridMethodStore
+
+        private void DataGridMethodStore_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            OpenEditFormMethodStoreElement();
+        }
+
+        private void DataGridMethodStore_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void DataGridMethodStore_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+
+            if (e.Key == Key.Enter)
+                OpenEditFormMethodStoreElement();
+            else
+            {
+                TextBoxFilterMethodStore.Focus();
+                //FilterMethodStore += e.Key.ToString();
+            }
+        }
+
+        #endregion
+
         private void OpenFormMethodStoreElement(int? id = null)
         {
             var viewElementStore = new Views.MethodStore.ElementStore(id)
@@ -618,6 +651,17 @@ namespace _1CProgrammerAssistant
             _assistantObjects.MethodStoreMain.LoadMethod();
 
             MethodStoreListMethod = _assistantObjects.MethodStoreMain.ListMethods;
+        }
+
+        private void OpenEditFormMethodStoreElement()
+        {
+            if (MethodStoreListMethodSelectedItem == null)
+            {
+                MessageBox.Show("Элемент не выбран.");
+                return;
+            }
+
+            OpenFormMethodStoreElement(MethodStoreListMethodSelectedItem.ID);
         }
 
         #endregion

@@ -361,7 +361,9 @@
                                        VerticalAlignment="Bottom"
                                        FontWeight="DemiBold"
                                        Content="Поиск:"/>
-                                <TextBox Grid.Column="2"/>
+                                <TextBox Grid.Column="2"
+                                         x:Name="TextBoxFilterMethodStore"
+                                         Text="{Binding FilterMethodStore}"/>
 
                             </Grid>
                         </Grid>
@@ -372,7 +374,10 @@
                                   ItemsSource="{Binding MethodStoreListMethod}"
                                   SelectedItem="{Binding MethodStoreListMethodSelectedItem}"
                                   AutoGenerateColumns="False"
-                                  IsReadOnly="True">
+                                  IsReadOnly="True"
+                                  MouseDoubleClick="DataGridMethodStore_MouseDoubleClick"
+                                  KeyDown="DataGridMethodStore_KeyDown"
+                                  PreviewKeyDown="DataGridMethodStore_PreviewKeyDown">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Группа"     Binding="{Binding Group}"/>
                                 <DataGridTextColumn Header="Тип"        Binding="{Binding Type}"/>
