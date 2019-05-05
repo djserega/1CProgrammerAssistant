@@ -24,7 +24,8 @@ namespace _1CProgrammerAssistant.MethodStore.EF
                 ")");
 
             Events.UpdateElementStoreEvent.UpdateElementStoreEvents += UpdateElementStores;
-            Events.LoadElementsStoreEvent.LoadElementsStoreEvents += GetElementStores;
+            Events.LoadElementsStoreEvent.LoadElementsStoreEvents += GetElementsStores;
+            Events.LoadElementStoreEvent.LoadElementStoreEvents += GetElementStores;
         }
 
         public DbSet<Models.ElementStore> ElementStores { get; set; }
@@ -36,19 +37,37 @@ namespace _1CProgrammerAssistant.MethodStore.EF
             return pathDb;
         }
 
+
         private void UpdateElementStores(Models.ElementStore elementStore)
         {
-            Models.ElementStore savedElement = ElementStores.Add(elementStore);
-            elementStore.ID = savedElement.ID;
+            if (elementStore.ID == 0)
+            {
+                Models.ElementStore savedElement = ElementStores.Add(elementStore);
+                elementStore.ID = savedElement.ID;
+            }
+            else
+            {
+                Models.ElementStore findedElement = GetElementStores(elementStore.ID);
+
+                findedElement.Fill(elementStore);
+            }
 
             Safe.SafeAction(() => SaveChanges());
         }
 
-        public List<Models.ElementStore> GetElementStores()
+        private List<Models.ElementStore> GetElementsStores()
         {
             List<Models.ElementStore> list = SafeResult<List<Models.ElementStore>>.SafeAction(() => ElementStores.ToList());
 
             return list;
         }
+
+        private Models.ElementStore GetElementStores(int id)
+        {
+            Models.ElementStore elementStore = SafeResult<Models.ElementStore>.SafeAction(() => ElementStores.FirstOrDefault(f => f.ID == id));
+
+            return elementStore;
+        }
+
     }
 }
