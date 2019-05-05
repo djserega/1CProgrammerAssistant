@@ -28,7 +28,7 @@ namespace _1CProgrammerAssistant
         }
 
         internal static void InitializeTaskbarIcon(Action ActionShowMainWindow,
-                                            Action ActionTopmostWindow)
+                                                   Action ActionTopmostWindow)
         {
             #region menuItemShowMainWindow
 
