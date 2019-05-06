@@ -726,5 +726,9 @@ namespace _1CProgrammerAssistant
             return result;
         }
 
+        private void ButtonFilterMethodStoreClear_Click(object sender, RoutedEventArgs e)
+        {
+            FilterMethodStore = string.Empty;
+        }
     }
 }
