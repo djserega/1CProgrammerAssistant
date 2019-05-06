@@ -101,7 +101,7 @@ namespace _1CProgrammerAssistant
         private void ClickButtonsAdditions(object sender) => ChangePagesAdditions(Grid.GetColumn((Button)sender));
 
         #endregion
-        
+
         #region Changes pages
 
         private void ChangePagesAdditions(int newColumn)
@@ -446,7 +446,7 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
-           private void ModifiedFilesAddFileByPath(string path)
+        private void ModifiedFilesAddFileByPath(string path)
         {
             if (ListModifiedFiles.FirstOrDefault(f => f.Path == path) == null)
             {
@@ -622,14 +622,14 @@ namespace _1CProgrammerAssistant
 
         private void DataGridMethodStore_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            e.Handled = true;
-
             if (e.Key == Key.Enter)
+            {
+                e.Handled = true;
                 OpenEditFormMethodStoreElement();
-            else
+            }
+            else if (PressedKeyLetterOrNumber(e.Key))
             {
                 TextBoxFilterMethodStore.Focus();
-                //FilterMethodStore += e.Key.ToString();
             }
         }
 
@@ -669,7 +669,7 @@ namespace _1CProgrammerAssistant
         private void InitializeTaskbarIcon()
         {
             AssistantTaskbarIcon.InitializeTaskbarIcon(
-                
+
                 () =>
                 {
                     Show(); WindowState = WindowState.Normal;
@@ -680,11 +680,51 @@ namespace _1CProgrammerAssistant
                     bool newValueIsTopmost = !Properties.Settings.Default.IsTopmost;
                     Properties.Settings.Default.IsTopmost = newValueIsTopmost;
                     Topmost = newValueIsTopmost;
-                }  
+                }
             );
         }
 
         private Visibility ReverseValueVisibility(Visibility currentVisibility)
             => Visibility.Collapsed == currentVisibility ? Visibility.Visible : Visibility.Collapsed;
+
+        private bool PressedKeyLetterOrNumber(Key key)
+        {
+            bool result = false;
+
+            switch (key)
+            {
+                case Key.A:
+                case Key.B:
+                case Key.C:
+                case Key.D:
+                case Key.E:
+                case Key.F:
+                case Key.G:
+                case Key.H:
+                case Key.I:
+                case Key.J:
+                case Key.K:
+                case Key.L:
+                case Key.M:
+                case Key.N:
+                case Key.O:
+                case Key.P:
+                case Key.Q:
+                case Key.R:
+                case Key.S:
+                case Key.T:
+                case Key.U:
+                case Key.V:
+                case Key.W:
+                case Key.X:
+                case Key.Y:
+                case Key.Z:
+                    result = true;
+                    break;
+            }
+
+            return result;
+        }
+
     }
 }
