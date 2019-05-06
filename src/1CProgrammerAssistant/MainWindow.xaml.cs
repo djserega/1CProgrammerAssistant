@@ -62,6 +62,9 @@ namespace _1CProgrammerAssistant
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+#warning Бага? В Release без этой строки не создается статический экземпляр контекста MethodStore
+            AssistantObjects.MethodStoreContext.GetType();
+
             ChangePagesAdditions(0);
 
             InitializeTaskbarIcon();
