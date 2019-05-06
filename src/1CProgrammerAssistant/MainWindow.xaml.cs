@@ -606,6 +606,12 @@ namespace _1CProgrammerAssistant
             InitializeMethodStore();
         }
 
+
+        private void ButtonFilterMethodStoreClear_Click(object sender, RoutedEventArgs e)
+        {
+            FilterMethodStore = string.Empty;
+        }
+
         #endregion
 
         #region DataGridMethodStore
@@ -761,11 +767,6 @@ namespace _1CProgrammerAssistant
             }
 
             return result;
-        }
-
-        private void ButtonFilterMethodStoreClear_Click(object sender, RoutedEventArgs e)
-        {
-            FilterMethodStore = string.Empty;
         }
     }
 }
