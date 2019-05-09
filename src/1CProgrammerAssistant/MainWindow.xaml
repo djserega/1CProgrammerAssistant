@@ -387,10 +387,12 @@
                                   KeyDown="DataGridMethodStore_KeyDown"
                                   PreviewKeyDown="DataGridMethodStore_PreviewKeyDown">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Группа"     Binding="{Binding Group}"/>
-                                <DataGridTextColumn Header="Тип"        Binding="{Binding Type}"/>
-                                <DataGridTextColumn Header="Модуль"     Binding="{Binding Module}"/>
-                                <DataGridTextColumn Header="Метод"      Binding="{Binding Method}"/>
+                                <DataGridTextColumn Header="ID"             Binding="{Binding ID}"/>
+                                <DataGridTextColumn Header="Группа"         Binding="{Binding Group}"/>
+                                <DataGridTextColumn Header="Тип"            Binding="{Binding Type}"/>
+                                <DataGridTextColumn Header="Модуль"         Binding="{Binding Module}"/>
+                                <DataGridTextColumn Header="Метод"          Binding="{Binding Method}"/>
+                                <DataGridTextColumn Header="Комментарий"    Binding="{Binding Comment}"/>
                             </DataGrid.Columns>
 
                         </DataGrid>
