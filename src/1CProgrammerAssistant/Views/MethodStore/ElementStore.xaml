@@ -48,12 +48,12 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1">
-                <TextBlock Text="{Binding Path=ID}" Margin="0 5"/>
-                <TextBox Text="{Binding Path=Group}"/>
-                <TextBox Text="{Binding Path=Type}"/>
-                <TextBox Text="{Binding Path=Module}"/>
-                <TextBox Text="{Binding Path=Method}"/>
-                <TextBox Text="{Binding Path=Comment}"/>
+                <TextBlock  Text="{Binding ID}" Margin="0 5"/>
+                <TextBox    Text="{Binding Group}"/>
+                <TextBox    Text="{Binding Type}"/>
+                <TextBox    Text="{Binding Module}"/>
+                <TextBox    Text="{Binding Method}"/>
+                <TextBox    Text="{Binding Comment}"/>
             </StackPanel>
 
         </Grid>
