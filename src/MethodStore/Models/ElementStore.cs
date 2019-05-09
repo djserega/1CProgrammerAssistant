@@ -31,9 +31,11 @@ namespace _1CProgrammerAssistant.MethodStore.Models
                 Comment = elementStore.Comment;
         }
 
-        public void Save()
+        public bool Save()
         {
-            Events.UpdateElementStoreEvent.Update(this);
+            bool result = Events.UpdateElementStoreEvent.Update(this);
+
+            return result;
         }
     }
 }

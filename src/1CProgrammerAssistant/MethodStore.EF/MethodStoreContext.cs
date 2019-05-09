@@ -39,7 +39,7 @@ namespace _1CProgrammerAssistant.MethodStore.EF
         }
 
 
-        private void UpdateElementStores(Models.ElementStore elementStore)
+        private bool UpdateElementStores(Models.ElementStore elementStore)
         {
             if (elementStore.ID == 0)
             {
@@ -53,7 +53,14 @@ namespace _1CProgrammerAssistant.MethodStore.EF
                 findedElement.Fill(elementStore);
             }
 
-            Safe.SafeAction(() => SaveChanges());
+            bool result = SafeResult<bool>.SafeAction(
+                () =>
+                {
+                    SaveChanges();
+                    return true;
+                });
+
+            return result;
         }
 
         private List<Models.ElementStore> GetElementsStores()

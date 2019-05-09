@@ -22,22 +22,40 @@ namespace _1CProgrammerAssistant.Views.MethodStore
     /// </summary>
     public partial class ElementStore : Window
     {
-        private Models.ElementStore _refObj;
+        public Models.ElementStore RefObject
+        {
+            get { return (Models.ElementStore)GetValue(RefObjectProperty); }
+            set { SetValue(RefObjectProperty, value); }
+        }
+
+        public static readonly DependencyProperty RefObjectProperty =
+            DependencyProperty.Register("RefObject", typeof(Models.ElementStore), typeof(ElementStore), null);
+
+
         public ElementStore(int? id = null)
         {
             InitializeComponent();
 
-            if (id == null)
-                _refObj = new Models.ElementStore();
-            else
-                _refObj = Events.LoadElementStoreEvent.Load((int)id);
-
-            DataContext = _refObj;
+            LoadObjectById(id);
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            _refObj.Save();
+            if (RefObject.Save())
+            {
+                LoadObjectById(RefObject.ID);
+            }
+        }
+
+        private void LoadObjectById(int? id)
+        {
+            if (id == null)
+                RefObject = new Models.ElementStore();
+            else
+                RefObject = Events.LoadElementStoreEvent.Load((int)id);
+
+            DataContext = null;
+            DataContext = RefObject;
         }
     }
 }
