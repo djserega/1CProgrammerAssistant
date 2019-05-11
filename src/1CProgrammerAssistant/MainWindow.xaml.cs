@@ -58,6 +58,11 @@ namespace _1CProgrammerAssistant
                         BalloonIcon.Info);
                 }));
             };
+
+            MethodStore.Events.DatabaseChangedEvent.DatabaseChangedEvents += () => 
+            {
+                Dispatcher.Invoke(new ThreadStart(delegate { InitializeMethodStore(); }));
+            };
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

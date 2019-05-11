@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
@@ -27,6 +29,10 @@ namespace _1CProgrammerAssistant.MethodStore.EF
             Events.LoadElementsStoreEvent.LoadElementsStoreEvents += GetElementsStores;
             Events.LoadElementStoreEvent.LoadElementStoreEvents += GetElementStores;
             Events.RemoveElementStoreEvent.RemoveElementStoreEvents += RemoveElementStores;
+
+            Events.DatabaseChangedEvent.InitializeWatcher(
+                Environment.CurrentDirectory,
+                Database.Connection.DataSource);
         }
 
         public DbSet<Models.ElementStore> ElementStores { get; set; }
