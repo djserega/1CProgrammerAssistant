@@ -21,10 +21,12 @@ namespace MakingCode
         internal string MakeText()
         {
             int startPosition = 0;
+            char previousSymbol = default;
             char currentSymbol;
             char nextSymbol;
             bool checkStartParameters = true;
             bool checkEndParameters = false;
+            bool appendPrefix = true;
 
             for (int i = 0; i < LengthSource; i++)
             {
@@ -44,13 +46,36 @@ namespace MakingCode
                 }
                 else if (currentSymbol == ',')
                 {
-                    AppendText(Source.Substring(startPosition + 1, i - startPosition), true);
+                    if (previousSymbol == '"' && currentSymbol == ',')
+                    {
+                        appendPrefix = !appendPrefix;
+                    }
+
+                    AppendText(
+                        Source.Substring(startPosition + 1, i - startPosition),
+                        true,
+                        appendPrefix);
+
+                    if (previousSymbol == '"' && currentSymbol == ',')
+                    {
+                        string tempResultBuilder = _textBuilder.ToString();
+                        _textBuilder.Clear();
+                        _textBuilder.Append(tempResultBuilder.Replace(",				", ", "));
+                    }
+
                     startPosition = i;
                 }
                 else if (checkEndParameters && currentSymbol == ')' && nextSymbol == ';')
                 {
                     AppendText(Source.Substring(startPosition + 1), true);
                 }
+
+                if (currentSymbol == '"' && appendPrefix)
+                {
+                    appendPrefix = !appendPrefix;
+                }
+
+                previousSymbol = currentSymbol;
             }
 
             return _textBuilder.ToString();
