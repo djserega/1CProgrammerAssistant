@@ -23,8 +23,8 @@ namespace MakingCode
             int startPosition = 0;
             char currentSymbol;
             char nextSymbol;
-            bool CheckStartParameters = true;
-            bool CheckEndParameters = false;
+            bool checkStartParameters = true;
+            bool checkEndParameters = false;
 
             for (int i = 0; i < LengthSource; i++)
             {
@@ -34,12 +34,12 @@ namespace MakingCode
                 else
                     nextSymbol = char.MinValue;
 
-                if (CheckStartParameters && currentSymbol == '(')
+                if (checkStartParameters && currentSymbol == '(')
                 {
                     AppendText(Source.Left(i + 1), false);
 
-                    CheckStartParameters = false;
-                    CheckEndParameters = true;
+                    checkStartParameters = false;
+                    checkEndParameters = true;
                     startPosition = i;
                 }
                 else if (currentSymbol == ',')
@@ -47,7 +47,7 @@ namespace MakingCode
                     AppendText(Source.Substring(startPosition + 1, i - startPosition), true);
                     startPosition = i;
                 }
-                else if (CheckEndParameters && currentSymbol == ')' && nextSymbol == ';')
+                else if (checkEndParameters && currentSymbol == ')' && nextSymbol == ';')
                 {
                     AppendText(Source.Substring(startPosition + 1), true);
                 }
