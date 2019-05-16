@@ -21,7 +21,7 @@ namespace _1CProgrammerAssistant
     {
         #region Fields
 
-        private readonly AssistantObjects _assistantObjects = new AssistantObjects();
+        internal readonly AssistantObjects assistantObjects = new AssistantObjects();
         private readonly GlobalHotKeyManager _hotKeyManager = new GlobalHotKeyManager();
         private readonly ActionClipboard _actionClipboard;
 
@@ -41,7 +41,7 @@ namespace _1CProgrammerAssistant
         {
             InitializeComponent();
 
-            _actionClipboard = new ActionClipboard(ref _assistantObjects);
+            _actionClipboard = new ActionClipboard(ref assistantObjects);
 
             _actionClipboard.ChangedSourceTextEvents += (string value) => { SourceText = value; };
             _actionClipboard.ChangedResultTextEvents += (string value) => { ResultText = value; };
@@ -82,7 +82,7 @@ namespace _1CProgrammerAssistant
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             SaveListModifiedFiles();
-            _assistantObjects.ViewerFilesMain.Dispose();
+            assistantObjects.ViewerFilesMain.Dispose();
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -323,7 +323,7 @@ namespace _1CProgrammerAssistant
                 {
                     SelectedModifiedFile.Description = inputBox.Description;
                     if (ListModifiedFilesVersion.Count > 0)
-                        _assistantObjects.ModifiedFilesMain.SetDescriptionLastVersion(SelectedModifiedFile, ListModifiedFilesVersion);
+                        assistantObjects.ModifiedFilesMain.SetDescriptionLastVersion(SelectedModifiedFile, ListModifiedFilesVersion);
                 }
                 LoadVersionSelectedModifiedFiles();
 
@@ -349,7 +349,7 @@ namespace _1CProgrammerAssistant
             ListModifiedFilesVersion?.Clear();
 
             string lastComment = string.Empty;
-            List<ModifiedFiles.Models.Version> listVersion = _assistantObjects.ModifiedFilesMain.GetListVersion(_selectedModifiedFile);
+            List<ModifiedFiles.Models.Version> listVersion = assistantObjects.ModifiedFilesMain.GetListVersion(_selectedModifiedFile);
             if (listVersion != null)
             {
                 ListModifiedFilesVersion = new ObservableCollection<ModifiedFiles.Models.Version>(listVersion);
@@ -375,14 +375,14 @@ namespace _1CProgrammerAssistant
             foreach (string path in Properties.Settings.Default.ListModifiedFiles)
                 ListModifiedFiles.Add(new ModifiedFiles.Models.File(path));
 
-            _assistantObjects.ModifiedFilesMain.Files = ListModifiedFiles.ToList();
+            assistantObjects.ModifiedFilesMain.Files = ListModifiedFiles.ToList();
         }
 
         private void SaveListModifiedFiles()
         {
             Properties.Settings.Default.ListModifiedFiles.Clear();
 
-            foreach (ModifiedFiles.Models.File file in _assistantObjects.ModifiedFilesMain.Files)
+            foreach (ModifiedFiles.Models.File file in assistantObjects.ModifiedFilesMain.Files)
                 Properties.Settings.Default.ListModifiedFiles.Add(file.Path);
 
             Properties.Settings.Default.Save();
@@ -391,7 +391,7 @@ namespace _1CProgrammerAssistant
         private void MenuItemCompareVersion_Click(object sender, RoutedEventArgs e)
         {
             if (_selectedVersions.Count > 1)
-                _assistantObjects.ViewerFilesMain.CompareFilesVersion(_selectedVersions[0].Path, _selectedVersions[_selectedVersions.Count - 1].Path);
+                assistantObjects.ViewerFilesMain.CompareFilesVersion(_selectedVersions[0].Path, _selectedVersions[_selectedVersions.Count - 1].Path);
             else
                 MessageBox.Show("Для сравнения версий нужно выделить более одного файла версии.");
         }
@@ -430,7 +430,7 @@ namespace _1CProgrammerAssistant
             {
                 ListModifiedFiles.Remove(fileInList);
 
-                _assistantObjects.ModifiedFilesMain.Files = ListModifiedFiles.ToList();
+                assistantObjects.ModifiedFilesMain.Files = ListModifiedFiles.ToList();
             }
         }
 
@@ -441,7 +441,7 @@ namespace _1CProgrammerAssistant
 
         private void ButtonOpenFolderVersion_Click(object sender, RoutedEventArgs e)
         {
-            _assistantObjects.ModifiedFilesMain.OpenDirectoryVersion();
+            assistantObjects.ModifiedFilesMain.OpenDirectoryVersion();
         }
 
         private void MenuItemVersionOpenFile(object sender, RoutedEventArgs e)
@@ -449,7 +449,7 @@ namespace _1CProgrammerAssistant
             if (ListModifiedFilesVersionSelectedItem == null)
                 return;
 
-            _assistantObjects.ViewerFilesMain.OpenFileVersion(ListModifiedFilesVersionSelectedItem.Path);
+            assistantObjects.ViewerFilesMain.OpenFileVersion(ListModifiedFilesVersionSelectedItem.Path);
         }
 
         #endregion
@@ -460,7 +460,7 @@ namespace _1CProgrammerAssistant
             {
                 ListModifiedFiles.Add(new ModifiedFiles.Models.File(path));
 
-                _assistantObjects.ModifiedFilesMain.Files = ListModifiedFiles.ToList();
+                assistantObjects.ModifiedFilesMain.Files = ListModifiedFiles.ToList();
             }
         }
 
@@ -666,9 +666,9 @@ namespace _1CProgrammerAssistant
 
         private void InitializeMethodStore()
         {
-            _assistantObjects.MethodStoreMain.LoadMethod();
+            assistantObjects.MethodStoreMain.LoadMethod();
 
-            MethodStoreListMethod = _assistantObjects.MethodStoreMain.ListMethods;
+            MethodStoreListMethod = assistantObjects.MethodStoreMain.ListMethods;
         }
 
         private void OpenEditFormMethodStoreElement()

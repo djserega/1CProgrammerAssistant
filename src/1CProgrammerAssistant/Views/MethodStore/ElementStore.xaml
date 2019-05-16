@@ -7,7 +7,8 @@
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="ElementStore" Height="250" Width="500"
-        x:Name="WindowElementStore">
+        x:Name="WindowElementStore"
+        Loaded="WindowElementStore_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -48,12 +49,42 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1">
-                <TextBlock  Text="{Binding ID}" Margin="0 5"/>
-                <TextBox    Text="{Binding Group}"/>
-                <TextBox    Text="{Binding Type}"/>
-                <TextBox    Text="{Binding Module}"/>
-                <TextBox    Text="{Binding Method}"/>
-                <TextBox    Text="{Binding Comment}"/>
+                <TextBlock      Text="{Binding ID}" Margin="0 5"/>
+                <Grid>
+                    <TextBox    Text="{Binding Group}"/>
+                    <Button     Style="{StaticResource ButtonRightGrid}"
+                                Tag="Group"
+                                Click="ButtonGroupSelect_Click">
+                        <md:PackIcon Kind="ChevronDown"/>
+                        <Button.ContextMenu>
+                            <ContextMenu MenuItem.Click="ButtonRightContextMenu_Click"/>
+                        </Button.ContextMenu>
+                    </Button>
+                </Grid>
+                <Grid>
+                    <TextBox    Text="{Binding Type}"/>
+                    <Button     Style="{StaticResource ButtonRightGrid}"
+                                Tag="Type"
+                                Click="ButtonTypeSelect_Click">
+                        <md:PackIcon Kind="ChevronDown"/>
+                        <Button.ContextMenu>
+                            <ContextMenu MenuItem.Click="ButtonRightContextMenu_Click"/>
+                        </Button.ContextMenu>
+                    </Button>
+                </Grid>
+                <Grid>
+                    <TextBox    Text="{Binding Module}"/>
+                    <Button     Style="{StaticResource ButtonRightGrid}"
+                                Tag="Module"
+                                Click="ButtonModuleSelect_Click">
+                        <md:PackIcon Kind="ChevronDown"/>
+                        <Button.ContextMenu>
+                            <ContextMenu MenuItem.Click="ButtonRightContextMenu_Click"/>
+                        </Button.ContextMenu>
+                    </Button>
+                </Grid>
+                <TextBox        Text="{Binding Method}"/>
+                <TextBox        Text="{Binding Comment}"/>
             </StackPanel>
 
         </Grid>

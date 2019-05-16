@@ -22,6 +22,9 @@ namespace _1CProgrammerAssistant.Views.MethodStore
     /// </summary>
     public partial class ElementStore : Window
     {
+        private _1CProgrammerAssistant.MethodStore.Main MethodStoreMain;
+        private object _buttonOpenedContextMenu;
+
         public Models.ElementStore RefObject
         {
             get { return (Models.ElementStore)GetValue(RefObjectProperty); }
@@ -39,6 +42,11 @@ namespace _1CProgrammerAssistant.Views.MethodStore
             LoadObjectById(id);
         }
 
+        private void WindowElementStore_Loaded(object sender, RoutedEventArgs e)
+        {
+            MethodStoreMain = ((MainWindow)Owner).assistantObjects.MethodStoreMain;
+        }
+
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             if (RefObject.Save())
@@ -54,8 +62,57 @@ namespace _1CProgrammerAssistant.Views.MethodStore
             else
                 RefObject = Events.LoadElementStoreEvent.Load((int)id);
 
+            ReInitializeDataContext();
+        }
+
+        private void ButtonGroupSelect_Click(object sender, RoutedEventArgs e)
+        {
+            SetContextMenuSelectedButton(sender, MethodStoreMain.GetUniqueGroups().ToList());
+        }
+
+        private void ButtonTypeSelect_Click(object sender, RoutedEventArgs e)
+        {
+            SetContextMenuSelectedButton(sender, MethodStoreMain.GetUniqueType().ToList());
+        }
+
+        private void ButtonModuleSelect_Click(object sender, RoutedEventArgs e)
+        {
+            SetContextMenuSelectedButton(sender, MethodStoreMain.GetUniqueModule().ToList());
+        }
+
+        private void SetContextMenuSelectedButton(object container, List<string> listToContextMenu)
+        {
+            _buttonOpenedContextMenu = container;
+
+            ((Button)container).ContextMenu.ItemsSource = listToContextMenu;
+            ((Button)container).ContextMenu.HorizontalContentAlignment = HorizontalAlignment.Center;
+            ((Button)container).ContextMenu.IsOpen = true;
+        }
+
+        private void ButtonRightContextMenu_Click(object sender, RoutedEventArgs e)
+        {
+            string dataContextMenuItem = (string)((MenuItem)e.OriginalSource).DataContext;
+
+            switch (((Button)_buttonOpenedContextMenu).Tag)
+            {
+                case "Group":
+                    RefObject.Group = dataContextMenuItem;
+                    break;
+                case "Type":
+                    RefObject.Type = dataContextMenuItem;
+                    break;
+                case "Module":
+                    RefObject.Module = dataContextMenuItem;
+                    break;
+            }
+            ReInitializeDataContext();
+        }
+
+        private void ReInitializeDataContext()
+        {
             DataContext = null;
             DataContext = RefObject;
         }
+
     }
 }

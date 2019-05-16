@@ -29,6 +29,7 @@ namespace _1CProgrammerAssistant.MethodStore.EF
             Events.LoadElementsStoreEvent.LoadElementsStoreEvents += GetElementsStores;
             Events.LoadElementStoreEvent.LoadElementStoreEvents += GetElementStores;
             Events.RemoveElementStoreEvent.RemoveElementStoreEvents += RemoveElementStores;
+            Events.GetDistinctFieldsEvent.GetElementsEvents += GetDistinctFields;
 
             Events.DatabaseChangedEvent.InitializeWatcher(
                 Environment.CurrentDirectory,
@@ -44,6 +45,7 @@ namespace _1CProgrammerAssistant.MethodStore.EF
             return pathDb;
         }
 
+        #region Additions events
 
         private bool UpdateElementStores(Models.ElementStore elementStore)
         {
@@ -91,5 +93,30 @@ namespace _1CProgrammerAssistant.MethodStore.EF
 
             Safe.SafeAction(() => SaveChanges());
         }
+
+        private IQueryable<string> GetDistinctFields(NamesDistinctField name)
+        {
+            IQueryable<string> result = null;
+
+            switch (name)
+            {
+                case NamesDistinctField.Group:
+                    result = ElementStores.Select(f => f.Group);
+                    break;
+                case NamesDistinctField.Type:
+                    result = ElementStores.Select(f => f.Type);
+                    break;
+                case NamesDistinctField.Module:
+                    result = ElementStores.Select(f => f.Method);
+                    break;
+                default:
+                    result = (IQueryable<string>)new List<string>();
+                    break;
+            }
+
+            return result.Distinct().Where(f => !string.IsNullOrEmpty(f));
+        }
+
+        #endregion
     }
 }
