@@ -583,6 +583,16 @@ namespace _1CProgrammerAssistant
             DependencyProperty.Register("FilterMethodStore", typeof(string), typeof(MainWindow), null);
 
 
+        public bool MethodStoreListMethodSelectedItemNotNull
+        {
+            get { return (bool)GetValue(MethodStoreListMethodSelectedItemNotNullProperty); }
+            set { SetValue(MethodStoreListMethodSelectedItemNotNullProperty, value); }
+        }
+
+        public static readonly DependencyProperty MethodStoreListMethodSelectedItemNotNullProperty =
+            DependencyProperty.Register("MethodStoreListMethodSelectedItemNotNull", typeof(bool), typeof(MainWindow), null);
+
+
         #endregion
 
         #region Button
@@ -658,6 +668,11 @@ namespace _1CProgrammerAssistant
             else
                 FilterMethodStore += e.Key.ToString();
 #endif
+        }
+
+        private void DataGridMethodStoreListMethods_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MethodStoreListMethodSelectedItemNotNull = MethodStoreListMethodSelectedItem != null;
         }
 
         #endregion

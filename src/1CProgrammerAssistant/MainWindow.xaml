@@ -307,11 +307,13 @@
                                 </Button>
                                 <Button Margin="2"
                                         ToolTip="Редактировать"
+                                        IsEnabled="{Binding MethodStoreListMethodSelectedItemNotNull}"
                                         Click="ButtonMethodStoreEdit_Click">
                                     <md:PackIcon Kind="Edit"/>
                                 </Button>
                                 <Button Margin="2"
                                         ToolTip="Удаление файла"
+                                        IsEnabled="{Binding MethodStoreListMethodSelectedItemNotNull}"
                                         Click="ButtonMethodStoreRemove_Click">
                                     <md:PackIcon Kind="MinusCircleOutline"/>
                                 </Button>
@@ -385,7 +387,8 @@
                                   IsReadOnly="True"
                                   MouseDoubleClick="DataGridMethodStore_MouseDoubleClick"
                                   KeyDown="DataGridMethodStore_KeyDown"
-                                  PreviewKeyDown="DataGridMethodStore_PreviewKeyDown">
+                                  PreviewKeyDown="DataGridMethodStore_PreviewKeyDown"
+                                  SelectionChanged="DataGridMethodStoreListMethods_SelectionChanged">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID"             Binding="{Binding ID}"/>
                                 <DataGridTextColumn Header="Группа"         Binding="{Binding Group}"/>
