@@ -579,7 +579,6 @@ namespace _1CProgrammerAssistant
             set { SetValue(FilterMethodStoreProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for FilterMethodStore.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FilterMethodStoreProperty =
             DependencyProperty.Register("FilterMethodStore", typeof(string), typeof(MainWindow), null);
 
