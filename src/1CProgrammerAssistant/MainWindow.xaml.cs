@@ -635,7 +635,7 @@ namespace _1CProgrammerAssistant
 
         private void DataGridMethodStore_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            OpenEditFormMethodStoreElement();
+            OpenEditFormMethodStoreElement(false);
         }
 
         private void DataGridMethodStore_KeyDown(object sender, KeyEventArgs e)
@@ -680,11 +680,12 @@ namespace _1CProgrammerAssistant
             MethodStoreListMethod = assistantObjects.MethodStoreMain.ListMethods;
         }
 
-        private void OpenEditFormMethodStoreElement()
+        private void OpenEditFormMethodStoreElement(bool showMessage = true)
         {
             if (MethodStoreListMethodSelectedItem == null)
             {
-                MessageBox.Show("Элемент не выбран.");
+                if (showMessage)
+                    MessageBox.Show("Элемент не выбран.");
                 return;
             }
 
