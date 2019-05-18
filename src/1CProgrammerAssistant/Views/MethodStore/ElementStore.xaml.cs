@@ -47,6 +47,15 @@ namespace _1CProgrammerAssistant.Views.MethodStore
             MethodStoreMain = ((MainWindow)Owner).assistantObjects.MethodStoreMain;
         }
 
+        private void WindowElementStore_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                Close();
+            else if (e.KeyboardDevice.Modifiers == ModifierKeys.Control
+                && e.Key == Key.Enter)
+                Close();
+        }
+
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             if (RefObject.Save())

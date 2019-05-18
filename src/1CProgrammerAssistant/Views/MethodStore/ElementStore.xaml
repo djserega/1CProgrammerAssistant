@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         Title="ElementStore" Height="260" Width="500"
         x:Name="WindowElementStore"
-        Loaded="WindowElementStore_Loaded">
+        Loaded="WindowElementStore_Loaded"
+        PreviewKeyDown="WindowElementStore_PreviewKeyDown">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -47,7 +48,8 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0"
                            Content="ID:"/>
-                    <TextBlock      Text="{Binding ID}" Margin="0 5"/>
+                    <TextBlock Grid.Column="1"
+                               Text="{Binding ID}" Margin="0 5"/>
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>
