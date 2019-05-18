@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:_1CProgrammerAssistant.Views.MethodStore"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="ElementStore" Height="250" Width="500"
+        Title="ElementStore" Height="260" Width="500"
         x:Name="WindowElementStore"
         Loaded="WindowElementStore_Loaded">
     <Grid>
@@ -39,52 +39,93 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0">
-                <Label Content="ID:"/>
-                <Label Content="Группа:"/>
-                <Label Content="Тип:"/>
-                <Label Content="Модуль:"/>
-                <Label Content="Метод:"/>
-                <Label Content="Комментарий:"/>
-            </StackPanel>
-
             <StackPanel Grid.Column="1">
-                <TextBlock      Text="{Binding ID}" Margin="0 5"/>
                 <Grid>
-                    <TextBox    Text="{Binding Group}"/>
-                    <Button     Style="{StaticResource ButtonRightGrid}"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Content="ID:"/>
+                    <TextBlock      Text="{Binding ID}" Margin="0 5"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Content="Группа:"/>
+                    <Grid Grid.Column="1">
+                        <TextBox Text="{Binding Group}"/>
+                        <Button Style="{StaticResource ButtonRightGrid}"
                                 Tag="Group"
                                 Click="ButtonGroupSelect_Click">
-                        <md:PackIcon Kind="ChevronDown"/>
-                        <Button.ContextMenu>
-                            <ContextMenu MenuItem.Click="ButtonRightContextMenu_Click"/>
-                        </Button.ContextMenu>
-                    </Button>
+                            <md:PackIcon Kind="ChevronDown"/>
+                            <Button.ContextMenu>
+                                <ContextMenu MenuItem.Click="ButtonRightContextMenu_Click"/>
+                            </Button.ContextMenu>
+                        </Button>
+                    </Grid>
                 </Grid>
                 <Grid>
-                    <TextBox    Text="{Binding Type}"/>
-                    <Button     Style="{StaticResource ButtonRightGrid}"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Content="Тип:"/>
+                    <Grid Grid.Column="1">
+                        <TextBox Text="{Binding Type}"/>
+                        <Button Style="{StaticResource ButtonRightGrid}"
                                 Tag="Type"
                                 Click="ButtonTypeSelect_Click">
-                        <md:PackIcon Kind="ChevronDown"/>
-                        <Button.ContextMenu>
-                            <ContextMenu MenuItem.Click="ButtonRightContextMenu_Click"/>
-                        </Button.ContextMenu>
-                    </Button>
+                            <md:PackIcon Kind="ChevronDown"/>
+                            <Button.ContextMenu>
+                                <ContextMenu MenuItem.Click="ButtonRightContextMenu_Click"/>
+                            </Button.ContextMenu>
+                        </Button>
+                    </Grid>
                 </Grid>
                 <Grid>
-                    <TextBox    Text="{Binding Module}"/>
-                    <Button     Style="{StaticResource ButtonRightGrid}"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Content="Модуль:"/>
+                    <Grid Grid.Column="1">
+                        <TextBox Text="{Binding Module}"/>
+                        <Button Style="{StaticResource ButtonRightGrid}"
                                 Tag="Module"
                                 Click="ButtonModuleSelect_Click">
-                        <md:PackIcon Kind="ChevronDown"/>
-                        <Button.ContextMenu>
-                            <ContextMenu MenuItem.Click="ButtonRightContextMenu_Click"/>
-                        </Button.ContextMenu>
-                    </Button>
+                            <md:PackIcon Kind="ChevronDown"/>
+                            <Button.ContextMenu>
+                                <ContextMenu MenuItem.Click="ButtonRightContextMenu_Click"/>
+                            </Button.ContextMenu>
+                        </Button>
+                    </Grid>
                 </Grid>
-                <TextBox        Text="{Binding Method}"/>
-                <TextBox        Text="{Binding Comment}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Content="Метод:"/>
+                    <TextBox Grid.Column="1"
+                             Text="{Binding Method}"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Content="Комментарий:"/>
+                    <TextBox Grid.Column="1" 
+                             Text="{Binding Comment}"/>
+                </Grid>
             </StackPanel>
 
         </Grid>
