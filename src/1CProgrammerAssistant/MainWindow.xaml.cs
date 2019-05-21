@@ -690,7 +690,7 @@ namespace _1CProgrammerAssistant
 
         private void InitializeMethodStore()
         {
-            assistantObjects.MethodStoreMain.LoadMethod();
+            assistantObjects.MethodStoreMain.LoadMethod(FilterMethodStore);
 
             MethodStoreListMethod = assistantObjects.MethodStoreMain.ListMethods;
         }
@@ -705,6 +705,11 @@ namespace _1CProgrammerAssistant
             }
 
             OpenFormMethodStoreElement(MethodStoreListMethodSelectedItem.ID);
+        }
+
+        private void TextBoxFilterMethodStore_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            InitializeMethodStore();
         }
 
         #endregion

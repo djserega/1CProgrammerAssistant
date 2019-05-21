@@ -364,9 +364,9 @@
                                        FontWeight="DemiBold"
                                        Content="Поиск:"/>
                                 <Grid Grid.Column="2">
-                                    <TextBox 
-                                         x:Name="TextBoxFilterMethodStore"
-                                         Text="{Binding FilterMethodStore}"/>
+                                    <TextBox x:Name="TextBoxFilterMethodStore"
+                                             Text="{Binding FilterMethodStore}"
+                                             TextChanged="TextBoxFilterMethodStore_TextChanged"/>
                                     <Button HorizontalAlignment="Right"
                                             BorderThickness="0"
                                             Background="{x:Null}"

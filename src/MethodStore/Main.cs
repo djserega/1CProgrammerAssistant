@@ -13,15 +13,28 @@ namespace _1CProgrammerAssistant.MethodStore
 
         public ObservableCollection<Models.ElementStore> ListMethods { get; set; } = new ObservableCollection<Models.ElementStore>();
 
-        public void LoadMethod()
+        public void LoadMethod(string filter)
         {
             ListMethods.Clear();
 
             List<Models.ElementStore> listElementStores = Events.LoadElementsStoreEvent.Load() ?? new List<Models.ElementStore>();
 
+            string filterToLower = string.Empty;
+            if (!string.IsNullOrEmpty(filter))
+                filterToLower = filter.ToLower();
+
             foreach (Models.ElementStore record in listElementStores)
             {
-                ListMethods.Add(record);
+                if (
+                    !string.IsNullOrEmpty(filterToLower)
+                    && record.Group.ToLower().Contains(filterToLower)
+                    || record.Type.ToLower().Contains(filterToLower)
+                    || record.Module.ToLower().Contains(filterToLower)
+                    || record.Method.ToLower().Contains(filterToLower)
+                    )
+                {
+                    ListMethods.Add(record);
+                }
             }
         }
 
