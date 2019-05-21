@@ -390,12 +390,12 @@
                                   PreviewKeyDown="DataGridMethodStore_PreviewKeyDown"
                                   SelectionChanged="DataGridMethodStoreListMethods_SelectionChanged">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Код"            Binding="{Binding ID}"/>
-                                <DataGridTextColumn Header="Группа"         Binding="{Binding Group}"/>
-                                <DataGridTextColumn Header="Тип"            Binding="{Binding Type}"/>
-                                <DataGridTextColumn Header="Модуль"         Binding="{Binding Module}"/>
-                                <DataGridTextColumn Header="Метод"          Binding="{Binding Method}"/>
-                                <DataGridTextColumn Header="Комментарий"    Binding="{Binding Comment}"/>
+                                <DataGridTextColumn Header="Код"            MinWidth="70"   Binding="{Binding ID}"/>
+                                <DataGridTextColumn Header="Группа"         MinWidth="85"   Binding="{Binding Group}"/>
+                                <DataGridTextColumn Header="Тип"            MinWidth="65"   Binding="{Binding Type}"/>
+                                <DataGridTextColumn Header="Модуль"         MinWidth="90"   Binding="{Binding Module}"/>
+                                <DataGridTextColumn Header="Метод"          MinWidth="80"   Binding="{Binding Method}"/>
+                                <DataGridTextColumn Header="Комментарий"    MinWidth="110"  Binding="{Binding Comment}"/>
                             </DataGrid.Columns>
 
                         </DataGrid>
