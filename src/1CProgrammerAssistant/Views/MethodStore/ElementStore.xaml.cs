@@ -53,7 +53,10 @@ namespace _1CProgrammerAssistant.Views.MethodStore
                 Close();
             else if (e.KeyboardDevice.Modifiers == ModifierKeys.Control
                 && e.Key == Key.Enter)
+            {
+                RefObject.Save();
                 Close();
+            }
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
