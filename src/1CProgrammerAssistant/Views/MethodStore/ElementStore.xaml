@@ -47,7 +47,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0"
-                           Content="ID:"/>
+                           Content="Код:"/>
                     <TextBlock Grid.Column="1"
                                Text="{Binding ID}" Margin="0 5"/>
                 </Grid>

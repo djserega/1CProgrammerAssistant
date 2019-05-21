@@ -107,7 +107,7 @@ namespace _1CProgrammerAssistant.MethodStore.EF
                     result = ElementStores.Select(f => f.Type);
                     break;
                 case NamesDistinctField.Module:
-                    result = ElementStores.Select(f => f.Method);
+                    result = ElementStores.Select(f => f.Module);
                     break;
                 default:
                     result = (IQueryable<string>)new List<string>();
