@@ -7,7 +7,7 @@ namespace _1CProgrammerAssistant.MethodStore
 {
     public class Main
     {
-        private Filter _filter = new Filter();
+        private readonly Filter _filter = new Filter();
         public Main()
         {
         }
