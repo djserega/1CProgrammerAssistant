@@ -28,9 +28,6 @@ namespace _1CProgrammerAssistant.MethodStore
 
             List<Models.ElementStore> listElementStores = Events.LoadElementsStoreEvent.Load() ?? new List<Models.ElementStore>();
 
-            //IEnumerable<Models.ElementStore> dd = (IEnumerable<Models.ElementStore>)listElementStores;
-            //dd.Where();
-
             string filterToLower = string.Empty;
             if (!string.IsNullOrEmpty(filter))
                 filterToLower = filter.ToLower();
@@ -44,21 +41,18 @@ namespace _1CProgrammerAssistant.MethodStore
 
             if (needFiltered)
             {
-                foreach (Models.ElementStore record in listElementStores)
-                {
-                    if (
-                        _filter.IsCheckedFilterGroup && record.Group.ToLower().Contains(filterToLower)
-                        ||
-                        _filter.IsCheckedFilterType && record.Type.ToLower().Contains(filterToLower)
-                        ||
-                        _filter.IsCheckedFilterModule && record.Module.ToLower().Contains(filterToLower)
-                        ||
-                        _filter.IsCheckedFilterMethod && record.Method.ToLower().Contains(filterToLower)
-                        )
-                    {
-                        ListMethods.Add(record);
-                    }
-                }
+                IEnumerable<Models.ElementStore> listElementStoresFilter = ((IEnumerable<Models.ElementStore>)(listElementStores))
+                    .Where(
+                        item =>
+                            _filter.IsCheckedFilterGroup && item.Group.ToLower().Contains(filterToLower)
+                            ||
+                            _filter.IsCheckedFilterType && item.Type.ToLower().Contains(filterToLower)
+                            ||
+                            _filter.IsCheckedFilterModule && item.Module.ToLower().Contains(filterToLower)
+                            ||
+                            _filter.IsCheckedFilterMethod && item.Method.ToLower().Contains(filterToLower)
+                            );
+                ListMethods = new ObservableCollection<Models.ElementStore>(listElementStoresFilter);
             }
             else
                 ListMethods = new ObservableCollection<Models.ElementStore>(listElementStores);
