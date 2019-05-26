@@ -791,8 +791,6 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private void InitializeTaskbarIcon()
         {
             AssistantTaskbarIcon.InitializeTaskbarIcon(
