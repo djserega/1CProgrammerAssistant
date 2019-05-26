@@ -8,6 +8,9 @@ namespace _1CProgrammerAssistant.MethodStore
     public class Main
     {
         private readonly Filter _filter = new Filter();
+        private string _filterText = string.Empty;
+        private string[] _filterTextArray;
+
         public Main()
         {
         }
@@ -35,25 +38,43 @@ namespace _1CProgrammerAssistant.MethodStore
 
             if (needFiltered)
             {
-                string filterToLower = string.Empty;
-                if (!string.IsNullOrEmpty(filter))
-                    filterToLower = filter.ToLower();
+                _filterText = filter.ToLower();
+                _filterTextArray = _filterText.Split(' ');
 
                 IEnumerable<Models.ElementStore> listElementStoresFilter = ((IEnumerable<Models.ElementStore>)(listElementStores))
                     .Where(
                         item =>
-                            _filter.IsCheckedFilterGroup && item.Group.ToLower().Contains(filterToLower)
+                            _filter.IsCheckedFilterGroup && TextContainsArrayFilter(item.Group.ToLower())
                             ||
-                            _filter.IsCheckedFilterType && item.Type.ToLower().Contains(filterToLower)
+                            _filter.IsCheckedFilterType && TextContainsArrayFilter(item.Type.ToLower())
                             ||
-                            _filter.IsCheckedFilterModule && item.Module.ToLower().Contains(filterToLower)
+                            _filter.IsCheckedFilterModule && TextContainsArrayFilter(item.Module.ToLower())
                             ||
-                            _filter.IsCheckedFilterMethod && item.Method.ToLower().Contains(filterToLower)
+                            _filter.IsCheckedFilterMethod && TextContainsArrayFilter(item.Method.ToLower())
                             );
                 ListMethods = new ObservableCollection<Models.ElementStore>(listElementStoresFilter);
             }
             else
                 ListMethods = new ObservableCollection<Models.ElementStore>(listElementStores);
+        }
+
+        private bool TextContainsArrayFilter(string text)
+        {
+            bool finded = false;
+
+            foreach (string textFilter in _filterTextArray)
+            {
+                if (string.IsNullOrEmpty(textFilter))
+                    continue;
+
+                if (text.Contains(textFilter))
+                {
+                    finded = true;
+                    break;
+                }
+            }
+
+            return finded;
         }
 
         public IQueryable<string> GetUniqueGroups() => Events.GetDistinctFieldsEvent.Get(NamesDistinctField.Group);
