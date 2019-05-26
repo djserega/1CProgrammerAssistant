@@ -741,10 +741,6 @@ namespace _1CProgrammerAssistant
             {
                 TextBoxFilterMethodStore.Focus();
             }
-#if DEBUG
-            else
-                FilterMethodStore += e.Key.ToString();
-#endif
         }
 
         private void DataGridMethodStoreListMethods_SelectionChanged(object sender, SelectionChangedEventArgs e)
