@@ -722,7 +722,8 @@ namespace _1CProgrammerAssistant
 
         private void DataGridMethodStore_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            OpenEditFormMethodStoreElement(false);
+            if (e.LeftButton == MouseButtonState.Pressed)
+                OpenEditFormMethodStoreElement(false);
         }
 
         private void DataGridMethodStore_KeyDown(object sender, KeyEventArgs e)
