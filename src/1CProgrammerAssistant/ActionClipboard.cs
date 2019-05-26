@@ -9,7 +9,7 @@ namespace _1CProgrammerAssistant
     internal class ActionClipboard
     {
         internal event ChangedSourceTextEvents ChangedSourceTextEvents;
-        internal event ChangedSourceTextEvents ChangedResultTextEvents;
+        internal event ChangedResultTextEvents ChangedResultTextEvents;
 
         private readonly AssistantObjects _assistantObjects;
 

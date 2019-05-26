@@ -266,8 +266,8 @@
                                 </DataGrid.ContextMenu>
 
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Версия"         Binding="{Binding DateVersion, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"/>
-                                    <DataGridTextColumn Header="Комментарий"    Binding="{Binding Description}"/>
+                                    <DataGridTextColumn Header="Версия"         Binding="{Binding DateVersion, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" Width="150"/>
+                                    <DataGridTextColumn Header="Комментарий"    Binding="{Binding Description}" Width="150"/>
                                 </DataGrid.Columns>
                             </DataGrid>
 
