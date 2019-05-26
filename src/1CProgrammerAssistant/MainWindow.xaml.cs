@@ -702,10 +702,18 @@ namespace _1CProgrammerAssistant
             InitializeMethodStore();
         }
 
-
         private void ButtonFilterMethodStoreClear_Click(object sender, RoutedEventArgs e)
         {
             FilterMethodStore = string.Empty;
+        }
+
+        private void FilterIsCheckedAll_Click(object sender, RoutedEventArgs e)
+        {
+            bool newValue = Convert.ToBoolean((string)((FrameworkElement)sender).Tag);
+            FilterIsCheckedGroup = newValue;
+            FilterIsCheckedType = newValue;
+            FilterIsCheckedModule = newValue;
+            FilterIsCheckedMethod = newValue;
         }
 
         #endregion
@@ -877,6 +885,5 @@ namespace _1CProgrammerAssistant
 
             return result;
         }
-
     }
 }

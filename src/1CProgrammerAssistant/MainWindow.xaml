@@ -334,6 +334,19 @@
 
                                 <StackPanel Grid.Column="0"
                                             Orientation="Horizontal">
+                                    <StackPanel.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Icon="{md:PackIcon Kind=SelectAll}"
+                                                          Header="Установить фильтры"   
+                                                          Tag="True"
+                                                          Click="FilterIsCheckedAll_Click"/>
+                                            <MenuItem Icon="{md:PackIcon Kind=SelectOff}" 
+                                                          Header="Снять фильтры"      
+                                                          Tag="False" 
+                                                          Click="FilterIsCheckedAll_Click"/>
+                                        </ContextMenu>
+                                    </StackPanel.ContextMenu>
+                                    
                                     <Label Content="Фильтр:"
                                            FontWeight="DemiBold"
                                            VerticalAlignment="Bottom"/>
