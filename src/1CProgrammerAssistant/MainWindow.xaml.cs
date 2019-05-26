@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -59,7 +60,7 @@ namespace _1CProgrammerAssistant
                 }));
             };
 
-            MethodStore.Events.DatabaseChangedEvent.DatabaseChangedEvents += () => 
+            MethodStore.Events.DatabaseChangedEvent.DatabaseChangedEvents += () =>
             {
                 Dispatcher.Invoke(new ThreadStart(delegate { InitializeMethodStore(); }));
             };
@@ -560,7 +561,10 @@ namespace _1CProgrammerAssistant
         }
 
         public static readonly DependencyProperty MethodStoreListMethodProperty =
-            DependencyProperty.Register("MethodStoreListMethod", typeof(ObservableCollection<MethodStore.Models.ElementStore>), typeof(MainWindow), null);
+            DependencyProperty.Register(
+                "MethodStoreListMethod",
+                typeof(ObservableCollection<MethodStore.Models.ElementStore>),
+                typeof(MainWindow));
 
 
         public MethodStore.Models.ElementStore MethodStoreListMethodSelectedItem
@@ -570,8 +574,62 @@ namespace _1CProgrammerAssistant
         }
 
         public static readonly DependencyProperty MyPropertyProperty =
-            DependencyProperty.Register("MethodStoreListMethodSelectedItem", typeof(MethodStore.Models.ElementStore), typeof(MainWindow), null);
+            DependencyProperty.Register(
+                "MethodStoreListMethodSelectedItem",
+                typeof(MethodStore.Models.ElementStore), 
+                typeof(MainWindow));
 
+        public bool FilterIsCheckedGroup
+        {
+            get { return (bool)GetValue(FilterIsCheckedGroupProperty); }
+            set { SetValue(FilterIsCheckedGroupProperty, value); }
+        }
+
+        public static readonly DependencyProperty FilterIsCheckedGroupProperty =
+            DependencyProperty.Register(
+                "FilterIsCheckedGroup",
+                typeof(bool),
+                typeof(MainWindow),
+                new PropertyMetadata(MethodStoreDependencyPropertyMetadataCallback));
+
+        public bool FilterIsCheckedType
+        {
+            get { return (bool)GetValue(FilterIsCheckedTypeProperty); }
+            set { SetValue(FilterIsCheckedTypeProperty, value); }
+        }
+
+        public static readonly DependencyProperty FilterIsCheckedTypeProperty =
+            DependencyProperty.Register(
+                "FilterIsCheckedType",
+                typeof(bool),
+                typeof(MainWindow),
+                new PropertyMetadata(MethodStoreDependencyPropertyMetadataCallback));
+
+        public bool FilterIsCheckedModule
+        {
+            get { return (bool)GetValue(FilterIsCheckedModuleProperty); }
+            set { SetValue(FilterIsCheckedModuleProperty, value); }
+        }
+
+        public static readonly DependencyProperty FilterIsCheckedModuleProperty =
+            DependencyProperty.Register(
+                "FilterIsCheckedModule",
+                typeof(bool),
+                typeof(MainWindow),
+                new PropertyMetadata(MethodStoreDependencyPropertyMetadataCallback));
+
+        public bool FilterIsCheckedMethod
+        {
+            get { return (bool)GetValue(FilterIsCheckedMethodProperty); }
+            set { SetValue(FilterIsCheckedMethodProperty, value); }
+        }
+
+        public static readonly DependencyProperty FilterIsCheckedMethodProperty =
+            DependencyProperty.Register(
+                "FilterIsCheckedMethod",
+                typeof(bool),
+                typeof(MainWindow),
+                new PropertyMetadata(MethodStoreDependencyPropertyMetadataCallback));
 
         public string FilterMethodStore
         {
@@ -580,8 +638,11 @@ namespace _1CProgrammerAssistant
         }
 
         public static readonly DependencyProperty FilterMethodStoreProperty =
-            DependencyProperty.Register("FilterMethodStore", typeof(string), typeof(MainWindow), null);
-
+            DependencyProperty.Register(
+                "FilterMethodStore",
+                typeof(string),
+                typeof(MainWindow),
+                new PropertyMetadata(MethodStoreDependencyPropertyMetadataCallback));
 
         public bool MethodStoreListMethodSelectedItemNotNull
         {
@@ -590,9 +651,17 @@ namespace _1CProgrammerAssistant
         }
 
         public static readonly DependencyProperty MethodStoreListMethodSelectedItemNotNullProperty =
-            DependencyProperty.Register("MethodStoreListMethodSelectedItemNotNull", typeof(bool), typeof(MainWindow), null);
+            DependencyProperty.Register(
+                "MethodStoreListMethodSelectedItemNotNull",
+                typeof(bool),
+                typeof(MainWindow));
 
 
+        private static void MethodStoreDependencyPropertyMetadataCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((MainWindow)d).InitializeMethodStore();
+        }
+       
         #endregion
 
         #region Button
@@ -690,6 +759,11 @@ namespace _1CProgrammerAssistant
 
         private void InitializeMethodStore()
         {
+            assistantObjects.MethodStoreMain.UpdateValueIsCheckedFilter(
+                FilterIsCheckedGroup,
+                FilterIsCheckedType,
+                FilterIsCheckedModule,
+                FilterIsCheckedMethod);
             assistantObjects.MethodStoreMain.LoadMethod(FilterMethodStore);
 
             MethodStoreListMethod = assistantObjects.MethodStoreMain.ListMethods;
@@ -707,12 +781,9 @@ namespace _1CProgrammerAssistant
             OpenFormMethodStoreElement(MethodStoreListMethodSelectedItem.ID);
         }
 
-        private void TextBoxFilterMethodStore_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            InitializeMethodStore();
-        }
-
         #endregion
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void InitializeTaskbarIcon()
         {
@@ -806,5 +877,6 @@ namespace _1CProgrammerAssistant
 
             return result;
         }
+
     }
 }

@@ -341,22 +341,26 @@
                                     <Label Content="Группа"
                                            VerticalAlignment="Bottom"/>
                                     <CheckBox VerticalAlignment="Bottom"
-                                              Margin="0 4"/>
+                                              Margin="0 4"
+                                              IsChecked="{Binding FilterIsCheckedGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                                     <Label Content="Тип"
                                            VerticalAlignment="Bottom"/>
                                     <CheckBox VerticalAlignment="Bottom"
-                                              Margin="0 4"/>
+                                              Margin="0 4"
+                                              IsChecked="{Binding FilterIsCheckedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                                     <Label Content="Модуль"
                                            VerticalAlignment="Bottom"/>
                                     <CheckBox VerticalAlignment="Bottom"
-                                              Margin="0 4"/>
+                                              Margin="0 4"
+                                              IsChecked="{Binding FilterIsCheckedModule, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                                     <Label Content="Метод"
                                            VerticalAlignment="Bottom"/>
                                     <CheckBox VerticalAlignment="Bottom"
-                                              Margin="0 4"/>
+                                              Margin="0 4"
+                                              IsChecked="{Binding FilterIsCheckedMethod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
 
                                 <Label Grid.Column="1"
@@ -365,8 +369,7 @@
                                        Content="Поиск:"/>
                                 <Grid Grid.Column="2">
                                     <TextBox x:Name="TextBoxFilterMethodStore"
-                                             Text="{Binding FilterMethodStore}"
-                                             TextChanged="TextBoxFilterMethodStore_TextChanged"/>
+                                             Text="{Binding FilterMethodStore, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <Button HorizontalAlignment="Right"
                                             BorderThickness="0"
                                             Background="{x:Null}"
