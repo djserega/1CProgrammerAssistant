@@ -351,25 +351,25 @@
                                            FontWeight="DemiBold"
                                            VerticalAlignment="Bottom"/>
 
-                                    <Label Content="Группа"
+                                    <Label Content="Группа:"
                                            VerticalAlignment="Bottom"/>
                                     <CheckBox VerticalAlignment="Bottom"
                                               Margin="0 4"
                                               IsChecked="{Binding FilterIsCheckedGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                                    <Label Content="Тип"
+                                    <Label Content="Тип:"
                                            VerticalAlignment="Bottom"/>
                                     <CheckBox VerticalAlignment="Bottom"
                                               Margin="0 4"
                                               IsChecked="{Binding FilterIsCheckedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                                    <Label Content="Модуль"
+                                    <Label Content="Модуль:"
                                            VerticalAlignment="Bottom"/>
                                     <CheckBox VerticalAlignment="Bottom"
                                               Margin="0 4"
                                               IsChecked="{Binding FilterIsCheckedModule, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                                    <Label Content="Метод"
+                                    <Label Content="Метод:"
                                            VerticalAlignment="Bottom"/>
                                     <CheckBox VerticalAlignment="Bottom"
                                               Margin="0 4"
@@ -384,6 +384,7 @@
                                     <TextBox x:Name="TextBoxFilterMethodStore"
                                              Text="{Binding FilterMethodStore, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <Button HorizontalAlignment="Right"
+                                            VerticalAlignment="Bottom"
                                             BorderThickness="0"
                                             Background="{x:Null}"
                                             Foreground="{DynamicResource MaterialDesignToolTipBackground}"
