@@ -261,7 +261,10 @@ namespace _1CProgrammerAssistant
         }
 
         public static readonly DependencyProperty ListModifiedFilesProperty =
-            DependencyProperty.Register("ListModifiedFiles", typeof(ObservableCollection<ModifiedFiles.Models.File>), typeof(MainWindow), null);
+            DependencyProperty.Register(
+                "ListModifiedFiles",
+                typeof(ObservableCollection<ModifiedFiles.Models.File>),
+                typeof(MainWindow));
 
 
         public ObservableCollection<ModifiedFiles.Models.Version> ListModifiedFilesVersion
@@ -271,7 +274,10 @@ namespace _1CProgrammerAssistant
         }
 
         public static readonly DependencyProperty ListModifiedFilesVersionProperty =
-            DependencyProperty.Register("ListModifiedFilesVersion", typeof(ObservableCollection<ModifiedFiles.Models.Version>), typeof(MainWindow), null);
+            DependencyProperty.Register(
+                "ListModifiedFilesVersion",
+                typeof(ObservableCollection<ModifiedFiles.Models.Version>),
+                typeof(MainWindow));
 
 
         public ModifiedFiles.Models.Version ListModifiedFilesVersionSelectedItem
@@ -281,7 +287,23 @@ namespace _1CProgrammerAssistant
         }
 
         public static readonly DependencyProperty ListModifiedFilesVersionSelectedItemProperty =
-            DependencyProperty.Register("ListModifiedFilesVersionSelectedItem", typeof(ModifiedFiles.Models.Version), typeof(MainWindow), null);
+            DependencyProperty.Register(
+                "ListModifiedFilesVersionSelectedItem",
+                typeof(ModifiedFiles.Models.Version),
+                typeof(MainWindow));
+
+
+        public bool SelectedModifiedFileIsNotNull
+        {
+            get { return (bool)GetValue(SelectedModifiedFileIsNotNullProperty); }
+            set { SetValue(SelectedModifiedFileIsNotNullProperty, value); }
+        }
+
+        public static readonly DependencyProperty SelectedModifiedFileIsNotNullProperty =
+            DependencyProperty.Register(
+                "SelectedModifiedFileIsNotNull",
+                typeof(bool),
+                typeof(MainWindow));
 
         #endregion
 
@@ -307,6 +329,11 @@ namespace _1CProgrammerAssistant
                 if (fileInfo.Extension == ".epf" || fileInfo.Extension == ".erf")
                     ModifiedFilesAddFileByPath(path);
             }
+        }
+
+        private void DataGridModifiedFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SelectedModifiedFileIsNotNull = _selectedModifiedFile != null;
         }
 
         #endregion

@@ -196,11 +196,13 @@
                             </Button>
                             <Button Margin="2"
                                     ToolTip="Отключение файла от версионирования"
+                                    IsEnabled="{Binding SelectedModifiedFileIsNotNull}"
                                     Click="ButtonModifiedFilesRemoveFile_Click">
                                 <md:PackIcon Kind="MinusCircleOutline"/>
                             </Button>
                             <Button Margin="2"
                                     ToolTip="Список версий файла активной строки"
+                                    IsEnabled="{Binding SelectedModifiedFileIsNotNull}"
                                     Click="ButtonModifiedFilesChangeVisibility_Click">
                                 <md:PackIcon Kind="FormatListBulleted"/>
                             </Button>
@@ -232,7 +234,8 @@
                                       AllowDrop="True"
                                       Drop="DataGridModifiedFiles_Drop"
                                       MouseDoubleClick="DataGridModifiedFiles_MouseDoubleClick"
-                                      KeyDown="DataGridModifiedFiles_KeyDown">
+                                      KeyDown="DataGridModifiedFiles_KeyDown"
+                                      SelectionChanged="DataGridModifiedFiles_SelectionChanged">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Имя файла"      Binding="{Binding FileName}"/>
                                     <DataGridTextColumn Header="Дата изменения" Binding="{Binding DateVersion, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"/>
