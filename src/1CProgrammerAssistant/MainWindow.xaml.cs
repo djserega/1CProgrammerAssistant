@@ -749,6 +749,11 @@ namespace _1CProgrammerAssistant
             MethodStoreListMethodSelectedItemNotNull = MethodStoreListMethodSelectedItem != null;
         }
 
+        private void DataGridMethodStoreListMethods_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
+        {
+            e.DetailsElement.Visibility = string.IsNullOrWhiteSpace(MethodStoreListMethodSelectedItem.Comment) ? Visibility.Collapsed : Visibility.Visible;
+        }
+
         #endregion
 
         private void OpenFormMethodStoreElement(int? id = null)

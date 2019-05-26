@@ -401,18 +401,27 @@
                                   SelectedItem="{Binding MethodStoreListMethodSelectedItem}"
                                   AutoGenerateColumns="False"
                                   IsReadOnly="True"
+                                  SelectionMode="Single"
                                   MouseDoubleClick="DataGridMethodStore_MouseDoubleClick"
                                   KeyDown="DataGridMethodStore_KeyDown"
                                   PreviewKeyDown="DataGridMethodStore_PreviewKeyDown"
-                                  SelectionChanged="DataGridMethodStoreListMethods_SelectionChanged">
+                                  SelectionChanged="DataGridMethodStoreListMethods_SelectionChanged"
+                                  LoadingRowDetails="DataGridMethodStoreListMethods_LoadingRowDetails">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Код"            MinWidth="70"   Binding="{Binding ID}"/>
                                 <DataGridTextColumn Header="Группа"         MinWidth="85"   Binding="{Binding Group}"/>
                                 <DataGridTextColumn Header="Тип"            MinWidth="65"   Binding="{Binding Type}"/>
                                 <DataGridTextColumn Header="Модуль"         MinWidth="90"   Binding="{Binding Module}"/>
-                                <DataGridTextColumn Header="Метод"          MinWidth="80"   Binding="{Binding Method}"/>
-                                <DataGridTextColumn Header="Комментарий"    MinWidth="110"  Binding="{Binding Comment}"/>
+                                <DataGridTextColumn Header="Метод"          MinWidth="80"   Binding="{Binding Method}" Width="*"/>
                             </DataGrid.Columns>
+                            
+                            <DataGrid.RowDetailsTemplate>
+                                <DataTemplate>
+                                    <Border Margin="10 5" Padding="5" BorderThickness="2" CornerRadius="5">
+                                        <TextBlock Text="{Binding Comment}" TextWrapping="Wrap" Width="auto"/>
+                                    </Border>
+                                </DataTemplate>
+                            </DataGrid.RowDetailsTemplate>
 
                         </DataGrid>
 
