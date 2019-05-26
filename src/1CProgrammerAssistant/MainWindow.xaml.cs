@@ -675,6 +675,12 @@ namespace _1CProgrammerAssistant
 
         private void ButtonMethodStoreEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (MethodStoreListMethodSelectedItem == null)
+            {
+                MessageBox.Show("Элемент не выбран.");
+                return;
+            }
+
             OpenEditFormMethodStoreElement();
         }
 
