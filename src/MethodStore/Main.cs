@@ -24,16 +24,10 @@ namespace _1CProgrammerAssistant.MethodStore
 
         public void LoadMethod(string filter)
         {
-            ListMethods.Clear();
-
             List<Models.ElementStore> listElementStores = Events.LoadElementsStoreEvent.Load() ?? new List<Models.ElementStore>();
 
-            string filterToLower = string.Empty;
-            if (!string.IsNullOrEmpty(filter))
-                filterToLower = filter.ToLower();
-
             bool needFiltered =
-                !string.IsNullOrEmpty(filterToLower)
+                !string.IsNullOrEmpty(filter)
                 && (_filter.IsCheckedFilterGroup
                     || _filter.IsCheckedFilterType
                     || _filter.IsCheckedFilterMethod
@@ -41,6 +35,10 @@ namespace _1CProgrammerAssistant.MethodStore
 
             if (needFiltered)
             {
+                string filterToLower = string.Empty;
+                if (!string.IsNullOrEmpty(filter))
+                    filterToLower = filter.ToLower();
+
                 IEnumerable<Models.ElementStore> listElementStoresFilter = ((IEnumerable<Models.ElementStore>)(listElementStores))
                     .Where(
                         item =>
