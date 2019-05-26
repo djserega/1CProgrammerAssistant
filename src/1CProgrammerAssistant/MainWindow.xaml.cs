@@ -64,6 +64,8 @@ namespace _1CProgrammerAssistant
             {
                 Dispatcher.Invoke(new ThreadStart(delegate { InitializeMethodStore(); }));
             };
+
+            SetValueFilterMethodStore(true);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -710,6 +712,12 @@ namespace _1CProgrammerAssistant
         private void FilterIsCheckedAll_Click(object sender, RoutedEventArgs e)
         {
             bool newValue = Convert.ToBoolean((string)((FrameworkElement)sender).Tag);
+
+            SetValueFilterMethodStore(newValue);
+        }
+
+        private void SetValueFilterMethodStore(bool newValue)
+        {
             FilterIsCheckedGroup = newValue;
             FilterIsCheckedType = newValue;
             FilterIsCheckedModule = newValue;
