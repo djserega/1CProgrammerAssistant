@@ -40,7 +40,7 @@ namespace _1CProgrammerAssistant.MethodStore.EF
 
         private static string GetConnectionString()
         {
-            string pathDb = "Data Source=./MethodStore.db;Version=3";
+            string pathDb = "Data Source=./MethodStore.db"; // ;Version=3";
 
             return pathDb;
         }

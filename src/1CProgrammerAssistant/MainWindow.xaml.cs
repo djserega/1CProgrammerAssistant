@@ -70,8 +70,15 @@ namespace _1CProgrammerAssistant
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            if (AssistantObjects.MethodStoreContext == null)
+            {
+                ButtonMethodStore.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
 #warning Бага? В Release без этой строки не создается статический экземпляр контекста MethodStore
-            AssistantObjects.MethodStoreContext.GetType();
+                AssistantObjects.MethodStoreContext.GetType();
+            }
 
             ChangePagesAdditions(0);
 
@@ -605,7 +612,7 @@ namespace _1CProgrammerAssistant
         public static readonly DependencyProperty MyPropertyProperty =
             DependencyProperty.Register(
                 "MethodStoreListMethodSelectedItem",
-                typeof(MethodStore.Models.ElementStore), 
+                typeof(MethodStore.Models.ElementStore),
                 typeof(MainWindow));
 
         public bool FilterIsCheckedGroup
@@ -690,7 +697,7 @@ namespace _1CProgrammerAssistant
         {
             ((MainWindow)d).InitializeMethodStore();
         }
-       
+
         #endregion
 
         #region Button

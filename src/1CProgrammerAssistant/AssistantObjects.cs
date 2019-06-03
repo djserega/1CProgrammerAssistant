@@ -2,8 +2,16 @@
 {
     internal class AssistantObjects
     {
-        internal static MethodStore.EF.MethodStoreContext MethodStoreContext = new MethodStore.EF.MethodStoreContext();
-        
+        internal static MethodStore.EF.MethodStoreContext MethodStoreContext;
+
+        public AssistantObjects()
+        {
+            Safe.SafeAction(() =>
+            {
+                MethodStoreContext = new MethodStore.EF.MethodStoreContext();
+            });
+        }
+
         internal DescriptionsTheMethods.Main DescriptionsTheMethodsMain { get; } = new DescriptionsTheMethods.Main();
         internal QueryParameters.Main QueryParametersMain { get; } = new QueryParameters.Main();
         internal MethodStore.Main MethodStoreMain { get; } = new MethodStore.Main();
