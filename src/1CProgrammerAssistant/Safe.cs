@@ -1,9 +1,42 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Text;
 using System.Windows;
 
 namespace _1CProgrammerAssistant
 {
+    internal static class SafeBase
+    {
+        internal static string GetMessageException(Exception ex)
+        {
+            return ex.Message
+                + GetSeparatorInnerException(0) +
+                ex.InnerException?.Message
+                + GetSeparatorInnerException(1) +
+                ex.InnerException?.InnerException?.Message
+                + GetSeparatorInnerException(2) +
+                ex.InnerException?.InnerException?.InnerException?.Message
+                + GetSeparatorInnerException(3) +
+                ex.InnerException?.InnerException?.InnerException?.InnerException?.Message
+                + GetSeparatorInnerException(4) +
+                ex.InnerException?.InnerException?.InnerException?.InnerException?.InnerException?.Message;
+        }
+
+        private static string GetSeparatorInnerException(int count)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine();
+
+            for (int i = 0; i < count; i++)
+                sb.Append('-');
+
+            sb.Append('>');
+            sb.AppendLine();
+
+            return sb.ToString();
+        }
+    }
+
     internal static class Safe
     {
         internal static void SafeAction(Action action)
@@ -18,13 +51,7 @@ namespace _1CProgrammerAssistant
                 {
                     eventLog.Source = "Application";
                     eventLog.WriteEntry(
-                        ex.Message
-                        + "\n" + "\n" +
-                        ex.InnerException?.Message
-                        + "\n" + "\n" +
-                        ex.InnerException?.InnerException?.Message
-                        + "\n" + "\n" +
-                        ex.InnerException?.InnerException?.InnerException?.Message,
+                        SafeBase.GetMessageException(ex),
                         EventLogEntryType.Warning);
                 }
                 MessageBox.Show("Перехвачена ошибка выполнения.\nДетальную информацию можно найти в событиях Windows.");
@@ -46,13 +73,7 @@ namespace _1CProgrammerAssistant
                 {
                     eventLog.Source = "Application";
                     eventLog.WriteEntry(
-                        ex.Message
-                        + "\n" + "\n" +
-                        ex.InnerException?.Message
-                        + "\n" + "\n" +
-                        ex.InnerException?.InnerException?.Message
-                        + "\n" + "\n" +
-                        ex.InnerException?.InnerException?.InnerException?.Message,
+                        SafeBase.GetMessageException(ex),
                         EventLogEntryType.Warning);
                 }
                 MessageBox.Show("Перехвачена ошибка выполнения.\nДетальную информацию можно найти в событиях Windows.");
@@ -60,5 +81,6 @@ namespace _1CProgrammerAssistant
                 return default;
             }
         }
+
     }
 }
