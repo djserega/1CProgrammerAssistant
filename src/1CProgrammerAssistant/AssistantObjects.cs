@@ -8,7 +8,7 @@
         {
             Safe.SafeAction(
                 () => MethodStoreContext = new MethodStore.EF.MethodStoreContext(),
-                "Ошибка инициализации контекста. При первом запуске, в каталоге приложения создан файл строки подключения.");
+                "Ошибка инициализации контекста. При первом запуске, в каталоге приложения создается файл строки подключения.");
         }
 
         internal DescriptionsTheMethods.Main DescriptionsTheMethodsMain { get; } = new DescriptionsTheMethods.Main();
