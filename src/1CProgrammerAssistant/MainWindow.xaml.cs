@@ -825,6 +825,7 @@ namespace _1CProgrammerAssistant
             assistantObjects.MethodStoreMain.LoadMethod(FilterMethodStore);
 
             MethodStoreListMethod = assistantObjects.MethodStoreMain.ListMethods;
+            DataGridMethodStoreListMethods.UpdateLayout();
         }
 
         private void OpenEditFormMethodStoreElement(bool showMessage = true)

@@ -54,8 +54,8 @@ namespace _1CProgrammerAssistant.Views.MethodStore
             else if (e.KeyboardDevice.Modifiers == ModifierKeys.Control
                 && e.Key == Key.Enter)
             {
-                RefObject.Save();
-                Close();
+                if (RefObject.Save())
+                    Close();
             }
         }
 
