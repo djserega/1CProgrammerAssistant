@@ -20,9 +20,9 @@ namespace _1CProgrammerAssistant.MethodStore.EF
             Events.RemoveElementStoreEvent.RemoveElementStoreEvents += RemoveElementStores;
             Events.GetDistinctFieldsEvent.GetElementsEvents += GetDistinctFields;
 
-            Events.DatabaseChangedEvent.InitializeWatcher(
-                Environment.CurrentDirectory,
-                Database.Connection.DataSource);
+            //Events.DatabaseChangedEvent.InitializeWatcher(
+            //    Environment.CurrentDirectory,
+            //    Database.Connection.DataSource);
         }
 
         public DbSet<Models.ElementStore> ElementStores { get; set; }
@@ -135,6 +135,19 @@ namespace _1CProgrammerAssistant.MethodStore.EF
 
             return result.Distinct().Where(f => !string.IsNullOrEmpty(f));
         }
+
+        #region Overrides
+
+        public override int SaveChanges()
+        {
+            int result = base.SaveChanges();
+
+            Events.SaveChangesDatabaseEvent.SaveChanges();
+
+            return result;
+        }
+
+        #endregion
 
         #endregion
     }

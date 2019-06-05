@@ -60,7 +60,7 @@ namespace _1CProgrammerAssistant
                 }));
             };
 
-            MethodStore.Events.DatabaseChangedEvent.DatabaseChangedEvents += () =>
+            MethodStore.Events.SaveChangesDatabaseEvent.SaveChangesDatabaseEvents += () =>
             {
                 Dispatcher.Invoke(new ThreadStart(delegate { InitializeMethodStore(); }));
             };
