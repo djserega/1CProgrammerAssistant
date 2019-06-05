@@ -39,8 +39,11 @@ namespace _1CProgrammerAssistant
 
     internal static class Safe
     {
-        internal static void SafeAction(Action action)
+        internal static void SafeAction(Action action, string textInfo = "")
         {
+            if (string.IsNullOrEmpty(textInfo))
+                textInfo = "Перехвачена ошибка выполнения.\nДетальную информацию можно найти в событиях Windows.";
+
             try
             {
                 action();
@@ -54,7 +57,7 @@ namespace _1CProgrammerAssistant
                         SafeBase.GetMessageException(ex),
                         EventLogEntryType.Warning);
                 }
-                MessageBox.Show("Перехвачена ошибка выполнения.\nДетальную информацию можно найти в событиях Windows.");
+                MessageBox.Show(textInfo);
             }
         }
     }
