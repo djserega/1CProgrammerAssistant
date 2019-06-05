@@ -27,8 +27,14 @@
                 </StackPanel>
             </Button>
             <Button Margin="2"
-                    ToolTip="Закрыть">
+                    ToolTip="Удалить"
+                    Click="ButtonDelete_Click">
                 <md:PackIcon Kind="Delete"/>
+            </Button>
+            <Button Margin="2"
+                    ToolTip="Получить текст из буфера обмена"
+                    Click="ButtonProcessedTextInClipboard_Click">
+                <md:PackIcon Kind="Clipboard"/>
             </Button>
         </StackPanel>
 

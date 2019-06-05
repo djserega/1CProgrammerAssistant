@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _1CProgrammerAssistant.Additions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,7 @@ namespace _1CProgrammerAssistant.Views.MethodStore
         public static readonly DependencyProperty RefObjectProperty =
             DependencyProperty.Register("RefObject", typeof(Models.ElementStore), typeof(ElementStore), null);
 
+        internal ActionClipboard ActionClipboard { get; set; }
 
         public ElementStore(int? id = null)
         {
@@ -51,12 +53,12 @@ namespace _1CProgrammerAssistant.Views.MethodStore
         {
             if (e.Key == Key.Escape)
                 Close();
-            else if (e.KeyboardDevice.Modifiers == ModifierKeys.Control
-                && e.Key == Key.Enter)
-            {
-                if (RefObject.Save())
-                    Close();
-            }
+            //else if (e.KeyboardDevice.Modifiers == ModifierKeys.Control
+            //    && e.Key == Key.Enter)
+            //{
+            //    if (RefObject.Save())
+            //        Close();
+            //}
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
@@ -65,6 +67,18 @@ namespace _1CProgrammerAssistant.Views.MethodStore
             {
                 LoadObjectById(RefObject.ID);
             }
+        }
+
+        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonProcessedTextInClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            string textInClipboard = ActionClipboard.GetTextInClipboard();
+
+            ProcessedTextInClipboard(textInClipboard);
         }
 
         private void LoadObjectById(int? id)
@@ -126,5 +140,17 @@ namespace _1CProgrammerAssistant.Views.MethodStore
             DataContext = RefObject;
         }
 
+        private void ProcessedTextInClipboard(string text)
+        {
+            if (text.Contains('.')
+                && text.Count(f => f.Equals('.')) == 1)
+            {
+                int positionDot = text.IndexOf('.');
+                RefObject.Module = text.Left(positionDot);
+                RefObject.Method = text.Right(positionDot - 3);
+
+                ReInitializeDataContext();
+            }
+        }
     }
 }

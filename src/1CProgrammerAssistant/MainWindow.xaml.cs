@@ -810,7 +810,8 @@ namespace _1CProgrammerAssistant
             {
                 Left = Left + 20,
                 Top = Top + 20,
-                Owner = this
+                Owner = this,
+                ActionClipboard = _actionClipboard
             };
             viewElementStore.ShowDialog();
         }
