@@ -14,17 +14,6 @@ namespace _1CProgrammerAssistant.MethodStore.EF
 
         public MethodStoreContext() : base(GetConnectionString())
         {
-            //Database.CreateIfNotExists();
-            //Database.ExecuteSqlCommand(
-            //    "CREATE TABLE IF NOT EXISTS 'ElementStores' (" +
-            //    " 'ID'       INTEGER PRIMARY KEY AUTOINCREMENT," +
-            //    " 'Group'    TEXT    NOT NULL," +
-            //    " 'Type'     TEXT    NOT NULL," +
-            //    " 'Module'   TEXT    NOT NULL," +
-            //    " 'Method'   TEXT    NOT NULL," +
-            //    " 'Comment'  TEXT    NOT NULL" +
-            //    ")");
-
             Events.UpdateElementStoreEvent.UpdateElementStoreEvents += UpdateElementStores;
             Events.LoadElementsStoreEvent.LoadElementsStoreEvents += GetElementsStores;
             Events.LoadElementStoreEvent.LoadElementStoreEvents += GetElementStores;
