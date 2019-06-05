@@ -38,5 +38,16 @@ namespace _1CProgrammerAssistant.Additions
         {
             return string.Compare(source.Left(text.Length), text, ignoreCase) == 0;
         }
+
+        public static string Right(this string source, int lenght)
+        {
+            if (lenght > source.Length)
+                return source;
+
+            if (lenght < 0)
+                return source;
+
+            return source.Substring(source.Length - lenght);
+        }
     }
 }
