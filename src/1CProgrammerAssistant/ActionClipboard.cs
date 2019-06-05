@@ -38,7 +38,7 @@ namespace _1CProgrammerAssistant
             {
                 if (Clipboard.ContainsText())
                 {
-                    string textInClipboard = Clipboard.GetText();
+                    string textInClipboard = GetTextInClipboard();
 
                     ChangedSourceTextEvents?.Invoke(textInClipboard);
 
@@ -49,6 +49,11 @@ namespace _1CProgrammerAssistant
                             ShowNotification("Не удалось распознать данные буфера обмена.", BalloonIcon.Error);
                 }
             });
+        }
+
+        internal static string GetTextInClipboard()
+        {
+            return Clipboard.GetText();
         }
 
         internal void SetResultTextToClipboard(bool showMessage = false)
