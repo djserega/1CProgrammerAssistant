@@ -14,16 +14,16 @@ namespace _1CProgrammerAssistant.MethodStore.EF
 
         public MethodStoreContext() : base(GetConnectionString())
         {
-            Database.CreateIfNotExists();
-            Database.ExecuteSqlCommand(
-                "CREATE TABLE IF NOT EXISTS 'ElementStores' (" +
-                " 'ID'       INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " 'Group'    TEXT    NOT NULL," +
-                " 'Type'     TEXT    NOT NULL," +
-                " 'Module'   TEXT    NOT NULL," +
-                " 'Method'   TEXT    NOT NULL," +
-                " 'Comment'  TEXT    NOT NULL" +
-                ")");
+            //Database.CreateIfNotExists();
+            //Database.ExecuteSqlCommand(
+            //    "CREATE TABLE IF NOT EXISTS 'ElementStores' (" +
+            //    " 'ID'       INTEGER PRIMARY KEY AUTOINCREMENT," +
+            //    " 'Group'    TEXT    NOT NULL," +
+            //    " 'Type'     TEXT    NOT NULL," +
+            //    " 'Module'   TEXT    NOT NULL," +
+            //    " 'Method'   TEXT    NOT NULL," +
+            //    " 'Comment'  TEXT    NOT NULL" +
+            //    ")");
 
             Events.UpdateElementStoreEvent.UpdateElementStoreEvents += UpdateElementStores;
             Events.LoadElementsStoreEvent.LoadElementsStoreEvents += GetElementsStores;
@@ -40,9 +40,39 @@ namespace _1CProgrammerAssistant.MethodStore.EF
 
         private static string GetConnectionString()
         {
-            string pathDb = "Data Source=./MethodStore.db"; // ;Version=3";
+            string connectionString = SafeResult<string>.SafeAction(() => GetConnectionStringSafeAction());
 
-            return pathDb;
+            if (string.IsNullOrEmpty(connectionString))
+                new CreateConnectionStringException();
+
+            return connectionString;
+        }
+
+        private static string GetConnectionStringSafeAction()
+        {
+            string pathConnectionString = Path.Combine(
+                Environment.CurrentDirectory,
+                "MethodStoreConnectionString.cfg");
+
+            string connectionString = string.Empty;
+
+            FileInfo infoConenctionString = new FileInfo(pathConnectionString);
+            if (!infoConenctionString.Exists)
+            {
+                string defaultConenctionString = "Data Source=  ; Initial Catalog=  ; User Id=  ; Password=  ;";
+
+                using (StreamWriter writer = infoConenctionString.CreateText())
+                    writer.Write(defaultConenctionString);
+
+                throw new Exception();
+            }
+            else
+            {
+                using (StreamReader reader = infoConenctionString.OpenText())
+                    connectionString = reader.ReadToEnd();
+            }
+
+            return connectionString;
         }
 
         #region Additions events

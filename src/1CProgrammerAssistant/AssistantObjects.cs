@@ -6,10 +6,9 @@
 
         public AssistantObjects()
         {
-            Safe.SafeAction(() =>
-            {
-                MethodStoreContext = new MethodStore.EF.MethodStoreContext();
-            });
+            Safe.SafeAction(
+                () => MethodStoreContext = new MethodStore.EF.MethodStoreContext(),
+                "Ошибка инициализации контекста. При первом запуске, в каталоге приложения создан файл строки подключения.");
         }
 
         internal DescriptionsTheMethods.Main DescriptionsTheMethodsMain { get; } = new DescriptionsTheMethods.Main();
