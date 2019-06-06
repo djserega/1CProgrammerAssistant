@@ -858,6 +858,7 @@ namespace _1CProgrammerAssistant
                 FilterIsCheckedMethod);
             assistantObjects.MethodStoreMain.LoadMethod(FilterMethodStore);
 
+            MethodStoreListMethod?.Clear();
             MethodStoreListMethod = assistantObjects.MethodStoreMain.ListMethods;
             DataGridMethodStoreListMethods.UpdateLayout();
         }
