@@ -147,7 +147,10 @@ namespace _1CProgrammerAssistant.Views.MethodStore
             {
                 int positionDot = text.IndexOf('.');
                 RefObject.Module = text.Left(positionDot);
-                RefObject.Method = text.Right(positionDot - 3);
+                RefObject.Method = text.Substring(positionDot + 1);
+
+                if (RefObject.Method.Contains('('))
+                    RefObject.Method = RefObject.Method.Left(RefObject.Method.IndexOf('('));
 
                 ReInitializeDataContext();
             }
