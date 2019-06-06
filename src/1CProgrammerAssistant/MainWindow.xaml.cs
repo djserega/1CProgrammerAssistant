@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 
@@ -615,6 +616,18 @@ namespace _1CProgrammerAssistant
                 typeof(MethodStore.Models.ElementStore),
                 typeof(MainWindow));
 
+        public DataGridColumn MethodStoreListMethodCurrentColumn
+        {
+            get { return (DataGridColumn)GetValue(MethodStoreListMethodCurrentColumnProperty); }
+            set { SetValue(MethodStoreListMethodCurrentColumnProperty, value); }
+        }
+
+        public static readonly DependencyProperty MethodStoreListMethodCurrentColumnProperty =
+            DependencyProperty.Register(
+                "MethodStoreListMethodCurrentColumn",
+                typeof(DataGridColumn),
+                typeof(MainWindow));
+
         public bool FilterIsCheckedGroup
         {
             get { return (bool)GetValue(FilterIsCheckedGroupProperty); }
@@ -802,6 +815,36 @@ namespace _1CProgrammerAssistant
             e.DetailsElement.Visibility = string.IsNullOrWhiteSpace(MethodStoreListMethodSelectedItem.Comment) ? Visibility.Collapsed : Visibility.Visible;
         }
 
+        private void DataGridMethodStoreMenuItemFilterCurrentCell_Click(object sender, RoutedEventArgs e)
+        {
+            if (MethodStoreListMethodSelectedItem != null)
+            {
+                SetValueFilterMethodStore(false);
+
+                string columnPath = ((Binding)((DataGridBoundColumn)DataGridMethodStoreListMethods.CurrentColumn).Binding).Path.Path;
+
+                switch (columnPath)
+                {
+                    case "Group":
+                        FilterMethodStore = MethodStoreListMethodSelectedItem.Group;
+                        FilterIsCheckedGroup = true;
+                        break;
+                    case "Type":
+                        FilterMethodStore = MethodStoreListMethodSelectedItem.Type;
+                        FilterIsCheckedType = true;
+                        break;
+                    case "Module":
+                        FilterMethodStore = MethodStoreListMethodSelectedItem.Module;
+                        FilterIsCheckedModule = true;
+                        break;
+                    case "Method":
+                        FilterMethodStore = MethodStoreListMethodSelectedItem.Method;
+                        FilterIsCheckedMethod = true;
+                        break;
+                }
+            }
+        }
+
         #endregion
 
         private void OpenFormMethodStoreElement(int? id = null)
@@ -935,5 +978,6 @@ namespace _1CProgrammerAssistant
 
             return result;
         }
+
     }
 }

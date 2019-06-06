@@ -403,6 +403,7 @@
                                   Background="{x:Null}"
                                   ItemsSource="{Binding MethodStoreListMethod}"
                                   SelectedItem="{Binding MethodStoreListMethodSelectedItem}"
+                                  CurrentColumn="{Binding MethodStoreListMethodCurrentColumn}"
                                   AutoGenerateColumns="False"
                                   IsReadOnly="True"
                                   SelectionMode="Single"
@@ -412,11 +413,11 @@
                                   SelectionChanged="DataGridMethodStoreListMethods_SelectionChanged"
                                   LoadingRowDetails="DataGridMethodStoreListMethods_LoadingRowDetails">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Код"            MinWidth="70"   Binding="{Binding ID}"/>
-                                <DataGridTextColumn Header="Группа"         MinWidth="85"   Binding="{Binding Group}"/>
-                                <DataGridTextColumn Header="Тип"            MinWidth="65"   Binding="{Binding Type}"/>
-                                <DataGridTextColumn Header="Модуль"         MinWidth="90"   Binding="{Binding Module}"/>
-                                <DataGridTextColumn Header="Метод"          MinWidth="80"   Binding="{Binding Method}" Width="*"/>
+                                <DataGridTextColumn Header="Код"        MinWidth="70"   Binding="{Binding ID}"/>
+                                <DataGridTextColumn Header="Группа"     MinWidth="85"   Binding="{Binding Group}"/>
+                                <DataGridTextColumn Header="Тип"        MinWidth="65"   Binding="{Binding Type}"/>
+                                <DataGridTextColumn Header="Модуль"     MinWidth="90"   Binding="{Binding Module}"/>
+                                <DataGridTextColumn Header="Метод"      MinWidth="80"   Binding="{Binding Method}" Width="*"/>
                             </DataGrid.Columns>
                             
                             <DataGrid.RowDetailsTemplate>
@@ -427,6 +428,13 @@
                                 </DataTemplate>
                             </DataGrid.RowDetailsTemplate>
 
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Отбор по текущему значению"
+                                              Click="DataGridMethodStoreMenuItemFilterCurrentCell_Click"/>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
+                            
                         </DataGrid>
 
                     </Grid>
