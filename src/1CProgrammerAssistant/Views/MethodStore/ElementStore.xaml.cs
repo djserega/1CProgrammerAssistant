@@ -23,6 +23,8 @@ namespace _1CProgrammerAssistant.Views.MethodStore
     /// </summary>
     public partial class ElementStore : Window
     {
+        #region Fields, properties
+
         private _1CProgrammerAssistant.MethodStore.Main MethodStoreMain;
         private object _buttonOpenedContextMenu;
 
@@ -37,12 +39,20 @@ namespace _1CProgrammerAssistant.Views.MethodStore
 
         internal ActionClipboard ActionClipboard { get; set; }
 
+        #endregion
+
+        #region Constructors
+
         public ElementStore(int? id = null)
         {
             InitializeComponent();
 
             LoadObjectById(id);
         }
+
+        #endregion
+
+        #region Window events
 
         private void WindowElementStore_Loaded(object sender, RoutedEventArgs e)
         {
@@ -60,6 +70,10 @@ namespace _1CProgrammerAssistant.Views.MethodStore
             //        Close();
             //}
         }
+
+        #endregion
+
+        #region Buttons
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
@@ -81,16 +95,6 @@ namespace _1CProgrammerAssistant.Views.MethodStore
             ProcessedTextInClipboard(textInClipboard);
         }
 
-        private void LoadObjectById(int? id)
-        {
-            if (id == null)
-                RefObject = new Models.ElementStore();
-            else
-                RefObject = Events.LoadElementStoreEvent.Load((int)id);
-
-            ReInitializeDataContext();
-        }
-
         private void ButtonGroupSelect_Click(object sender, RoutedEventArgs e)
         {
             SetContextMenuSelectedButton(sender, MethodStoreMain.GetUniqueGroups().ToList());
@@ -104,15 +108,6 @@ namespace _1CProgrammerAssistant.Views.MethodStore
         private void ButtonModuleSelect_Click(object sender, RoutedEventArgs e)
         {
             SetContextMenuSelectedButton(sender, MethodStoreMain.GetUniqueModule().ToList());
-        }
-
-        private void SetContextMenuSelectedButton(object container, List<string> listToContextMenu)
-        {
-            _buttonOpenedContextMenu = container;
-
-            ((Button)container).ContextMenu.ItemsSource = listToContextMenu;
-            ((Button)container).ContextMenu.HorizontalContentAlignment = HorizontalAlignment.Center;
-            ((Button)container).ContextMenu.IsOpen = true;
         }
 
         private void ButtonRightContextMenu_Click(object sender, RoutedEventArgs e)
@@ -131,6 +126,27 @@ namespace _1CProgrammerAssistant.Views.MethodStore
                     RefObject.Module = dataContextMenuItem;
                     break;
             }
+            ReInitializeDataContext();
+        }
+
+        #endregion
+
+        private void SetContextMenuSelectedButton(object container, List<string> listToContextMenu)
+        {
+            _buttonOpenedContextMenu = container;
+
+            ((Button)container).ContextMenu.ItemsSource = listToContextMenu;
+            ((Button)container).ContextMenu.HorizontalContentAlignment = HorizontalAlignment.Center;
+            ((Button)container).ContextMenu.IsOpen = true;
+        }
+
+        private void LoadObjectById(int? id)
+        {
+            if (id == null)
+                RefObject = new Models.ElementStore();
+            else
+                RefObject = Events.LoadElementStoreEvent.Load((int)id);
+
             ReInitializeDataContext();
         }
 
