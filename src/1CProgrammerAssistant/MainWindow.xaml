@@ -318,7 +318,7 @@
                                         ToolTip="Удаление файла"
                                         IsEnabled="{Binding MethodStoreListMethodSelectedItemNotNull}"
                                         Click="ButtonMethodStoreRemove_Click">
-                                    <md:PackIcon Kind="MinusCircleOutline"/>
+                                    <md:PackIcon Kind="Delete"/>
                                 </Button>
                                 <Button Margin="2"
                                         ToolTip="Обновить список методов"
