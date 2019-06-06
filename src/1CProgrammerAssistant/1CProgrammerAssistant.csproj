@@ -84,7 +84,8 @@
     <Compile Include="AssistantObjects.cs" />
     <Compile Include="AssistantTaskbarIcon.cs" />
     <Compile Include="Exceptions.cs" />
-    <Compile Include="MethodStore.EF\MethodStoreContext.cs" />
+    <Compile Include="MethodStore\Messages.cs" />
+    <Compile Include="MethodStore\MethodStore.EF\MethodStoreContext.cs" />
     <Compile Include="InputBox.xaml.cs">
       <DependentUpon>InputBox.xaml</DependentUpon>
     </Compile>

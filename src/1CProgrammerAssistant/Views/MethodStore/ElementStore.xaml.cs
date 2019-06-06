@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 
 using Events = _1CProgrammerAssistant.MethodStore.Events;
 using Models = _1CProgrammerAssistant.MethodStore.Models;
+using Messages = _1CProgrammerAssistant.MethodStore.Messages;
 
 namespace _1CProgrammerAssistant.Views.MethodStore
 {
@@ -75,6 +76,12 @@ namespace _1CProgrammerAssistant.Views.MethodStore
 
         #region Buttons
 
+        private void ButtonSaveAndClose_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonSave_Click(sender, e);
+            Close();
+        }
+
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             if (RefObject.Save())
@@ -85,7 +92,10 @@ namespace _1CProgrammerAssistant.Views.MethodStore
 
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (RefObject.ID == 0)
+                return;
 
+            Messages.RemoveElementStore(RefObject.ID);
         }
 
         private void ButtonProcessedTextInClipboard_Click(object sender, RoutedEventArgs e)

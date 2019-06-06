@@ -19,11 +19,18 @@
                     Orientation="Horizontal"
                     Margin="2 2">
             <Button Margin="2"
+                    ToolTip="Записать и закрыть"
+                    Click="ButtonSaveAndClose_Click">
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon VerticalAlignment="Center" Kind="ArrowLeftBoldBox"/>
+                    <TextBlock Margin="5 0">Записать</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Margin="2"
                     ToolTip="Записать"
                     Click="ButtonSave_Click">
                 <StackPanel Orientation="Horizontal">
                     <md:PackIcon VerticalAlignment="Center" Kind="ContentSave"/>
-                    <TextBlock Margin="5 0">Записать</TextBlock>
                 </StackPanel>
             </Button>
             <Button Margin="2"

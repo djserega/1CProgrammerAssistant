@@ -739,17 +739,7 @@ namespace _1CProgrammerAssistant
                 return;
             }
 
-            MessageBoxResult result = MessageBox.Show(
-                "Действительно удалить элемент?",
-                "Удаление элемента",
-                MessageBoxButton.OKCancel,
-                MessageBoxImage.Question,
-                MessageBoxResult.Cancel);
-
-            if (result != MessageBoxResult.OK)
-                return;
-
-            MethodStore.Events.RemoveElementStoreEvent.Remove(MethodStoreListMethodSelectedItem.ID);
+            MethodStore.Messages.RemoveElementStore(MethodStoreListMethodSelectedItem.ID);
         }
 
         private void ButtonMethodStoreUpdateList_Click(object sender, RoutedEventArgs e)
