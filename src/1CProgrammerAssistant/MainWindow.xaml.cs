@@ -66,6 +66,7 @@ namespace _1CProgrammerAssistant
                 Dispatcher.Invoke(new ThreadStart(delegate { InitializeMethodStore(); }));
             };
 
+            FilterMethodStore = string.Empty;
             SetValueFilterMethodStore(true);
         }
 
@@ -808,26 +809,37 @@ namespace _1CProgrammerAssistant
         {
             if (MethodStoreListMethodSelectedItem != null)
             {
-                SetValueFilterMethodStore(false);
-
                 string columnPath = ((Binding)((DataGridBoundColumn)DataGridMethodStoreListMethods.CurrentColumn).Binding).Path.Path;
-
                 switch (columnPath)
                 {
                     case "Group":
                         FilterMethodStore = MethodStoreListMethodSelectedItem.Group;
-                        FilterIsCheckedGroup = true;
                         break;
                     case "Type":
                         FilterMethodStore = MethodStoreListMethodSelectedItem.Type;
-                        FilterIsCheckedType = true;
                         break;
                     case "Module":
                         FilterMethodStore = MethodStoreListMethodSelectedItem.Module;
-                        FilterIsCheckedModule = true;
                         break;
                     case "Method":
                         FilterMethodStore = MethodStoreListMethodSelectedItem.Method;
+                        break;
+                }
+
+                SetValueFilterMethodStore(false);
+
+                switch (columnPath)
+                {
+                    case "Group":
+                        FilterIsCheckedGroup = true;
+                        break;
+                    case "Type":
+                        FilterIsCheckedType = true;
+                        break;
+                    case "Module":
+                        FilterIsCheckedModule = true;
+                        break;
+                    case "Method":
                         FilterIsCheckedMethod = true;
                         break;
                 }
