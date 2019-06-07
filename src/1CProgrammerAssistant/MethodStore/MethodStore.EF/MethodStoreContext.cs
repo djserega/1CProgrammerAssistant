@@ -92,7 +92,9 @@ namespace _1CProgrammerAssistant.MethodStore.EF
 
         private List<Models.ElementStore> GetElementsStores()
         {
-            List<Models.ElementStore> list = SafeResult<List<Models.ElementStore>>.SafeAction(() => ElementStores.ToList());
+            List<Models.ElementStore> list = SafeResult<List<Models.ElementStore>>.SafeAction(
+                () 
+                => ElementStores.OrderByDescending(f => f.ID).ToList());
 
             return list;
         }
