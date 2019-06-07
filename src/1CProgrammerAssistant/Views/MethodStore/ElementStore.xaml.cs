@@ -44,11 +44,21 @@ namespace _1CProgrammerAssistant.Views.MethodStore
 
         #region Constructors
 
-        public ElementStore(int? id = null)
+        public ElementStore()
         {
             InitializeComponent();
 
+            LoadObjectById(null);
+        }
+
+        public ElementStore(int id) : this()
+        {
             LoadObjectById(id);
+        }
+
+        public ElementStore(Models.ElementStore source) : this()
+        {
+            CopyObjectElementStore(source);
         }
 
         #endregion
@@ -156,6 +166,15 @@ namespace _1CProgrammerAssistant.Views.MethodStore
                 RefObject = new Models.ElementStore();
             else
                 RefObject = Events.LoadElementStoreEvent.Load((int)id);
+
+            ReInitializeDataContext();
+        }
+
+        private void CopyObjectElementStore(Models.ElementStore source)
+        {
+            RefObject = new Models.ElementStore();
+
+            RefObject.Fill(source);
 
             ReInitializeDataContext();
         }

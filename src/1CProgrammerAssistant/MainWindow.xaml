@@ -315,6 +315,12 @@
                                     <md:PackIcon Kind="Edit"/>
                                 </Button>
                                 <Button Margin="2"
+                                        ToolTip="Скопировать"
+                                        IsEnabled="{Binding MethodStoreListMethodSelectedItemNotNull}"
+                                        Click="ButtonMethodStoreCopy_Click">
+                                    <md:PackIcon Kind="ContentCopy"/>
+                                </Button>
+                                <Button Margin="2"
                                         ToolTip="Удаление файла"
                                         IsEnabled="{Binding MethodStoreListMethodSelectedItemNotNull}"
                                         Click="ButtonMethodStoreRemove_Click">

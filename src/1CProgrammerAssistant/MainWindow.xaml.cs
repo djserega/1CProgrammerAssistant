@@ -722,13 +722,12 @@ namespace _1CProgrammerAssistant
 
         private void ButtonMethodStoreEdit_Click(object sender, RoutedEventArgs e)
         {
-            if (MethodStoreListMethodSelectedItem == null)
-            {
-                MessageBox.Show("Элемент не выбран.");
-                return;
-            }
-
             OpenEditFormMethodStoreElement();
+        }
+
+        private void ButtonMethodStoreCopy_Click(object sender, RoutedEventArgs e)
+        {
+            OpenEditFormMethodStoreElement(copyElement: true);
         }
 
         private void ButtonMethodStoreRemove_Click(object sender, RoutedEventArgs e)
@@ -837,16 +836,39 @@ namespace _1CProgrammerAssistant
 
         #endregion
 
-        private void OpenFormMethodStoreElement(int? id = null)
+        private void OpenFormMethodStoreElement()
         {
-            var viewElementStore = new Views.MethodStore.ElementStore(id)
-            {
-                Left = Left + 20,
-                Top = Top + 20,
-                Owner = this,
-                ActionClipboard = _actionClipboard
-            };
+            var viewElementStore = new Views.MethodStore.ElementStore();
+
+            SetBaseWindowPropertiesMethodStoreElements(viewElementStore);
+
             viewElementStore.ShowDialog();
+        }
+
+        private void OpenFormMethodStoreElement(int id)
+        {
+            var viewElementStore = new Views.MethodStore.ElementStore(id);
+
+            SetBaseWindowPropertiesMethodStoreElements(viewElementStore);
+
+            viewElementStore.ShowDialog();
+        }
+
+        private void OpenFormMethodStoreElement(MethodStore.Models.ElementStore elementStore = null)
+        {
+            var viewElementStore = new Views.MethodStore.ElementStore(elementStore);
+
+            SetBaseWindowPropertiesMethodStoreElements(viewElementStore);
+
+            viewElementStore.ShowDialog();
+        }
+
+        private void SetBaseWindowPropertiesMethodStoreElements(Views.MethodStore.ElementStore viewElementStore)
+        {
+            viewElementStore.Left = Left + 20;
+            viewElementStore.Top = Top + 20;
+            viewElementStore.Owner = this;
+            viewElementStore.ActionClipboard = _actionClipboard;
         }
 
         private void InitializeMethodStore()
@@ -863,7 +885,7 @@ namespace _1CProgrammerAssistant
             DataGridMethodStoreListMethods.UpdateLayout();
         }
 
-        private void OpenEditFormMethodStoreElement(bool showMessage = true)
+        private void OpenEditFormMethodStoreElement(bool showMessage = true, bool copyElement = false)
         {
             if (MethodStoreListMethodSelectedItem == null)
             {
@@ -872,7 +894,10 @@ namespace _1CProgrammerAssistant
                 return;
             }
 
-            OpenFormMethodStoreElement(MethodStoreListMethodSelectedItem.ID);
+            if (copyElement)
+                OpenFormMethodStoreElement(MethodStoreListMethodSelectedItem);
+            else
+                OpenFormMethodStoreElement(MethodStoreListMethodSelectedItem.ID);
         }
 
         #endregion
@@ -969,6 +994,5 @@ namespace _1CProgrammerAssistant
 
             return result;
         }
-
     }
 }
