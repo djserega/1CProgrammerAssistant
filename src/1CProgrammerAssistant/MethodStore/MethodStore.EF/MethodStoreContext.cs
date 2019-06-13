@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Windows;
 
 namespace _1CProgrammerAssistant.MethodStore.EF
@@ -32,7 +33,11 @@ namespace _1CProgrammerAssistant.MethodStore.EF
             string connectionString = SafeResult<string>.SafeAction(() => GetConnectionStringSafeAction());
 
             if (string.IsNullOrEmpty(connectionString))
-                new CreateConnectionStringException();
+                throw new CreateConnectionStringException();
+
+            if (!CheckConnectionDataSouce(connectionString))
+                throw new PingConnectionException("При проверке подключения к базе данных 'Method store' произошла ошибка.\n" +
+                    "Проверьте строку подключения и наличие соединения к серверу.");
 
             return connectionString;
         }
@@ -64,6 +69,44 @@ namespace _1CProgrammerAssistant.MethodStore.EF
             return connectionString;
         }
 
+        private static bool CheckConnectionDataSouce(string connectionString)
+        {
+            string serverName = GetServerNameFromConnectionString(connectionString);
+
+            bool result = false;
+            using (Ping ping = new Ping())
+            {
+                try
+                {
+                    PingReply reply = ping.Send(serverName, 5);
+                    result = reply.Status == IPStatus.Success;
+                }
+                catch (PingException)
+                {
+                }
+
+            }
+            return result;
+        }
+
+        private static string GetServerNameFromConnectionString(string connectionString)
+        {
+            string serverName = string.Empty;
+
+            string parameterDataSource = "Data Source=";
+            int positionDataSource = connectionString.IndexOf(parameterDataSource);
+            if (positionDataSource >= 0)
+            {
+                int positionSeparator = connectionString.IndexOf(';', positionDataSource);
+                serverName = connectionString.Substring(
+                    positionDataSource + parameterDataSource.Length,
+                    positionSeparator - parameterDataSource.Length).Trim();
+
+            }
+
+            return serverName;
+        }
+
         #region Additions events
 
         private bool UpdateElementStores(Models.ElementStore elementStore)
@@ -93,7 +136,7 @@ namespace _1CProgrammerAssistant.MethodStore.EF
         private List<Models.ElementStore> GetElementsStores()
         {
             List<Models.ElementStore> list = SafeResult<List<Models.ElementStore>>.SafeAction(
-                () 
+                ()
                 => ElementStores.OrderByDescending(f => f.ID).ToList());
 
             return list;

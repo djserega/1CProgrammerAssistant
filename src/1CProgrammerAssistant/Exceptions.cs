@@ -9,4 +9,14 @@ namespace _1CProgrammerAssistant
     internal class CreateConnectionStringException : Exception
     {
     }
+    internal class PingConnectionException : Exception
+    {
+        public PingConnectionException()
+        {
+        }
+
+        public PingConnectionException(string message) : base(message)
+        {
+        }
+    }
 }
