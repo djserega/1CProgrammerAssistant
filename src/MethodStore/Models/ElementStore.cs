@@ -37,5 +37,16 @@ namespace _1CProgrammerAssistant.MethodStore.Models
 
             return result;
         }
+
+        public string GetTextToClipboard()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(Module);
+            stringBuilder.Append('.');
+            stringBuilder.Append(Method);
+            stringBuilder.Append("();");
+
+            return stringBuilder.ToString();
+        }
     }
 }

@@ -43,6 +43,11 @@
                     Click="ButtonProcessedTextFromClipboard_Click">
                 <md:PackIcon Kind="ContentPaste"/>
             </Button>
+            <Button Margin="2"
+                    ToolTip="Скопировать вызов метода в буфер обмена"
+                    Click="ButtonSetTextToClipboard_Click">
+                <md:PackIcon Kind="Clipboard"/>
+            </Button>
         </StackPanel>
 
         <Grid Grid.Row="1"

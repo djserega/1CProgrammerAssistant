@@ -200,5 +200,15 @@ namespace _1CProgrammerAssistant.Views.MethodStore
                 ReInitializeDataContext();
             }
         }
+
+        private void ButtonSetTextToClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            if (RefObject != null)
+            {
+                string textToClipboard = RefObject.GetTextToClipboard();
+                if (!string.IsNullOrWhiteSpace(textToClipboard))
+                    ActionClipboard.SEtTextToClipboard(textToClipboard, true, "Вызов метода помещен в буфер обмена.");
+            };
+        }
     }
 }
