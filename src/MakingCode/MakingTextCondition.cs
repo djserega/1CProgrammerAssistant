@@ -20,7 +20,7 @@ namespace MakingCode
 
         internal string MakeText()
         {
-            Regex regex = new Regex("[иначеесли|если]\\s|\\sи\\s|\\sили\\s|\\sтогда", RegexOptions.IgnoreCase); // иначеесли|если\s|\sи\s|\sили\s|\sтогда
+            Regex regex = new Regex(@"иначеесли\s|если\s|\sи\s|\sили\s|\sтогда", RegexOptions.IgnoreCase); // иначеесли\s|если\s|\sи\s|\sили\s|\sтогда
 
             MatchCollection matches = regex.Matches(Source);
             Match previousMatch = null;
