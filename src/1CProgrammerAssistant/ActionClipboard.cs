@@ -38,7 +38,7 @@ namespace _1CProgrammerAssistant
             {
                 if (Clipboard.ContainsText())
                 {
-                    string textInClipboard = GetTextInClipboard();
+                    string textInClipboard = GetTextFromClipboard();
 
                     ChangedSourceTextEvents?.Invoke(textInClipboard);
 
@@ -51,7 +51,7 @@ namespace _1CProgrammerAssistant
             });
         }
 
-        internal static string GetTextInClipboard()
+        internal static string GetTextFromClipboard()
         {
             return Clipboard.GetText();
         }

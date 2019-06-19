@@ -108,9 +108,9 @@ namespace _1CProgrammerAssistant.Views.MethodStore
             Messages.RemoveElementStore(RefObject.ID);
         }
 
-        private void ButtonProcessedTextInClipboard_Click(object sender, RoutedEventArgs e)
+        private void ButtonProcessedTextFromClipboard_Click(object sender, RoutedEventArgs e)
         {
-            string textInClipboard = ActionClipboard.GetTextInClipboard();
+            string textInClipboard = ActionClipboard.GetTextFromClipboard();
 
             ProcessedTextInClipboard(textInClipboard);
         }
