@@ -42,6 +42,11 @@ namespace _1CProgrammerAssistant.MethodStore.Models
         public string GetTextToClipboard()
         {
             StringBuilder stringBuilder = new StringBuilder();
+            if (IncludeTypeInMethodString)
+            {
+                stringBuilder.Append(Type);
+                stringBuilder.Append('.');
+            }
             stringBuilder.Append(Module);
             stringBuilder.Append('.');
             stringBuilder.Append(Method);
