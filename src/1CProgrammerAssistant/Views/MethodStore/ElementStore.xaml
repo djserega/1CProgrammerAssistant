@@ -99,7 +99,20 @@
                               HorizontalAlignment="Right"
                               Width="25"
                               ToolTip="Включать тип в строку метода"
-                              IsChecked="{Binding IncludeTypeInMethodString}"/>
+                              IsChecked="{Binding IncludeTypeInMethodString}">
+                        <CheckBox.Style>
+                            <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter Property="Opacity" Value="1"/>
+                                    </Trigger>
+                                    <Trigger Property="IsChecked" Value="False">
+                                        <Setter Property="Opacity" Value=".3"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </CheckBox.Style>
+                    </CheckBox>
                     <Grid Grid.Column="1">
                         <TextBox Text="{Binding Type}"/>
                         <Button Style="{StaticResource ButtonRightGrid}"
