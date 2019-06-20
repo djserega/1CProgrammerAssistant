@@ -134,6 +134,9 @@ namespace _1CProgrammerAssistant.Views.MethodStore
         {
             string dataContextMenuItem = (string)((MenuItem)e.OriginalSource).DataContext;
 
+            if (dataContextMenuItem == "...")
+                return;
+
             switch (((Button)_buttonOpenedContextMenu).Tag)
             {
                 case "Group":

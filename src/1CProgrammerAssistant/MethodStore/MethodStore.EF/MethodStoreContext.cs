@@ -158,7 +158,7 @@ namespace _1CProgrammerAssistant.MethodStore.EF
             Safe.SafeAction(() => SaveChanges());
         }
 
-        private IQueryable<string> GetDistinctFields(NamesDistinctField name, string filter = null)
+        private List<string> GetDistinctFields(NamesDistinctField name, string filter = null)
         {
             IQueryable<string> result = null;
 
@@ -178,10 +178,18 @@ namespace _1CProgrammerAssistant.MethodStore.EF
                     break;
             }
 
-            return result
+            List<string> resultList = result
                 .Distinct()
                 .Where(f => !string.IsNullOrEmpty(f))
-                .Where(f => filter == null ? true : f.Contains(filter));
+                .Where(f => filter == null ? true : f.Contains(filter))
+                .OrderBy(f => f)
+                .Take(11)
+                .ToList();
+
+            if (resultList.Count() > 10)
+                resultList[10] = "...";
+
+            return resultList;
         }
 
         #region Overrides
