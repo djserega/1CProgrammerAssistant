@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:_1CProgrammerAssistant.Views.MethodStore"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="ElementStore" Height="260" Width="500"
+        Title="Метод" Height="260" Width="500"
         x:Name="WindowElementStore"
         Loaded="WindowElementStore_Loaded"
         PreviewKeyDown="WindowElementStore_PreviewKeyDown">
