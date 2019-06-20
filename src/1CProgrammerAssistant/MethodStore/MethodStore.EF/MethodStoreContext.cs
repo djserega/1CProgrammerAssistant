@@ -158,7 +158,7 @@ namespace _1CProgrammerAssistant.MethodStore.EF
             Safe.SafeAction(() => SaveChanges());
         }
 
-        private IQueryable<string> GetDistinctFields(NamesDistinctField name)
+        private IQueryable<string> GetDistinctFields(NamesDistinctField name, string filter = null)
         {
             IQueryable<string> result = null;
 
@@ -178,7 +178,7 @@ namespace _1CProgrammerAssistant.MethodStore.EF
                     break;
             }
 
-            return result.Distinct().Where(f => !string.IsNullOrEmpty(f));
+            return result.Distinct().Where(f => !string.IsNullOrEmpty(f)).Where(f => filter == null ? true : f.Contains(filter));
         }
 
         #region Overrides

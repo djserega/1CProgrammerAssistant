@@ -78,7 +78,10 @@ namespace _1CProgrammerAssistant.MethodStore
         }
 
         public IQueryable<string> GetUniqueGroups() => Events.GetDistinctFieldsEvent.Get(NamesDistinctField.Group);
+        public IQueryable<string> GetUniqueGroups(string filter) => Events.GetDistinctFieldsEvent.Get(NamesDistinctField.Group, filter);
         public IQueryable<string> GetUniqueType() => Events.GetDistinctFieldsEvent.Get(NamesDistinctField.Type);
+        public IQueryable<string> GetUniqueType(string filter) => Events.GetDistinctFieldsEvent.Get(NamesDistinctField.Type, filter);
         public IQueryable<string> GetUniqueModule() => Events.GetDistinctFieldsEvent.Get(NamesDistinctField.Module);
+        public IQueryable<string> GetUniqueModule(string filter) => Events.GetDistinctFieldsEvent.Get(NamesDistinctField.Module, filter);
     }
 }

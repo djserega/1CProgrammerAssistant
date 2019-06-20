@@ -117,17 +117,17 @@ namespace _1CProgrammerAssistant.Views.MethodStore
 
         private void ButtonGroupSelect_Click(object sender, RoutedEventArgs e)
         {
-            SetContextMenuSelectedButton(sender, MethodStoreMain.GetUniqueGroups().ToList());
+            SetContextMenuSelectedButton(sender, MethodStoreMain.GetUniqueGroups(RefObject.Group).ToList());
         }
 
         private void ButtonTypeSelect_Click(object sender, RoutedEventArgs e)
         {
-            SetContextMenuSelectedButton(sender, MethodStoreMain.GetUniqueType().ToList());
+            SetContextMenuSelectedButton(sender, MethodStoreMain.GetUniqueType(RefObject.Type).ToList());
         }
 
         private void ButtonModuleSelect_Click(object sender, RoutedEventArgs e)
         {
-            SetContextMenuSelectedButton(sender, MethodStoreMain.GetUniqueModule().ToList());
+            SetContextMenuSelectedButton(sender, MethodStoreMain.GetUniqueModule(RefObject.Module).ToList());
         }
 
         private void ButtonRightContextMenu_Click(object sender, RoutedEventArgs e)
