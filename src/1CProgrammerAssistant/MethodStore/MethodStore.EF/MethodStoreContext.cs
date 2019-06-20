@@ -178,7 +178,10 @@ namespace _1CProgrammerAssistant.MethodStore.EF
                     break;
             }
 
-            return result.Distinct().Where(f => !string.IsNullOrEmpty(f)).Where(f => filter == null ? true : f.Contains(filter));
+            return result
+                .Distinct()
+                .Where(f => !string.IsNullOrEmpty(f))
+                .Where(f => filter == null ? true : f.Contains(filter));
         }
 
         #region Overrides
