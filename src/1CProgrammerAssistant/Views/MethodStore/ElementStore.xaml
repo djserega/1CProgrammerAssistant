@@ -95,6 +95,11 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0"
                            Content="Тип:"/>
+                    <CheckBox Grid.Column="0"
+                              HorizontalAlignment="Right"
+                              Width="25"
+                              ToolTip="Включать тип в строку метода"
+                              IsChecked="{Binding IncludeTypeInMethodString}"/>
                     <Grid Grid.Column="1">
                         <TextBox Text="{Binding Type}"/>
                         <Button Style="{StaticResource ButtonRightGrid}"
