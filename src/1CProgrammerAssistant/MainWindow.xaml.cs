@@ -68,10 +68,7 @@ namespace _1CProgrammerAssistant
 
             FilterMethodStore = string.Empty;
             SetValueFilterMethodStore(true);
-        }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
             if (AssistantObjects.MethodStoreContext == null)
             {
                 ButtonMethodStore.Visibility = Visibility.Collapsed;
@@ -90,6 +87,10 @@ namespace _1CProgrammerAssistant
 
             Topmost = Properties.Settings.Default.IsTopmost;
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+          }
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {

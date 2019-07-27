@@ -281,7 +281,7 @@
             </Grid>
 
             <Grid x:Name="AdditionsMethodStore"
-                  Visibility="Visible"
+                  Visibility="Collapsed"
                   Width="{Binding ElementName=GridParent, Path=ActualWidth}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="31*"/>
