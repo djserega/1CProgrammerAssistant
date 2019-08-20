@@ -210,7 +210,7 @@ namespace _1CProgrammerAssistant.Views.MethodStore
             {
                 string textToClipboard = RefObject.GetTextToClipboard();
                 if (!string.IsNullOrWhiteSpace(textToClipboard))
-                    ActionClipboard.SEtTextToClipboard(textToClipboard, true, "Вызов метода помещен в буфер обмена.");
+                    ActionClipboard.SetTextToClipboard(textToClipboard, true, "Вызов метода помещен в буфер обмена.");
             };
         }
     }

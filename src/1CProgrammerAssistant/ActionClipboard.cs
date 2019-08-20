@@ -58,10 +58,10 @@ namespace _1CProgrammerAssistant
 
         internal void SetResultTextToClipboard(bool showMessage = false)
         {
-            SEtTextToClipboard(ResultText, showMessage, "Результат помещен в буфер обмена.");
+            SetTextToClipboard(ResultText, showMessage, "Результат помещен в буфер обмена.");
         }
 
-        internal void SEtTextToClipboard(string text, bool showMessage = false, string textNotification = "")
+        internal void SetTextToClipboard(string text, bool showMessage = false, string textNotification = "")
         {
             Safe.SafeAction(() =>
             {

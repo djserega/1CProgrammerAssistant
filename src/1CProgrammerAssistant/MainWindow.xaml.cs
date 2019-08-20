@@ -1014,7 +1014,7 @@ namespace _1CProgrammerAssistant
             {
                 string textToClipboard = MethodStoreListMethodSelectedItem.GetTextToClipboard();
                 if (!string.IsNullOrWhiteSpace(textToClipboard))
-                    _actionClipboard.SEtTextToClipboard(textToClipboard, true, "Вызов метода помещен в буфер обмена.");
+                    _actionClipboard.SetTextToClipboard(textToClipboard, true, "Вызов метода помещен в буфер обмена.");
             };
         }
     }
