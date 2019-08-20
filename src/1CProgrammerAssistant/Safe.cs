@@ -48,6 +48,16 @@ namespace _1CProgrammerAssistant
             {
                 action();
             }
+            catch (PingConnectionException ex)
+            {
+                using (EventLog eventLog = new EventLog("Application"))
+                {
+                    eventLog.Source = "Application";
+                    eventLog.WriteEntry(
+                        SafeBase.GetMessageException(ex),
+                        EventLogEntryType.Warning);
+                }
+            }
             catch (Exception ex)
             {
                 using (EventLog eventLog = new EventLog("Application"))
