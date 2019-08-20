@@ -438,6 +438,8 @@
                                 <ContextMenu>
                                     <MenuItem Header="Отбор по текущему значению"
                                               Click="DataGridMethodStoreMenuItemFilterCurrentCell_Click"/>
+                                    <MenuItem Header="Скопировать вызов метода в буфер обмена"
+                                              Click="DataGridMethodStoreMenuItemCopyToClipboard_Click"/>
                                 </ContextMenu>
                             </DataGrid.ContextMenu>
                             

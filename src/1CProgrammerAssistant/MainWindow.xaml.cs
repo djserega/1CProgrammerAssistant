@@ -1006,5 +1006,15 @@ namespace _1CProgrammerAssistant
 
             return result;
         }
+
+        private void DataGridMethodStoreMenuItemCopyToClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            if (MethodStoreListMethodSelectedItem != null)
+            {
+                string textToClipboard = MethodStoreListMethodSelectedItem.GetTextToClipboard();
+                if (!string.IsNullOrWhiteSpace(textToClipboard))
+                    _actionClipboard.SEtTextToClipboard(textToClipboard, true, "Вызов метода помещен в буфер обмена.");
+            };
+        }
     }
 }
