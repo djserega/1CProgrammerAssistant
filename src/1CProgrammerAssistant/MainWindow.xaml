@@ -127,6 +127,14 @@
                                         Click="ButtonProcessingTextInClipboard_Click">
                                     <md:PackIcon Kind="Cog"/>
                                 </Button>
+                                <CheckBox ToolTip="Создавать функции/процедуры"
+                                          BorderThickness="0"
+                                          HorizontalAlignment="Center"
+                                          Margin="0 5"
+                                          Foreground="{DynamicResource MaterialDesignToolTipBackground}"
+                                          IsChecked="{Binding CheckBoxEnableMakingMethod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Checked="CheckBoxEnableMakingMethod_Checked"
+                                          Unchecked="CheckBoxEnableMakingMethod_Unchecked"/>
                             </StackPanel>
                         </Grid>
                     </Border>

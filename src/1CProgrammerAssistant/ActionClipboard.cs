@@ -19,7 +19,7 @@ namespace _1CProgrammerAssistant
         public ActionClipboard(ref AssistantObjects assistantObjects)
         {
             _assistantObjects = assistantObjects;
-            
+
             ProcessTextInClipboardEvents.ProcessTextInClipboardEvent +=
             () =>
             {
@@ -31,7 +31,25 @@ namespace _1CProgrammerAssistant
 
         private string ResultText { get => _resultText; set { _resultText = value; ChangedResultTextEvents?.Invoke(value); } }
 
-        
+        internal void ProcessMakingMethod(bool showMessage = false)
+        {
+            Safe.SafeAction(() =>
+            {
+                if (Clipboard.ContainsText())
+                {
+                    string textInClipboard = GetTextFromClipboard();
+
+                    ChangedSourceTextEvents?.Invoke(textInClipboard);
+
+                    HandleText(textInClipboard);
+
+                    if (showMessage)
+                        if (!_handleResult)
+                            ShowNotification("Не удалось распознать данные буфера обмена.", BalloonIcon.Error);
+                }
+            });
+        }
+
         internal void ProcessTextWithClipboard(bool showMessage = false)
         {
             Safe.SafeAction(() =>

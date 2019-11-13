@@ -4,7 +4,7 @@ namespace MakingCode
 {
     internal class MakingSourceText
     {
-        internal MakingSourceText(string source)
+        internal MakingSourceText(string source, bool enableMakingMethod)
         {
             Source = source;
 
@@ -28,6 +28,12 @@ namespace MakingCode
             {
                 TypeSourceCode = TypeSourceCode.ReturnCondition;
             }
+            else if (enableMakingMethod
+                && sourceCopy.Contains("(")
+                && sourceCopy.Contains(")"))
+            {
+                TypeSourceCode = TypeSourceCode.MakingMethod;
+            }
         }
 
         internal string Source { get; }
@@ -44,6 +50,8 @@ namespace MakingCode
                     return new MakingTextCondition(Source, PrefixText).MakeText();
                 case TypeSourceCode.ReturnCondition:
                     return new MakingTextReturnCondition(Source, PrefixText).MakeText();
+                case TypeSourceCode.MakingMethod:
+                    return new MakingTextMakingMethod(Source).MakeText();
                 case TypeSourceCode.None:
                 default:
                     return string.Empty;

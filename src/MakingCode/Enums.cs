@@ -4,5 +4,12 @@ using System.Text;
 
 namespace MakingCode
 {
-    internal enum TypeSourceCode { None, CallMethod, Condition, ReturnCondition }
+    internal enum TypeSourceCode
+    {
+        None,
+        CallMethod,
+        Condition,
+        ReturnCondition,
+        MakingMethod
+    }
 }

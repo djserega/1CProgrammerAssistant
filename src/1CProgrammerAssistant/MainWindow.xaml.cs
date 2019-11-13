@@ -85,12 +85,14 @@ namespace _1CProgrammerAssistant
 
             LoadListModifiedFiles();
 
+            CheckBoxEnableMakingMethod = true;
+
             Topmost = Properties.Settings.Default.IsTopmost;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-          }
+        }
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
@@ -246,6 +248,14 @@ namespace _1CProgrammerAssistant
 
         public static readonly DependencyProperty ResultTextProperty =
             DependencyProperty.Register("ResultText", typeof(string), typeof(MainWindow), new PropertyMetadata(null));
+
+        public bool CheckBoxEnableMakingMethod
+        {
+            get { return (bool)GetValue(CheckBoxEnableMakingMethodProperty); }
+            set { SetValue(CheckBoxEnableMakingMethodProperty, value); }
+        }
+        public static readonly DependencyProperty CheckBoxEnableMakingMethodProperty =
+            DependencyProperty.Register("CheckBoxEnableMakingMethod", typeof(bool), typeof(MainWindow), new PropertyMetadata(null));
 
         #endregion
 
@@ -1016,6 +1026,16 @@ namespace _1CProgrammerAssistant
                 if (!string.IsNullOrWhiteSpace(textToClipboard))
                     _actionClipboard.SetTextToClipboard(textToClipboard, true, "Вызов метода помещен в буфер обмена.");
             };
+        }
+
+        private void CheckBoxEnableMakingMethod_Checked(object sender, RoutedEventArgs e)
+        {
+            assistantObjects.MakingCodeMain.EnableMakingMethod = CheckBoxEnableMakingMethod;
+        }
+
+        private void CheckBoxEnableMakingMethod_Unchecked(object sender, RoutedEventArgs e)
+        {
+            assistantObjects.MakingCodeMain.EnableMakingMethod = CheckBoxEnableMakingMethod;
         }
     }
 }
