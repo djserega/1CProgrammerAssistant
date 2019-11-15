@@ -67,7 +67,7 @@ namespace _1CProgrammerAssistant
             };
 
             FilterMethodStore = string.Empty;
-            SetValueFilterMethodStore(true);
+            SetValueFilterMethodStore(true, true);
 
             if (AssistantObjects.MethodStoreContext == null)
             {
@@ -770,11 +770,14 @@ namespace _1CProgrammerAssistant
             SetValueFilterMethodStore(newValue);
         }
 
-        private void SetValueFilterMethodStore(bool newValue)
+        private void SetValueFilterMethodStore(bool newValue, bool initialized = false)
         {
-            FilterIsCheckedGroup = newValue;
-            FilterIsCheckedType = newValue;
-            FilterIsCheckedModule = newValue;
+            if (!initialized)
+            {
+                FilterIsCheckedGroup = newValue;
+                FilterIsCheckedType = newValue;
+                FilterIsCheckedModule = newValue;
+            };
             FilterIsCheckedMethod = newValue;
         }
 
