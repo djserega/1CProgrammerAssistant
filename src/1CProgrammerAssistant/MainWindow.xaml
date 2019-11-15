@@ -295,6 +295,7 @@
                     <ColumnDefinition Width="31*"/>
                     <ColumnDefinition Width="117*"/>
                 </Grid.ColumnDefinitions>
+                
                 <Border CornerRadius="5" Grid.ColumnSpan="2">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -454,8 +455,8 @@
                         </DataGrid>
 
                     </Grid>
-
                 </Border>
+                
             </Grid>
 
         </StackPanel>
