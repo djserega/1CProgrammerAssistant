@@ -10,10 +10,12 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
         private readonly string _prefixString = "\t\t\t";
         private readonly string _prefix = "\t";
         private readonly List<Models.ObjectParameter> _parametersMethod = new List<Models.ObjectParameter>();
+        private readonly bool _enableAddedDescription;
 
-        public MakingDescription(string source)
+        public MakingDescription(string source, bool enableAddedDescription)
         {
             Source = source;
+            _enableAddedDescription = enableAddedDescription;
         }
 
         internal string Source { get; }
@@ -32,7 +34,9 @@ namespace _1CProgrammerAssistant.DescriptionsTheMethods
             MethodName = string.Empty;
 
             CreateParameters();
-            CreateDescription(appendReturnValue, includeStringMethod);
+
+            if (_enableAddedDescription)
+                CreateDescription(appendReturnValue, includeStringMethod);
 
             if (includeStringMethod)
             {

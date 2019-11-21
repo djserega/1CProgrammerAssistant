@@ -257,6 +257,14 @@ namespace _1CProgrammerAssistant
         public static readonly DependencyProperty CheckBoxEnableMakingMethodProperty =
             DependencyProperty.Register("CheckBoxEnableMakingMethod", typeof(bool), typeof(MainWindow), new PropertyMetadata(null));
 
+        public bool CheckBoxEnableAddedDescription
+        {
+            get { return (bool)GetValue(CheckBoxEnableAddedDescriptionProperty); }
+            set { SetValue(CheckBoxEnableAddedDescriptionProperty, value); }
+        }
+        public static readonly DependencyProperty CheckBoxEnableAddedDescriptionProperty =
+            DependencyProperty.Register("CheckBoxEnableAddedDescription", typeof(bool), typeof(MainWindow), new PropertyMetadata(null));
+
         #endregion
 
         #region Button
@@ -1039,6 +1047,16 @@ namespace _1CProgrammerAssistant
         private void CheckBoxEnableMakingMethod_Unchecked(object sender, RoutedEventArgs e)
         {
             assistantObjects.MakingCodeMain.EnableMakingMethod = CheckBoxEnableMakingMethod;
+        }
+
+        private void CheckBoxEnableAddedDescription_Checked(object sender, RoutedEventArgs e)
+        {
+            assistantObjects.DescriptionsTheMethodsMain.EnableAddedDescription = CheckBoxEnableAddedDescription;
+        }
+
+        private void CheckBoxEnableAddedDescription_Unchecked(object sender, RoutedEventArgs e)
+        {
+            assistantObjects.DescriptionsTheMethodsMain.EnableAddedDescription = CheckBoxEnableAddedDescription;
         }
     }
 }

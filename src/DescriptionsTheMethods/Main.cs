@@ -16,6 +16,7 @@
         public string Description { get; set; } = string.Empty;
         public string TextError { get; private set; } = string.Empty;
         public bool IncludeStringMethod { get; set; } = true;
+        public bool EnableAddedDescription { get; set; }
 
         #endregion
 
@@ -54,7 +55,7 @@
 
         private void CompileDescription()
         {
-            MakingDescription makingDescription = new MakingDescription(StringMethod);
+            MakingDescription makingDescription = new MakingDescription(StringMethod, EnableAddedDescription);
             makingDescription.Making(StringIsFunction, IncludeStringMethod);
 
             MethodName = makingDescription.MethodName;

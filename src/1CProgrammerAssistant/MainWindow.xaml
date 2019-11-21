@@ -135,6 +135,14 @@
                                           IsChecked="{Binding CheckBoxEnableMakingMethod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           Checked="CheckBoxEnableMakingMethod_Checked"
                                           Unchecked="CheckBoxEnableMakingMethod_Unchecked"/>
+                                <CheckBox ToolTip="Добавлять описание к методам"
+                                          BorderThickness="0"
+                                          HorizontalAlignment="Center"
+                                          Margin="0 5"
+                                          Foreground="{DynamicResource MaterialDesignToolTipBackground}"
+                                          IsChecked="{Binding CheckBoxEnableAddedDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Checked="CheckBoxEnableAddedDescription_Checked"
+                                          Unchecked="CheckBoxEnableAddedDescription_Unchecked"/>
                             </StackPanel>
                         </Grid>
                     </Border>
