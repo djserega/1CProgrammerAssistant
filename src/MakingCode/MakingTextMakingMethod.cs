@@ -32,7 +32,7 @@ namespace MakingCode
                 _textBuilder.Append("Функция   ");
 
             int positionBracket = Source.IndexOf('(');
-            string nameMethod = Source.Left(positionBracket - 1);
+            string nameMethod = Source.Left(positionBracket);
             _textBuilder.Append(nameMethod.TrimStart());
 
             _textBuilder.Append("(");
