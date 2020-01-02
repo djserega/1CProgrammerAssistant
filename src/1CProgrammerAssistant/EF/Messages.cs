@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace _1CProgrammerAssistant.MethodStore
+namespace _1CProgrammerAssistant.EF
 {
     internal static class Messages
     {
@@ -21,7 +21,7 @@ namespace _1CProgrammerAssistant.MethodStore
             if (result != MessageBoxResult.OK)
                 return;
 
-            Events.RemoveElementStoreEvent.Remove(id);
+            MethodStore.Events.RemoveElementStoreEvent.Remove(id);
         }
     }
 }

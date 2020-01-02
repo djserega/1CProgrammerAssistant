@@ -46,7 +46,7 @@ namespace _1CProgrammerAssistant.MethodStore.EF
         {
             string pathConnectionString = Path.Combine(
                 Environment.CurrentDirectory,
-                "MethodStoreConnectionString.cfg");
+                "MSSQLConnectionString.cfg");
 
             string connectionString = string.Empty;
 

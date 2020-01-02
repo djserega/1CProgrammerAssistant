@@ -758,7 +758,7 @@ namespace _1CProgrammerAssistant
                 return;
             }
 
-            MethodStore.Messages.RemoveElementStore(MethodStoreListMethodSelectedItem.ID);
+            EF.Messages.RemoveElementStore(MethodStoreListMethodSelectedItem.ID);
         }
 
         private void ButtonMethodStoreUpdateList_Click(object sender, RoutedEventArgs e)

@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 using Events = _1CProgrammerAssistant.MethodStore.Events;
 using Models = _1CProgrammerAssistant.MethodStore.Models;
-using Messages = _1CProgrammerAssistant.MethodStore.Messages;
+using Messages = _1CProgrammerAssistant.EF.Messages;
 
 namespace _1CProgrammerAssistant.Views.MethodStore
 {
