@@ -45,7 +45,7 @@ namespace _1CProgrammerAssistant.ViewerFiles
 
         private void Temp()
         {
-            V8Reader.Program.Main(new string[] { "" });
+            //V8Reader.Program.Main(new string[] { "" });
 
             //AppDomain domainV8 = AppDomain.CreateDomain("v8readerDomain");
             //try
